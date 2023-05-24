@@ -32,11 +32,50 @@ const ProductDetail = () => {
       category: "food"
     },
     {
+      _id: "39jfu34e8u32e",
+      product_name: "Hamburger",
+      product_price: "40000",
+      product_img:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/NYC-Diner-Bacon-Cheeseburger.jpg/1200px-NYC-Diner-Bacon-Cheeseburger.jpg',
+      category: "food"
+    },
+    {
+      _id: "cad989453nbui3fb58",
+      product_name: "Vietnamese Pho",
+      product_price: "35000",
+      product_img:
+        'https://static01.nyt.com/images/2023/03/22/multimedia/16korex1-pho-ltgp/16korex1-pho-ltgp-mediumSquareAt3X.jpg',
+      category: "food"
+    },
+    {
+      _id: "cre8743nd029u39r9n7xn3",
+      product_name: "Peach Tea",
+      product_price: "55000",
+      product_img: 'https://static.toiimg.com/photo/84818808.cms',
+      category: "drink"
+    },
+    {
       _id: "f90endjsldijw",
-      product_name: "Artiso Tea",
+      product_name: "Artichoke Tea",
       product_price: "27000",
       product_img:
-        "https://plantshospital.com/wp-content/uploads/2020/02/Artichoke-tea.jpg",
+        "https://cdn.shopify.com/s/files/1/0004/6379/8334/products/atiso_2048x.jpg?v=1567501693",
+      category: "drink"
+    },
+    {
+      _id: "f4ir9nc48cby",
+      product_name: "Vietnamese Coffee",
+      product_price: "45000",
+      product_img:
+        "https://product.hstatic.net/1000075078/product/1675355354_bg-tch-sua-da-no_30c87dcd6cb84819be30aebd65abdb4c_large.jpg",
+      category: "drink"
+    },
+    {
+      _id: "7nvhf9984927bf7396r8b",
+      product_name: "French Champagne",
+      product_price: "45000",
+      product_img:
+        "https://my-french-grocery.com/wp-content/uploads/2018/05/moet-et-chandon.jpg",
       category: "drink"
     }
   ];

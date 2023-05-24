@@ -158,6 +158,9 @@ button.updateButton:hover {
 
 select {
     font-size: 16px;
+    border: solid 1px gray;
+    padding: 7px 15px;
+    border-radius: 10px;
 }
 
 label {
@@ -183,7 +186,7 @@ label {
     z-index: 9;
     top: 20px;
     right: 20px;
-    font-size: 20px;
+    font-size: 30px;
     cursor: pointer;
 }
 
