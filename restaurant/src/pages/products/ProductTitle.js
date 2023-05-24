@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import './layout.css';
+import './this.css';
 import './tiles.css'
 const ProductTitle = (props) => {
-     const [product, setProduct] = useState(props.product);
+  const [product, setProduct] = useState(props.product);
   return (
     <div className="container">
       <Link to={`${product._id}`} className="fLink">

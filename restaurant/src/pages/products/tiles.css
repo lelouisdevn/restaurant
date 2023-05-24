@@ -5,6 +5,7 @@
     margin: 10px;
     border: solid grey 0.25px;
     border-radius: 10px;
+    width: fit-content;
 }
 .tile {
     width: 150px;
