@@ -1,0 +1,29 @@
+.container {
+    background-color: rgb(242, 242, 242);
+    padding: 10px;
+    display: inline-block;
+    margin: 10px;
+    border: solid grey 0.25px;
+    border-radius: 10px;
+}
+.tile {
+    width: 150px;
+    height: 150px;
+    /* background-color: black; */
+    color: white;
+    margin: 10px;
+    border-radius: 7px;
+    display: inline-block;
+}
+img {
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+}
+.productName {
+    text-align: center;
+}
+h4 {
+    margin: 0;
+    padding: 0;
+}
