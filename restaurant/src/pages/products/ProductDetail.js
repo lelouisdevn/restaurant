@@ -119,7 +119,7 @@ const ProductDetail = () => {
             <h2>PRODUCTS MANAGEMENT</h2>
           </Link>
         </div>
-        <Toolbar />
+        <Toolbar url="/manage/product/new" />
         <Outlet />
         <div className="content">
           <div className="header-product">
