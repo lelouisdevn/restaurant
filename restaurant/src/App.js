@@ -7,6 +7,15 @@ import Lobby from './pages/lobby/Lobby';
 import ProductDetail from './pages/products/ProductDetail';
 import ProductList from './pages/products/ProductList';
 import Layout from './components/Layout';
+
+import Info from "./pages/info_restaurant/Info";
+import User from "./pages/manage_user/User";
+import UserList from "./pages/manage_user/UserList";
+import UserDetail from "./pages/manage_user/UserDetail";
+import UserBase from "./pages/manage_user/UserBase";
+import UserAdd from './pages/manage_user/UserAdd';
+import InfoEdit from './pages/info_restaurant/InfoEdit';
+
 function App() {
   return (
     <div>
@@ -26,7 +35,17 @@ function App() {
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetail />} />
             </Route>
+            <Route path="user" element={<User/>}>
+              <Route index element={<UserList />}/>
+              <Route path="add" element={<UserAdd />}></Route>
+              <Route path=":id" element={<UserDetail/>}/>
+            </Route>
+            <Route path="info">
+              <Route index element={<Info />} />
+              <Route path="editinfo" element={<InfoEdit />}></Route>
+            </Route>
           </Route>
+          
         </Routes>
       </BrowserRouter>
     </div>
