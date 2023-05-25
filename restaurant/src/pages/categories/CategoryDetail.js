@@ -75,7 +75,7 @@ const CategoryDetail = () => {
                                         <label>Name:</label>
                                         <input
                                             value={categoryName}
-                                            // onChange={(event) => setProdName(event.target.value)}
+                                        // onChange={(event) => setProdName(event.target.value)}
                                         ></input>
                                     </div>
                                     <div>
