@@ -15,7 +15,9 @@ import UserDetail from "./pages/manage_user/UserDetail";
 import UserBase from "./pages/manage_user/UserBase";
 import UserAdd from './pages/manage_user/UserAdd';
 import InfoEdit from './pages/info_restaurant/InfoEdit';
-
+import ProductForm from './pages/products/ProductForm'
+import Category from './pages/categories/Category'
+import CategoryDetail from './pages/categories/CategoryDetail'
 function App() {
   return (
     <div>
@@ -34,6 +36,11 @@ function App() {
             <Route path="product" >
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetail />} />
+              <Route path='new' element={<ProductForm />} />
+            </Route>
+            <Route path="category" >
+              <Route index element={<Category />} />
+              <Route path=":id" element={<CategoryDetail />} />
             </Route>
             <Route path="user" element={<User/>}>
               <Route index element={<UserList />}/>

@@ -47,7 +47,7 @@ const Sidebar = () => {
 
           <ListItemButton
             selected={selectedIndex === 1}
-            onClick={(event) => handleListItemClick(event, 1)}
+            onClick={(event) => handleListItemClick(event, 1, '/manage/category')}
           >
             <ListItemIcon>
               <InboxIcon />
