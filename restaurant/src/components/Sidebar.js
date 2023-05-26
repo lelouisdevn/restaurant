@@ -1,10 +1,8 @@
 import {
-  Divider,
   List,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
-  Typography
+  ListItemText
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -17,27 +15,25 @@ import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 
 const Sidebar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(null);
   const handleListItemClick = (event, index, path) => {
     setSelectedIndex(index);
-    navigate(path)
+    navigate(path);
   };
- 
+
   return (
     <Box
       p={2}
       flex={1}
-      sx={{ display: { xs: "none", sm: "block" } }}
+      sx={{ display: { xs: "none", sm: "none", md: "block" } }}
       // bgcolor="pink"
     >
       <Box position="fixed">
         <List>
           <ListItemButton
             selected={selectedIndex === 0}
-            onClick={(event) => handleListItemClick(event, 0, '/manage/home')}
-              // component="a"
-              // href="/manage/home"
+            onClick={(event) => handleListItemClick(event, 0, "/manage/home")}
           >
             <ListItemIcon>
               <HomeIcon />
@@ -47,7 +43,9 @@ const Sidebar = () => {
 
           <ListItemButton
             selected={selectedIndex === 1}
-            onClick={(event) => handleListItemClick(event, 1, '/manage/category')}
+            onClick={(event) =>
+              handleListItemClick(event, 1, "/manage/category")
+            }
           >
             <ListItemIcon>
               <InboxIcon />
@@ -59,8 +57,6 @@ const Sidebar = () => {
             onClick={(event) =>
               handleListItemClick(event, 2, "/manage/product")
             }
-            // component="a"
-              // href="/manage/product"
           >
             <ListItemIcon>
               <FlatwareIcon />
@@ -70,9 +66,7 @@ const Sidebar = () => {
 
           <ListItemButton
             selected={selectedIndex === 3}
-            onClick={(event) => handleListItemClick(event, 3, '/manage/lobby')}
-            // component="a"
-            // href="/manage/lobby"
+            onClick={(event) => handleListItemClick(event, 3, "/manage/lobby")}
           >
             <ListItemIcon>
               <StoreIcon />
@@ -82,9 +76,7 @@ const Sidebar = () => {
 
           <ListItemButton
             selected={selectedIndex === 5}
-            onClick={(event) => handleListItemClick(event, 5, '/manage/user')}
-              // component="a"
-              // href="/manage/user"
+            onClick={(event) => handleListItemClick(event, 5, "/manage/user")}
           >
             <ListItemIcon>
               <AssignmentIndIcon />
@@ -93,9 +85,7 @@ const Sidebar = () => {
           </ListItemButton>
           <ListItemButton
             selected={selectedIndex === 6}
-            onClick={(event) => handleListItemClick(event, 6, '/manage/info')}
-            // component="a"
-            //   href="/manage/info"
+            onClick={(event) => handleListItemClick(event, 6, "/manage/info")}
           >
             <ListItemIcon>
               <FoodBankIcon />

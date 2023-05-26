@@ -17,7 +17,8 @@ import UserAdd from './pages/manage_user/UserAdd';
 import InfoEdit from './pages/info_restaurant/InfoEdit';
 import ProductForm from './pages/products/ProductForm'
 import Category from './pages/categories/Category'
-import CategoryDetail from './pages/categories/CategoryDetail'
+import CategoryDetail from './pages/categories/CategoryDetail';
+import NavbarStaff from './components/NavbarStaff';
 function App() {
   return (
     <div>
@@ -51,6 +52,9 @@ function App() {
               <Route index element={<Info />} />
               <Route path="editinfo" element={<InfoEdit />}></Route>
             </Route>
+          </Route>
+          <Route path="/staff/*" element={<NavbarStaff />} >
+
           </Route>
           
         </Routes>
