@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CategoryTile from './CategoryTile'
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loading from "../products/Loading";
 
 function Category() {
     // const categories = [
@@ -27,7 +28,7 @@ function Category() {
     return (
         <div >
             <div className="title">
-                <Link to="/manage/categories" className="fLink">
+                <Link to="/manage/category" className="fLink">
                     <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                 </Link>
             </div>
@@ -41,9 +42,9 @@ function Category() {
                     </Link>
                 </div>
                 <div className="products">
-                    {categories && categories.map((category) => (
+                    {categories ? categories.map((category) => (
                         <CategoryTile key={category._id} category={category} />
-                    ))}
+                    )) : <Loading message="fetching your data...." />}
                 </div>
             </div>
         </div>

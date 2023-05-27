@@ -93,15 +93,15 @@ const ProductDetail = () => {
   return (
     <>
       {
-        isDisplay &&
+        isDisplay ?
         <div className='img-container'>
           <img className='fullScreenImage' src={product.prod_img} />
           <div onClick={(e) => setStatus(!isDisplay)}>
             <FontAwesomeIcon icon={faClose} />
           </div>
         </div>
-      }
-      {!isDisplay &&
+      :
+      
         <div className='detail-container'>
           <div className="title">
             <Link to="/manage/product" className="fLink">
@@ -117,7 +117,7 @@ const ProductDetail = () => {
                 <span> Sản phẩm</span>
               </Link>
               <Link to={`/manage/products/category/${product.category}`} className="fLink">
-                {/* <span>/{cateName}</span> */}
+                <span>/{cateName}</span>
               </Link>
               <span>/{product.prod_name}</span>
 

@@ -29,19 +29,18 @@ const CategoryDetail = () => {
         <>
 
             {
-                status &&
+                status ?
                 <div className='img-container'>
                     <img className='fullScreenImage' src={category.category_img} />
                     <div onClick={(e) => setStatus(!status)}>
                         <FontAwesomeIcon icon={faClose} />
                     </div>
                 </div>
-            }
-            {!status &&
+            :
                 <div className='detail-container'>
                     <div className="title">
                         <Link to="/manage/category" className="fLink">
-                            <h2>QUẢN LÝ DANH MỤC</h2>
+                            <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                         </Link>
                     </div>
                     <Toolbar />

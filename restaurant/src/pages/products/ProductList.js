@@ -46,7 +46,7 @@ const ProductList = () => {
           <div className="products">
             {products ? products.map((product) => (
               <ProductTile key={product._id} product={product} />
-            )) : <Loading />}
+            )) : <Loading message="fetching your data...." />}
 
             {/* <Loading /> */}
           </div>
