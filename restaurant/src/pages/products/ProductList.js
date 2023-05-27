@@ -8,15 +8,13 @@ import Toolbar from './Toolbar';
 import axios from 'axios';
 import { useState } from 'react';
 import Loading from './Loading';
-const ProductList = () => {
-  const url = "http://localhost:4000/api/products";
+const ProductList = (props) => {
   const [products, setProducts] = useState("");
-
   const getProducts = async () => {
+    const url = "http://localhost:4000/api/products";
     await axios
       .get(url)
       .then((res) => {
-        console.log(res?.data.document);
         setProducts(res?.data.document)
       })
   }
@@ -47,8 +45,6 @@ const ProductList = () => {
             {products ? products.map((product) => (
               <ProductTile key={product._id} product={product} />
             )) : <Loading message="fetching your data...." />}
-
-            {/* <Loading /> */}
           </div>
         </div>
       </div>

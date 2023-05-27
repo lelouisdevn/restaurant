@@ -32,7 +32,7 @@ function Category() {
                     <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                 </Link>
             </div>
-            <Toolbar />
+            <Toolbar url="/manage/category/new"/>
             <Outlet />
             <div className="content">
                 <div className="header-product">

@@ -8,7 +8,7 @@ const ProductTitle = (props) => {
   return (
     <div className="container">
       { product ? 
-      <Link to={`${product._id}`} className="fLink">
+      <Link to={`/manage/product/${product._id}`} className="fLink">
         <div className="tile">
           <img src={product.prod_img} />
         </div>

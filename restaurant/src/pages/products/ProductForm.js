@@ -65,8 +65,9 @@ function ProductForm() {
                 <div className="header-product">
                     <Link to="/manage/product" className="fLink">
                         <FontAwesomeIcon icon={faHome} />
-                        <span> Sản phẩm/thêm sản phẩm mới</span>
+                        <span> Sản phẩm</span>
                     </Link>
+                    <span>/Thêm sản phẩm mới</span>
                 </div>
                 <div className='product-content'>
                     <div className='n_left'>

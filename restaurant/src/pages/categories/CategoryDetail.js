@@ -11,20 +11,29 @@ const CategoryDetail = () => {
     const { id } = useParams();
     const [category, setCategory] = useState("");
     const [status, setStatus] = useState(false);
+    const [name, setName] = useState("");
+    const [image, setImage] = useState("");
 
     const getCategoryById = async () => {
         const fetchDataURL = `http://localhost:4000/api/category/${id}`;
         await axios
             .get(fetchDataURL)
             .then((res)=>{
-                // console.log(res?.data.category)
                 setCategory(res?.data.category[0]);
             })
     };
     useEffect(()=>{
         getCategoryById()
     }, []);
-    
+    const updateCategory = async() => {
+        const updateURL = `http://localhost:4000/api/category/update/${id}`;
+        await axios
+            .put(updateURL, {
+                category_name: name ? name : category.category_name,
+                category_img: image ? image : category.category_img,
+            });
+        getCategoryById();
+    }
     return (
         <>
 
@@ -43,7 +52,7 @@ const CategoryDetail = () => {
                             <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                         </Link>
                     </div>
-                    <Toolbar />
+                    <Toolbar url="/manage/category/new" />
                     <Outlet />
                     <div className="content">
                         <div className="header-product">
@@ -51,9 +60,9 @@ const CategoryDetail = () => {
                                 <FontAwesomeIcon icon={faList} />
                                 <span> Danh mục</span>
                             </Link>
-                            /
-                            <Link to="/products/foods" className="fLink">
-                                <span>{category.category_name}</span>
+                            
+                            <Link to={`/manage/product/all/category/${category._id}`} className="fLink">
+                                <span>/{category.category_name}</span>
                             </Link>
                         </div>
                         <div className="product-content">
@@ -72,15 +81,22 @@ const CategoryDetail = () => {
                                     <div>
                                         <label>Tên danh mục:</label>
                                         <input
-                                            value={category.category_name}
+                                            defaultValue={category.category_name}
+                                            onChange={(e) => setName(e.target.value)}
                                         ></input>
                                     </div>
                                     <div>
                                         <label>Đường dẫn hình ảnh:</label>
-                                        <input value={category.category_img}></input>
+                                        <input 
+                                            defaultValue={category.category_img}
+                                            onChange={(e) => setImage(e.target.value)}
+                                        ></input>
                                     </div>
                                     <div>
-                                        <button className='updateButton'>Lưu các thay đổi</button>
+                                        <button 
+                                            className='updateButton'
+                                            onClick={updateCategory}
+                                        >Lưu các thay đổi</button>
                                         <button>Xóa danh mục</button>
                                     </div>
                                 </div>

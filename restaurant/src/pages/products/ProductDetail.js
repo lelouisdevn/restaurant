@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 const ProductDetail = () => {
   const { id } = useParams();
+  console.log(id)
 
   /**
    * Get a product with provided id
@@ -116,7 +117,7 @@ const ProductDetail = () => {
                 <FontAwesomeIcon icon={faHome} />
                 <span> Sản phẩm</span>
               </Link>
-              <Link to={`/manage/products/category/${product.category}`} className="fLink">
+              <Link to={`/manage/product/all/category/${product.category}`} className="fLink">
                 <span>/{cateName}</span>
               </Link>
               <span>/{product.prod_name}</span>
