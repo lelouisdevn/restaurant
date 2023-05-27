@@ -1,39 +1,60 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import ProductImage from './ProductImage';
 import Toolbar from './Toolbar';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function ProductForm() {
-    const product = {
-        'id': '',
-        'product_name': '',
-        'product_img': 'https://static.vecteezy.com/system/resources/previews/005/988/954/original/hidden-icon-free-vector.jpg',
-        'product_price': '',
-        'category': 'food'
-    }
-    const [prod, setProduct] = useState(product);
+    // const [isDisplay, setStatus] = useState(false)
+    const [name, setName] = useState("");
+    const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/005/988/954/original/hidden-icon-free-vector.jpg")
+    const [unit, setUnit] = useState("")
+    const [price, setPrice] = useState("")
+    const [desc, setDesc] = useState("")
+    const [Category, setCate] = useState("")
+    const [categories, setCategory] = useState("");
 
-    const [product_name, setProdName] = useState(product.product_name);
-    const [product_price, setProdPrice] = useState(product.product_price);
-    const [product_cate, setProdCate] = useState(product.category);
-    const [product_img, setProdImg] = useState(product.product_img);
-
-    function discardAll() {
-        setProdName(prod.product_name);
-        setProdPrice(prod.product_price);
-        setProdCate(prod.category);
-        setProdImg(prod.product_img)
+    const navigate = useNavigate()
+    const createProduct = async () => {
+        const createURL = 'http://localhost:4000/api/product/new';
+        await axios
+            .post(createURL, {
+                prod_name: name,
+                prod_img: image,
+                prod_unit: unit,
+                prod_price: price,
+                prod_desc: desc,
+                category: Category
+            })
+            .then((res) => {
+                console.log(res?.data.product._id)
+                const id = res?.data.product._id;
+                navigate(`/manage/product/${id}`);
+            })
     }
 
-    function updateAll() {
-        product.product_name = product_name;
-        product.product_price = product_price;
-        product.category = product_cate;
-        product.product_img = product_img;
-        setProduct(product);
+    const getCategories = async () => {
+        const fetchCategoriesURL = "http://localhost:4000/api/categories";
+        await axios
+            .get(fetchCategoriesURL)
+            .then((res) => {
+                // console.log(res?.data.categories);
+                setCategory(res?.data.categories);
+            })
     }
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const handleSelect = (event) => {
+        const value = event.target.value;
+        const item = categories.find(e => e.category_name == value);
+        const _id = item._id;
+        setCate(_id);
+      }
     return (
         <div className='detail-container'>
             <div className='title'>
@@ -50,50 +71,69 @@ function ProductForm() {
                 <div className='product-content'>
                     <div className='n_left'>
                         <div>
-                            <ProductImage img={product_img} />
+                            <ProductImage img={image} />
                         </div>
                     </div>
                     <div className='n_right'>
                         <div className='n_right_content'>
-                            
+
                             <div>
                                 <label>Tên sản phẩm:</label>
                                 <input
-                                    value={product_name}
-                                    onChange={(event) => setProdName(event.target.value)}
+                                    value={name}
+                                    onChange={(event) => setName(event.target.value)}
                                 ></input>
                             </div>
                             <div>
-                                <label>Danh mục: {product_cate}</label>
+                                <label>Danh mục sản phẩm:</label>
                                 <div>
-                                    <select onClick={(e) => setProdCate(e.target.value)}>
+                                    {/* <select onClick={(e) => setCate(e.target.value)}>
                                         <option value={"food"}> Thực phẩm</option>
                                         <option value={"drink"}> Thức uống</option>
+                                    </select> */}
+                                    <select onClick={handleSelect} >
+                                        {categories && categories.map((category) => (
+                                            <option
+                                                key={category._id}
+                                                defaultValue={category._id}
+                                            >
+                                                {category.category_name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
                             <div>
                                 <label>Đơn vị tính:</label>
-                                <input></input>
+                                <input
+                                    defaultValue={unit}
+                                    onChange={(e) => setUnit(e.target.value)}
+                                ></input>
                             </div>
                             <div>
                                 <label>Đơn giá:</label>
                                 <input
-                                    value={product_price}
-                                    onChange={(event) => setProdPrice(event.target.value)}
+                                    defaultValue={price}
+                                    onChange={(event) => setPrice(event.target.value)}
                                 ></input>
                             </div>
                             <div>
                                 <label>Đường dẫn hình ảnh:</label>
-                                <input value={product_img} onChange={(e) => setProdImg(e.target.value)}></input>
+                                <input
+                                    defaultValue={image}
+                                    onChange={(e) => setImage(e.target.value)}
+                                ></input>
                             </div>
                             <div>
                                 <label>Mô tả sản phẩm:</label>
-                                <input></input>
+                                <input
+                                    defaultValue={desc}
+                                    onChange={(e) => setDesc(e.target.value)}
+                                ></input>
                             </div>
                             <div>
-                                <button className='updateButton' onClick={updateAll}>Lưu các thay đổi</button>
-                                <button onClick={discardAll}>Bỏ các thay đổi</button>
+                                <button className='updateButton' onClick={createProduct}>Thêm sản phẩm</button>
+                                {/* <button>Bỏ các thay đổi</button> */}
                             </div>
                         </div>
                     </div>

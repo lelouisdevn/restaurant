@@ -167,6 +167,12 @@ button.updateButton:hover {
 .n_right_content label {
     display: block;
 }
+.n_right_content textarea {
+    width: 100%;
+    border: solid 1px grey;
+    padding: 7px;
+    border-radius: 10px;
+}
 
 .fullScreenImage {
     position: absolute;
@@ -201,4 +207,26 @@ button.updateButton:hover {
     z-index: 9;
     /* transition: all 2s ease-out; */
     
+}
+.productimg {
+    background: url('https://static.vecteezy.com/system/resources/previews/005/988/954/original/hidden-icon-free-vector.jpg');
+
+}
+.loading {
+    color: grey;
+    text-align: center;
+    margin: 30px 10px;
+    font-size: 25px;
+}
+.loading .loadicon {
+    animation: r 4s linear infinite;
+    transform-origin: 48%;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+@keyframes r {
+  to {
+    transform: rotate(360deg)
+  }
 }

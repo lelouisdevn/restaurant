@@ -13,20 +13,20 @@ const Toolbar = (props) => {
       <Link to={props.url}>
       <div>
         <FontAwesomeIcon icon={faPlus} />
-        <span> Add</span>
+        <span> Thêm</span>
       </div>
       </Link>
       <div>
         <FontAwesomeIcon icon={faEdit} />
-        <span> Edit</span>
+        <span> Sửa</span>
       </div>
       <div>
         <FontAwesomeIcon icon={faRemove} />
-        <span> Remove a product</span>
+        <span> Xóa sản phẩm</span>
       </div>
       <div>
         <FontAwesomeIcon icon={faSortAlphaAsc} />
-        <span> Sort: A-Z</span>
+        <span> Sắp xếp</span>
       </div>
     </div>
   );
