@@ -25,17 +25,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //
-app.get("/", (req, res) => {
-  res.send("This is home page");
-});
+// app.get("/", (req, res) => {
+//   res.send("This is home page");
+// });
 
 
 // Import cac routes
 const lobby = require('./routes/lobbyRoutes');
 const table = require('./routes/tableRoutes')
+const product = require("./routes/productRoutes");
+const category = require("./routes/categoryRoutes");
 
 app.use("/api", lobby);
 app.use("/api", table);
+app.use("/api", product);
+app.use("/api", category);
 
 const PORT = 4000;
 app.listen(PORT, () => {
