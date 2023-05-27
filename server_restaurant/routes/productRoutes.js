@@ -3,7 +3,6 @@ const Product = require("../models/Product")
 const Category = require("../models/Category")
 
 router.get('/products', async (req, res) => {
-    // res.send("OK")
     try {
         const document = await Product.aggregate(
             [
@@ -17,13 +16,22 @@ router.get('/products', async (req, res) => {
                 }
             ]
         );
-
         res.send({ document })
     }
     catch (e) {
         console.log(e)
     }
 });
+router.get('/products/category/:id', async(req, res) => {
+    const categoryId = req.params.id;
+    try {
+        const products = await Product.find({category: categoryId});
+        res.send({products});
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 router.get('/product/:id', async (req, res) => {
     const id = req.params.id;
     try {

@@ -19,6 +19,8 @@ import ProductForm from './pages/products/ProductForm'
 import Category from './pages/categories/Category'
 import CategoryDetail from './pages/categories/CategoryDetail';
 import NavbarStaff from './components/NavbarStaff';
+import CategoryForm from './pages/categories/CategoryForm';
+import CategoryProducts from './pages/products/CategoryProducts';
 function App() {
   return (
     <div>
@@ -38,10 +40,12 @@ function App() {
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetail />} />
               <Route path='new' element={<ProductForm />} />
+              <Route path='all/category/:id' element={<CategoryProducts />} />
             </Route>
             <Route path="category" >
               <Route index element={<Category />} />
               <Route path=":id" element={<CategoryDetail />} />
+              <Route path="new" element={<CategoryForm />} />
             </Route>
             <Route path="user" element={<User/>}>
               <Route index element={<UserList />}/>

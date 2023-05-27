@@ -35,4 +35,22 @@ router.get('/category/:id', async(req, res) => {
     }
 })
 
+router.put('/category/update/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        let category = await Category.updateOne(
+            {_id: id},
+            {
+                $set: {
+                    category_name: req.body.category_name,
+                    category_img: req.body.category_img,
+                }
+            }
+        )
+        res.send({category});
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 module.exports = router;
