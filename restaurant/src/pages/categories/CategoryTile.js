@@ -11,7 +11,7 @@ const CategoryTile = (props) => {
           <img src={category.category_img} />
         </div>
         <div className="productName">
-          <h4>{category.cate_name}</h4>
+          <h4>{category.category_name}</h4>
           {/* <h4>{category.categroy_}</h4> */}
         </div>
       </Link>
