@@ -3,7 +3,6 @@ const Table = require("../models/Table");
 
 //Thêm một bàn mới
 router.post('/table', async(req,res) => {
-    console.log("Thuc hien tao 1 ban moi");
     const { tbl_id, tbl_seat_num, lobby } = req.body;
     try {
         const table = new Table({
@@ -13,7 +12,6 @@ router.post('/table', async(req,res) => {
         });
         await table.save();
         res.send({ table });
-        
     } catch (error) {
          console.log("Database err", error);
          return res.status(422).send({ Error: error.message });
@@ -21,8 +19,6 @@ router.post('/table', async(req,res) => {
 })
 
 router.get('/lobby/:id/table', async (req, res) => {
-  
-  console.log(req.params);
   try {
     let table = await Table.find({ lobby: req.params.id, tbl_status: 0 });
     res.send({ table });
@@ -30,9 +26,22 @@ router.get('/lobby/:id/table', async (req, res) => {
   } catch (error) {
     console.log("Database err", error);
     return res.status(422).send({ Error: error.message });
-    
   }
 });
+
+// Điếm số bàn có chung một khu vực khu vực 
+router.get('/lobby/:id/counttable', async (req, res) => {
+  console.log("Diem ban",req.params);
+  try {
+    let table = await Table.countDocuments({ lobby: req.params.id, tbl_status:0 });
+    res.send({ table });
+    
+  } catch (error) {
+    console.log("Database err", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
+
 // Sửa thông tin của 1 bàn
 router.put('/table/edit/id=:id', async (req, res) => {
   console.log(" in ban: ", req.params.id);
@@ -47,10 +56,13 @@ router.put('/table/edit/id=:id', async (req, res) => {
       }
     );
     res.send({ table });
-  } catch (error) {}
-  
+  } catch (error) {
+     console.log("Database err", error);
+     return res.status(422).send({ Error: error.message });
+  }  
 })
-// Sửa thông tin của 1 bàn
+
+// Xóa 1 bàn
 router.put('/table/delete/id=:id', async (req, res) => {
   console.log("in ban: ", req.params.id);
   try {
@@ -63,7 +75,10 @@ router.put('/table/delete/id=:id', async (req, res) => {
       }
     );
     res.send({ table });
-  } catch (error) {}
-  
+  } catch (error) {
+     console.log("Database err", error);
+     return res.status(422).send({ Error: error.message });
+  }
 })
+
 module.exports = router;

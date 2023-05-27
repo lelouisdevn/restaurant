@@ -3,11 +3,9 @@ import {
   Button,
   Container,
   Divider,
-  IconButton,
   Modal,
   Stack,
   TextField,
-  Tooltip,
   Typography
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -15,61 +13,23 @@ import { styled } from "@mui/system";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { DataGrid } from "@mui/x-data-grid";
 import LobbiesActions from "./LobbiesActions";
 import TablesActions from "./TablesAction";
 import "./Lobby.scss";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Delete, Edit, Preview } from "@mui/icons-material";
 
 const StyledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center"
 });
-
-// Dữ liệu cột
-const columns = [
-  { field: "null", headerName: "", width: 50 },
-  { field: "id", headerName: "STT", width: 70 },
-  { field: "lob_name", headerName: "Tên khu vực", width: 130 },
-  { field: "lob_tbl_num", headerName: "Số bàn", type: "number", width: 130 },
-  {
-    field: "act",
-    headerName: "Thao tác",
-    type: "actions",
-    width: 270,
-    renderCell: (params) => <LobbiesActions {...{ params }} />
-  }
-];
-// 0:{_id: '646f1f116694bcf02233052a', lob_name: 'Khu vực 1', lob_tbl_num: 10, __v: 0}
-// length: 1
-
-// Dữ liệu hàng
-const rows = [
-  { null: "", id: 1, lob_name: "Snow", lob_tbl_num: 10 },
-  { null: "", id: 2, lob_name: "Lannister", lob_tbl_num: 8 },
-  { null: "", id: 3, lob_name: "Lannister", lob_tbl_num: 8 },
-  { null: "", id: 4, lob_name: "Stark", lob_tbl_num: 8 }
-];
-
-function createData(code, countp, status) {
-  return { code, countp, status };
-}
-const rowstable = [
-  createData("S01", 4, "trống"),
-  createData("S02", 4, "đang dùng"),
-  createData("S03", 4, "đang dùng"),
-  createData("S04", 4, "trống"),
-  createData("S05", 6, "trống")
-];
 
 const Lobby = () => {
   const [open, setOpen] = useState(false);
@@ -79,24 +39,23 @@ const Lobby = () => {
   const [table, setTable] = useState([]);
   const [lobbies, setLobbies] = useState([]);
   const [isLoading, setisLoading] = useState(true);
-  
-  const callbackFunction = async (id,name) => {
+
+  const callbackFunction = async (id, name) => {
     setNameL(name);
-    // console.log("if lobby : ", id);
-     await axios
-       .get(`http://localhost:4000/api/lobby/${id}/table`)
-       .then((res) => {
-         // console.log('Response', res?.data);
-         const temp = res?.data.table;
-         setTable(temp);
-       })
-       .catch((error) => {
-         console.log("Error: ", error);
-       })
-       .finally(() => {
-         setisLoading(false);
-       });
+    await axios
+      .get(`http://localhost:4000/api/lobby/${id}/table`)
+      .then((res) => {
+        const temp = res?.data.table;
+        setTable(temp);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      })
+      .finally(() => {
+        setisLoading(false);
+      });
   };
+
   useEffect(() => {
     getLobbies();
   }, []);
@@ -107,38 +66,28 @@ const Lobby = () => {
       .then((res) => {
         const temp = res?.data.lobbies;
         setLobbies(temp);
-        console.log(temp);
+        // console.log(temp);
       })
       .catch((error) => {
         console.log("Error: ", error);
       });
-  }
+  };
+
   const handleAdd = async (e) => {
     e.preventDefault();
-    console.log("ok", name + count);
     try {
-      await axios.post("http://localhost:4000/api/lobby", {
-        lob_name: name,
-        lob_tbl_num: count,
-      });
-      
+      await axios
+        .post("http://localhost:4000/api/lobby", {
+          lob_name: name,
+          lob_tbl_num: count
+        })
+        .then((res) => {
+          setOpen(false);
+          window.location.reload();
+        });
     } catch (error) {
       console.log("Error: ", error);
     }
-
-    setOpen(false);
-    // console.log("ok", count);
-    // toast.success("🦄 Thêm sản phẩm mới thành công!", {
-    //   position: "top-right",
-    //   autoClose: 900,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "colored"
-    // });
-    window.location.reload();
   };
 
   return (
@@ -168,16 +117,6 @@ const Lobby = () => {
           </Box>
         </Stack>
         <div className="lbtable" style={{ marginBottom: 20 }}>
-          {/* <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 }
-              }
-            }}
-            pageSizeOptions={[5, 10]}
-          /> */}
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead bgcolor="#F7F7F7" mr={-10}>
@@ -213,34 +152,11 @@ const Lobby = () => {
                     </TableCell>
                     <TableCell scope="row">{row.lob_name}</TableCell>
                     <TableCell align="right">{row.lob_tbl_num}</TableCell>
-                    {/* <TableCell align="right">{row.status}</TableCell> */}
                     <TableCell align="right">
                       <LobbiesActions
                         params={row}
                         parentCallback={callbackFunction}
                       />
-                      {/* <Box>
-                        <Tooltip title="Edit this lobby">
-                          <IconButton
-                            onClick={
-                              () => {}
-                              //   handleOpen1(item)
-                            }
-                          >
-                            <Edit />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Delete this lobby">
-                          <IconButton
-                            onClick={
-                              () => {}
-                              //   handleOpen(item)
-                            }
-                          >
-                            <Delete />
-                          </IconButton>
-                        </Tooltip>
-                      </Box> */}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -306,28 +222,6 @@ const Lobby = () => {
                           params={row}
                           parentCallback={callbackFunction}
                         />
-                        {/* <Box>
-                          <Tooltip title="Sửa thông tin ">
-                            <IconButton
-                              onClick={
-                                () => {}
-                                //   handleOpen1(item)
-                              }
-                            >
-                              <Edit />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="Xóa bàn">
-                            <IconButton
-                              onClick={
-                                () => {}
-                                //   handleOpen(item)
-                              }
-                            >
-                              <Delete />
-                            </IconButton>
-                          </Tooltip>
-                        </Box> */}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -340,7 +234,6 @@ const Lobby = () => {
 
       <StyledModal
         open={open}
-        // onClose={(e) => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -348,7 +241,6 @@ const Lobby = () => {
           <Box alignItems="right" justifyContent="right" display="flex">
             <CancelIcon onClick={(e) => setOpen(false)} />
           </Box>
-
           <Typography variant="h5" color="gray" textAlign="center">
             Thêm khu vực mới
           </Typography>
@@ -396,7 +288,6 @@ const Lobby = () => {
           </Box>
         </Box>
       </StyledModal>
-
       <ToastContainer />
     </>
   );

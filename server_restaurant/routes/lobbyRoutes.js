@@ -3,7 +3,6 @@ const Lobby = require("../models/Lobby");
 
 // Them moi 1 khu vuc
 router.post("/lobby", async (req, res) => {
-    // console.log("Thuc hien tao thu muc");
     const { lob_name, lob_tbl_num } = req.body;
     try {
         const lobby = new Lobby({
@@ -20,7 +19,6 @@ router.post("/lobby", async (req, res) => {
 
  // Lấy ra tất cả khu vực
 router.get("/lobbies", async (req, res) => {
-  // console.log("lay ra khu vực");
   try {
     let lobbies = await Lobby.find({lob_status: 1});
     res.send({ lobbies });

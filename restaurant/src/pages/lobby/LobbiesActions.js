@@ -12,9 +12,8 @@ import React, { useState } from "react";
 import { styled } from "@mui/system";
 import axios from "axios";
 import CancelIcon from "@mui/icons-material/Cancel";
-
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 const style = {
   top: "50%",
   left: "50%",
@@ -35,7 +34,6 @@ const LobbiesActions = ({ params, parentCallback }) => {
   const [item, setItem] = useState(params);
   const [name, setName] = useState(params.lob_name);
   const [count, setCount] = useState(params.lob_tbl_num);
-  const [table, setTable] = useState([]);
   const [codeT, setCodeT] = useState("");
   const [countP, setCountP] = useState();
   const [open, setOpen] = useState(false);
@@ -47,24 +45,48 @@ const LobbiesActions = ({ params, parentCallback }) => {
     setOpen(true);
     console.log(param);
   };
+
   const handleOpenAT = async (param) => {
-    console.log("THam số");
-    setOpen2(true);
-    console.log(param);
+    console.log("Thêm bàn mới cho khu vực: ");
+    await axios
+      .get(`http://localhost:4000/api/lobby/${param._id}/counttable`)
+      .then((res) => {
+        const temp = res?.data.table;
+        //  console.log("temp:", temp);
+        if (temp < param.lob_tbl_num) {
+          setOpen2(true);
+        } else {
+          toast.warn("🦄 Số bàn thuộc khu vực đã đủ!", {
+            position: "top-right",
+            autoClose: 900,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
   };
+
   const handleOpen1 = async (param) => {
     console.log("THam số");
     setOpen1(true);
     console.log(param);
   };
+
   const handleOpenT = async (item) => {
-    const id = item._id;;
-    const name = item.lob_name;;
-    parentCallback(id,name);
+    const id = item._id;
+    const name = item.lob_name;
+    parentCallback(id, name);
   };
 
   const handleAddT = async (id) => {
-    console.log("id add", id);
+    // console.log("id khu vực", id);
     try {
       await axios
         .post("http://localhost:4000/api/table", {
@@ -89,11 +111,11 @@ const LobbiesActions = ({ params, parentCallback }) => {
     } catch (error) {
       console.log("Error: ", error);
     }
-
     // window.location.reload();
   };
+
   const handleEdit = async (id) => {
-    console.log("id edit", id);
+    // console.log("id edit", id);
     try {
       await axios
         .put(`http://localhost:4000/api/lobby/edit/id=${id}`, {
@@ -106,13 +128,12 @@ const LobbiesActions = ({ params, parentCallback }) => {
     } catch (error) {
       console.log("Error: ", error);
     }
-
     setOpen1(false);
-
     window.location.reload();
   };
+
   const handleDelete = async (id) => {
-    console.log("id ", id);
+    // console.log("id ", id);
     try {
       await axios
         .put(`http://localhost:4000/api/lobby/delete/id=${id}`)
@@ -125,19 +146,16 @@ const LobbiesActions = ({ params, parentCallback }) => {
     setOpen(false);
     window.location.reload();
   };
+
   return (
     <Box sx={{}}>
       <Tooltip title="Thêm bàn">
-        <IconButton
-          onClick={() => handleOpenAT(item)}
-          >
+        <IconButton onClick={() => handleOpenAT(item)}>
           <AddBox />
         </IconButton>
       </Tooltip>
       <Tooltip title="Xem danh sách bàn">
-        <IconButton
-          onClick={() => handleOpenT(item)}
-        >
+        <IconButton onClick={() => handleOpenT(item)}>
           <Preview />
         </IconButton>
       </Tooltip>
