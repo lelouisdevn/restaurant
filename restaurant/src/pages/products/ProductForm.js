@@ -57,10 +57,12 @@ function ProductForm() {
       }
     return (
         <div className='detail-container'>
+            <div className='fixed-header'>
             <div className='title'>
                 <h2>QUẢN LÝ SẢN PHẨM</h2>
             </div>
             <Toolbar />
+            </div>
             <div className='content'>
                 <div className="header-product">
                     <Link to="/manage/product" className="fLink">

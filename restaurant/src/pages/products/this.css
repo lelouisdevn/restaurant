@@ -14,18 +14,36 @@
     width: 80%;
     background-color: whitesmoke;
     height: 100vh;
-    /* padding: 10px 30px; */
-    /* text-align: center; */
 }
-
+.detail-container {
+    margin: 5px 10px;
+    border-radius: 10px;
+    border: solid 1px lightgray;
+    height: 100%;
+}
 .title {
     text-align: center;
     margin: 10px;
+    padding: 5px 0;
     font-size: 30px;
     font-family: 'Courier New', Courier, monospace;
     text-decoration: none;
-    color: black;
+    /* color: black; */
     font-weight: 100;
+    /* position: sticky;
+    top: 64.1px;
+    z-index: 11;
+    border-radius: 10px;
+    background-color: #1976d2; */
+}
+.fixed-header {
+    position: sticky;
+    top: 64.1px;
+    z-index: 11;
+    background-color: whitesmoke;
+    padding: 7px;
+    border-radius: 10px;
+    border-bottom: solid 1px lightgray;
 }
 
 .fLink {
@@ -66,22 +84,46 @@
 }
 
 .content {
-    margin: 10px 30px;
+    margin: 10px 25px;
 }
 
 .header-product {
     font-size: 20px;
-
+    overflow: auto;
+    text-overflow: auto;
+    padding: 10px 0;
+}
+.header-product .left-menu {
+    float: left;
+    width: 50%;
+    text-align: left;
+}
+.header-product .right-menu {
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+.header-product .right-menu span {
+    background-color: lightgray;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: solid 1px grey;
 }
 
-.products {}
+.products {
+    margin: 15px 0;
+    text-align: center;
+}
 
 .product div {
-    text-align: justify;
+    /* text-align: right; */
+    
 }
 
 .product-content {
     margin: 10px 5px;
+    text-overflow: auto;
 }
 
 .n_left {
@@ -98,9 +140,9 @@
 .n_right_content {
     width: 70%;
     padding: 7px 15px;
-    border: solid 1px grey;
+    border: solid 1px lightgray;
     border-radius: 10px;
-    background-color: #f7f7f7;
+    background-color: white;
     /* margin: 0 auto; */
 }
 
@@ -161,6 +203,7 @@ button.updateButton:hover {
     font-size: 16px;
     border: solid 1px gray;
     padding: 7px 15px;
+    /* width: 100px; */
     border-radius: 10px;
 }
 

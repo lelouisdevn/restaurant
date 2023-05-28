@@ -7,6 +7,8 @@ import Toolbar from './Toolbar';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
 import axios from 'axios';
+import Loading from './Loading';
+import './this.css';
 const ProductDetail = () => {
   const { id } = useParams();
   console.log(id)
@@ -31,7 +33,6 @@ const ProductDetail = () => {
     await axios
         .get(fetchCategoriesURL)
         .then((res) => {
-          // console.log(res?.data.categories);
           setCategory(res?.data.categories);
         })
   }
@@ -55,6 +56,8 @@ const ProductDetail = () => {
   const [price, setPrice] = useState("")
   const [desc, setDesc] = useState("")
   const [Category, setCate] = useState("")
+  const [stt, setStt] = useState("");
+  const [success, setSuc] = useState(false)
 
   /**
    * This is to control how the image is displayed
@@ -73,14 +76,23 @@ const ProductDetail = () => {
         prod_unit: unit ? unit : product.unit,
         prod_price: price ? price : product.price,
         prod_desc: desc ? desc : product.desc,
-        category: Category ? Category : product.category
+        category: Category ? Category : product.category,
+        prod_status: stt ? stt : product.prod_status,
       })
     getProductById();
   }
 
-  const deleteProduct = () => {
-
+  const hideProduct = () => {
+    product.prod_status = false;
+    setProduct(product);
+    updateProduct();
   }
+  const displayProduct = () => {
+    product.prod_status = true;
+    setProduct(product);
+    updateProduct();
+  }
+
   const handleSelect = (event) => {
     const value = event.target.value;
     const item = categories.find(e => e.category_name == value);
@@ -97,22 +109,25 @@ const ProductDetail = () => {
         isDisplay ?
         <div className='img-container'>
           <img className='fullScreenImage' src={product.prod_img} />
-          <div onClick={(e) => setStatus(!isDisplay)}>
+          <div onClick={(e) => setStatus(false)}>
             <FontAwesomeIcon icon={faClose} />
           </div>
         </div>
       :
       
         <div className='detail-container'>
+          <div className='fixed-header'>
           <div className="title">
             <Link to="/manage/product" className="fLink">
               <h2>QUẢN LÝ SẢN PHẨM</h2>
             </Link>
           </div>
           <Toolbar url="/manage/product/new" />
-          <Outlet />
+          </div>
+          {/* <Outlet /> */}
           <div className="content">
-            <div className="header-product">
+            {/* <div className="header-product"> */}
+            <div className="header-product n_right_content" style={{width: "100%"}}>
               <Link to="/manage/product" className="fLink">
                 <FontAwesomeIcon icon={faHome} />
                 <span> Sản phẩm</span>
@@ -122,6 +137,7 @@ const ProductDetail = () => {
               </Link>
               <span>/{product.prod_name}</span>
 
+              
             </div>
             <div className="product-content">
               <div className="n_left">
@@ -131,7 +147,7 @@ const ProductDetail = () => {
                 <div>
                   <button 
                     className='updateButton' 
-                    onClick={(e) => setStatus(!isDisplay)}
+                    onClick={(e) => setStatus(true)}
                   >
                     Toàn màn hình
                   </button>
@@ -192,7 +208,11 @@ const ProductDetail = () => {
                   </div>
                   <div>
                     <button className='updateButton' onClick={updateProduct}>Lưu các thay đổi</button>
-                    <button onClick={deleteProduct}>Xóa sản phẩm</button>
+                    {
+                      product.prod_status ? 
+                      <button onClick={hideProduct}>Ẩn sản phẩm</button>
+                      : <button onClick={displayProduct}>Hiện sản phẩm</button>
+                    }
                   </div>
                 </div>
               </div>
