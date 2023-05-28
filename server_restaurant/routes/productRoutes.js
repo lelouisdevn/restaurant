@@ -2,31 +2,40 @@ const router = require('express').Router();
 const Product = require("../models/Product")
 const Category = require("../models/Category")
 
-router.get('/products', async (req, res) => {
+router.get('/products/:hidden', async (req, res) => {
+    const criteria = req.params.hidden;
+    const methods = [
+        {}, 
+        {"prod_status":true}, 
+        {"prod_status": false},
+    ];
     try {
-        const document = await Product.aggregate(
-            [
-                {
-                    $lookup: {
-                        from: 'categories',
-                        localField: 'category',
-                        foreignField: '_id',
-                        as: 'cat'
-                    }
-                }
-            ]
-        );
+        const document = await Product.find(methods[criteria]);
         res.send({ document })
     }
     catch (e) {
         console.log(e)
     }
 });
-router.get('/products/category/:id', async(req, res) => {
+router.get('/products/category/:id/:criteria', async(req, res) => {
     const categoryId = req.params.id;
+    const criteria = req.params.criteria;
+    const methods = [
+        {},
+        true,
+        false,
+    ]
+    
     try {
-        const products = await Product.find({category: categoryId});
-        res.send({products});
+        if (criteria == 0){
+            const products = await Product.find({category: categoryId});
+            res.send({products});
+        }
+        else {
+            const products = await Product.find({category: categoryId, prod_status: methods[criteria]});
+            res.send({products});
+        }
+        
     } catch (error) {
         console.log(error);
     }
@@ -82,6 +91,7 @@ router.put("/product/update/:id", async (req, res) => {
                     prod_price: data.prod_price,
                     prod_desc: data.prod_desc,
                     category: data.category,
+                    prod_status: data.prod_status,
                 }
             }
         );
