@@ -54,7 +54,7 @@ function App() {
             </Route>
             <Route path="info">
               <Route index element={<Info />} />
-              <Route path="editinfo" element={<InfoEdit />}></Route>
+              <Route path="edit/:id" element={<InfoEdit />}></Route>
             </Route>
           </Route>
           <Route path="/staff/*" element={<NavbarStaff />} >

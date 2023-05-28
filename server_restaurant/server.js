@@ -35,11 +35,15 @@ const lobby = require('./routes/lobbyRoutes');
 const table = require('./routes/tableRoutes')
 const product = require("./routes/productRoutes");
 const category = require("./routes/categoryRoutes");
+const user = require('./routes/userRoutes');
+const info = require('./routes/infoRoutes');
 
 app.use("/api", lobby);
 app.use("/api", table);
 app.use("/api", product);
 app.use("/api", category);
+app.use("/api", user);
+app.use("/api", info);
 
 const PORT = 4000;
 app.listen(PORT, () => {

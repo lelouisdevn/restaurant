@@ -1,8 +1,38 @@
-import React from 'react';
+import React,  { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import "./info.css";
 import { Link } from 'react-router-dom';
+import axios from "axios";
+
 
 const Info = () => {
+    // const {id,setID} = useParams();
+    // setID = "64730496807c841ff6a953a3";
+
+    const [info, setInfo] = useState([]);
+
+    const [rest_name, setInfoName] = useState("");
+    const [rest_desc, setInfoDesc] = useState("");
+    const [rest_addr, setInfoAddr] = useState("");
+    const [rest_phone, setInfoPhone] = useState("");
+
+    const getInfo = async () => {
+        await axios
+          .get("http://localhost:4000/api/info")
+          .then((res) => {
+            const temp = res?.data.info[0];
+            setInfo(temp);
+            console.log(temp);
+          })
+          .catch((error) => {
+            console.log("Error: ", error);
+          });
+    }
+
+    useEffect(() => {
+        getInfo();
+    }, []);
+
     return (
         <div className="">
             <div className="basis-3/4">
@@ -12,14 +42,14 @@ const Info = () => {
                     </div>
                 </div>
                 <table className='flex flex-row justify-center bg-indigo-200 rounded p-5 m-5'>
-                    <tbody className='font-mono font-bold'>
+                    <tbody className='font-mono font-bold info-content w-full'>
                         <br/>
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
                                 Name:
                             </td>
                             <td className='basis-3/4 text-2xl'>
-                                SAGA RESTAURANT
+                                {info.rest_name}
                             </td>
                         </tr >
                         <br/><br/>
@@ -27,8 +57,8 @@ const Info = () => {
                             <td className='basis-1/4'>
                                 Describe:
                             </td>
-                            <td className='basis-3/4'>
-                                Nhà Hàng SAGA cư ngụ tại số 3 Trần Hưng Đạo với 35 năm kinh nghiệm trong nghề.
+                            <td className='basis-3/4 '>
+                                {info.rest_desc}
                             </td>
                         </tr>
                         <br/><br/>
@@ -36,8 +66,8 @@ const Info = () => {
                             <td className='basis-1/4'>
                                 Address:
                             </td>
-                            <td className='basis-3/4'>
-                                3 Trần Hưng Đạo, Lê Bình, Cái Răng, Cần Thơ
+                            <td className='basis-3/4 text-2xl'>
+                                {info.rest_addr}
                             </td>
                         </tr>
                         <br/><br/>
@@ -45,14 +75,14 @@ const Info = () => {
                             <td className='basis-1/4'>
                                 Phone:
                             </td>
-                            <td className='basis-3/4'>
-                                0986195333
+                            <td className='basis-3/4 text-2xl'>
+                                {info.rest_phone}
                             </td>
                         </tr>
                         <br/>
                         <tr className='flex justify-center'>
                             <td colspan="2">
-                                <button type="button" className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"><Link to="./editinfo">Sửa</Link></button>
+                                <button type="button" className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"><Link to={`./edit/${info._id}`}>Sửa</Link></button>
                             </td>
                         </tr>
                     </tbody>
