@@ -25,23 +25,22 @@ function CategoryForm() {
     }
     return (
         <div className='detail-container'>
-            <div className="title">
-                <Link to="/manage/category" className="fLink">
-                    <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
-                </Link>
+            <div className='fixed-header'>
+                <div className="title">
+                    <Link to="/manage/category" className="fLink">
+                        <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
+                    </Link>
+                </div>
+                <Toolbar />
             </div>
-            <Toolbar />
-            <Outlet />
+            {/* <Outlet /> */}
             <div className="content">
                 <div className="header-product">
                     <Link to="/manage/category" className="fLink">
                         <FontAwesomeIcon icon={faList} />
                         <span> Danh mục</span>
                     </Link>
-                    
-                    {/* <Link to="/products/foods" className="fLink"> */}
-                        <span>/Thêm danh mục mới</span>
-                    {/* </Link> */}
+                    <span>/Thêm danh mục mới</span>
                 </div>
                 <div className="product-content">
                     <div className="n_left">

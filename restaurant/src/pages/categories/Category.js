@@ -26,16 +26,18 @@ function Category() {
         getCategories()
     }, [])
     return (
-        <div >
+        <div className="detail-container">
+            <div className="fixed-header">
             <div className="title">
                 <Link to="/manage/category" className="fLink">
                     <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                 </Link>
             </div>
             <Toolbar url="/manage/category/new"/>
-            <Outlet />
+            </div>
+            {/* <Outlet /> */}
             <div className="content">
-                <div className="header-product">
+                <div className="header-product n_right_content" style={{width: "100%"}}>
                     <Link to="/manage/category" className="fLink">
                         <FontAwesomeIcon icon={faList} />
                         <span> Danh mục</span>
