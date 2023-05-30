@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Category = require("../models/Category");
 
+/**Create a new category */
 router.post('/category/new', async(req, res) => {
     const { category_name, category_img } = req.body;
     try {
@@ -16,6 +17,7 @@ router.post('/category/new', async(req, res) => {
     }
 })
 
+/**Get all categories */
 router.get('/categories', async(req, res) => {
     try {
         const categories = await Category.find({})
@@ -25,6 +27,7 @@ router.get('/categories', async(req, res) => {
     }
 })
 
+/**Get a single category with ID */
 router.get('/category/:id', async(req, res) => {
     const id = req.params.id;
     try {
@@ -35,6 +38,7 @@ router.get('/category/:id', async(req, res) => {
     }
 })
 
+/**Update a single category with ID */
 router.put('/category/update/:id', async(req, res) => {
     const id = req.params.id;
     try {

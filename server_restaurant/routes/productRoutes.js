@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Product = require("../models/Product")
 const Category = require("../models/Category")
 
+/**Get all products with criteria */
 router.get('/products/:hidden', async (req, res) => {
     const criteria = req.params.hidden;
     const methods = [
@@ -17,6 +18,8 @@ router.get('/products/:hidden', async (req, res) => {
         console.log(e)
     }
 });
+
+/**Get all products with category and display criteria */
 router.get('/products/category/:id/:criteria', async(req, res) => {
     const categoryId = req.params.id;
     const criteria = req.params.criteria;
@@ -41,6 +44,7 @@ router.get('/products/category/:id/:criteria', async(req, res) => {
     }
 })
 
+/**Get a single product with provided ID */
 router.get('/product/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -55,6 +59,7 @@ router.get('/product/:id', async (req, res) => {
     }
 });
 
+/**Create a new product */
 router.post("/product/new", async (req, res) => {
     const { prod_name, prod_img, prod_desc, prod_unit, prod_price, category } = req.body;
     try {
@@ -73,11 +78,9 @@ router.post("/product/new", async (req, res) => {
     }
 });
 
+/**Update product with provided ID */
 router.put("/product/update/:id", async (req, res) => {
     const id = req.params.id;
-    // const filter = {
-    //     _id: ObjectId.isValid(id) ? new ObjectId(id) : null
-    // }
     const data = req.body;
     try {
         let product = await Product.updateOne(
@@ -100,13 +103,5 @@ router.put("/product/update/:id", async (req, res) => {
         console.log(error);
     }
 });
-
-// router.post("/product/update/:id", async(req, res) => {
-//     const id = req.params.id;
-//     const data = req.body;
-//     try {
-
-//     }
-// })
 
 module.exports = router;
