@@ -109,7 +109,7 @@ const ProductDetail = () => {
         isDisplay ?
         <div className='img-container'>
           <img className='fullScreenImage' src={product.prod_img} />
-          <div onClick={(e) => setStatus(false)}>
+          <div onClick={() => setStatus(false)}>
             <FontAwesomeIcon icon={faClose} />
           </div>
         </div>
@@ -147,7 +147,7 @@ const ProductDetail = () => {
                 <div>
                   <button 
                     className='updateButton' 
-                    onClick={(e) => setStatus(true)}
+                    onClick={() => setStatus(true)}
                   >
                     Toàn màn hình
                   </button>

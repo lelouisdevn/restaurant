@@ -64,7 +64,7 @@ function ProductForm() {
             <Toolbar />
             </div>
             <div className='content'>
-                <div className="header-product">
+                <div className="header-product n_right_content" style={{width: "100%"}}>
                     <Link to="/manage/product" className="fLink">
                         <FontAwesomeIcon icon={faHome} />
                         <span> Sản phẩm</span>

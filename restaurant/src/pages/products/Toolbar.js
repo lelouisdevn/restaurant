@@ -5,8 +5,12 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import { faSortAlphaAsc } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 const Toolbar = (props) => {
+  const [input, setInput] = useState(false);
   return (
     <div className="toolbar">
       {/* <FontAwesomeIcon icon={'face-smile-plus'}/> */}
@@ -27,6 +31,15 @@ const Toolbar = (props) => {
       <div>
         <FontAwesomeIcon icon={faSortAlphaAsc} />
         <span> Sắp xếp</span>
+      </div>
+      <div className='search'>
+        { input &&
+          <input defaultValue="" placeholder='Search' autoFocus  className='inputsearch' />
+        }
+        { input 
+        ? <FontAwesomeIcon icon={faClose} onClick={() => setInput(!input)} />
+        : <FontAwesomeIcon icon={faSearch} onClick={() => setInput(!input)} />
+        }
       </div>
     </div>
   );

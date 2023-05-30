@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Outlet } from 'react-router-dom';
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import './this.css';
-import ProductTile from './ProductTitle';
+import ProductTile from './ProductTile';
 import Toolbar from './Toolbar';
 import axios from 'axios';
 import { useState } from 'react';
 import Loading from './Loading';
 const ProductList = (props) => {
   const [products, setProducts] = useState("");
-  const [criteria, setCriteria] = useState(0);
+  const [criteria, setCriteria] = useState("0");
   const [type, setType] = useState(
     [
       'Tất cả sản phẩm',
@@ -43,7 +43,7 @@ const ProductList = (props) => {
               <h2>QUẢN LÝ SẢN PHẨM</h2>
             </Link>
           </div>
-          <Toolbar url="/manage/product/new" />
+          <Toolbar url="/manage/product/new"/>
         </div>
         {/* <Outlet /> */}
         <div className="content">
@@ -55,15 +55,16 @@ const ProductList = (props) => {
                 <span>/{type[criteria]}</span>
               </Link>
             </div>
-            <div className='right-menu '>
-              <select>
+            <div className='right-menu'>
+              {/* <span>{criteria}</span> */}
+              <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
                 <option disabled selected>Bộ lọc</option>
-                <option value={2} onClick={(e) => setCriteria(e.target.value)}>
+                <option value="2">
                   Sản phẩm đã ẩn
                 </option>
-                <option value={1} onClick={(e) => setCriteria(e.target.value)}>
+                <option value="1">
                   Sản phẩm đang bán</option>
-                <option value={0} onClick={(e) => setCriteria(e.target.value)}>
+                <option value="0">
                   Tất cả sản phẩm</option>
               </select>
             </div>

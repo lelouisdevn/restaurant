@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import './this.css';
-import ProductTile from './ProductTitle';
+import ProductTile from './ProductTile';
 import Toolbar from './Toolbar';
 import axios from 'axios';
 import { useState } from 'react';

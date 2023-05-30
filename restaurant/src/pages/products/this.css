@@ -273,3 +273,35 @@ button.updateButton:hover {
     transform: rotate(360deg)
   }
 }
+.toolbar .search {
+    width: calc(100% - 550px);
+    border: none;
+    text-align: right;
+    background: none;
+}
+.toolbar .search:hover {
+    background: none;
+    border: none;
+    margin: 0;
+    color: black;
+}
+
+.toolbar .search input {
+    transition: 400ms;
+    text-align: left;
+    margin: 0 10px;
+    /* height: 30px; */
+    /* width: calc(50px); */
+    /* display: none; */
+    width: 75px;
+    border: solid 1px grey;
+    border-radius: 10px;
+    color: black;
+    padding: 0 10px;
+}
+
+.toolbar .search input:focus {
+    /* display: block; */
+    width: calc(100% - 50px);
+    transition: width 0.4s ease-in-out;
+}
