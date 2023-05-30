@@ -2,6 +2,7 @@ import { AppBar, Tab, Tabs, Toolbar, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -29,7 +30,10 @@ const NavbarStaff = () => {
             value={value}
             onChange={handleTabs}
           >
-            <Tab label="Đặt món"> </Tab>
+            <Link to={"/staff/orders"}>
+              <Tab label="Đặt món">
+              </Tab>
+            </Link>
             <Tab label="Sơ đồ"> </Tab>
             <Tab label="Trả món"> </Tab>
             <Tab label="Phiếu tạm tính"> </Tab>
@@ -37,7 +41,7 @@ const NavbarStaff = () => {
         </StyledToolbar>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item 1 Detail
+        {/* Item 1 Detail */}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item 2 Detail
