@@ -21,6 +21,8 @@ import CategoryDetail from './pages/categories/CategoryDetail';
 import NavbarStaff from './components/NavbarStaff';
 import CategoryForm from './pages/categories/CategoryForm';
 import CategoryProducts from './pages/products/CategoryProducts';
+import Orders from './pages/orders/Orders';
+import LayoutStaff from './components/LayoutStaff';
 function App() {
   return (
     <div>
@@ -57,8 +59,9 @@ function App() {
               <Route path="edit/:id" element={<InfoEdit />}></Route>
             </Route>
           </Route>
-          <Route path="/staff/*" element={<NavbarStaff />} >
-
+          
+          <Route path="/staff/*" element={<LayoutStaff />} >
+            <Route path='orders' element={<Orders />} />
           </Route>
           
         </Routes>
