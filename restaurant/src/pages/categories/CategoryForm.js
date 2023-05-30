@@ -35,7 +35,7 @@ function CategoryForm() {
             </div>
             {/* <Outlet /> */}
             <div className="content">
-                <div className="header-product">
+                <div className="header-product n_right_content" style={{width: "100%"}}>
                     <Link to="/manage/category" className="fLink">
                         <FontAwesomeIcon icon={faList} />
                         <span> Danh mục</span>
