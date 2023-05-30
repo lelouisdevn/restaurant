@@ -25,7 +25,7 @@ const ProductSchema = new Schema({
     },
     prod_status: {
         type: Boolean,
-        default: false,
+        default: true,
         // required: true,
     },
     // restaurant: {
