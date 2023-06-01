@@ -11,6 +11,13 @@ import { useState } from 'react';
 
 const Toolbar = (props) => {
   const [input, setInput] = useState(false);
+  const [isSearch, setSearchStatus] = useState(props.search);
+  const handleKeyDown = (event)  => {
+      props.functioner(event.target.value);
+  }
+  const handleClick = () => {
+    setInput(!input);
+  }
   return (
     <div className="toolbar">
       {/* <FontAwesomeIcon icon={'face-smile-plus'}/> */}
@@ -32,15 +39,17 @@ const Toolbar = (props) => {
         <FontAwesomeIcon icon={faSortAlphaAsc} />
         <span> Sắp xếp</span>
       </div>
+      { isSearch &&
       <div className='search'>
         { input &&
-          <input defaultValue="" placeholder='Search' autoFocus  className='inputsearch' />
+          <input defaultValue="" placeholder='Search' autoFocus  className='inputsearch' onChange={handleKeyDown} />
         }
         { input 
-        ? <FontAwesomeIcon icon={faClose} onClick={() => setInput(!input)} />
-        : <FontAwesomeIcon icon={faSearch} onClick={() => setInput(!input)} />
+        ? <FontAwesomeIcon icon={faClose} className='sicon' onClick={handleClick} />
+        : <FontAwesomeIcon icon={faSearch} className='sicon' onClick={handleClick} />
         }
       </div>
+      }
     </div>
   );
 }

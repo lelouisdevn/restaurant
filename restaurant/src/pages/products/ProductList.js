@@ -9,8 +9,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import Loading from './Loading';
 const ProductList = (props) => {
-  const [products, setProducts] = useState("");
+  const [products, setProducts] = useState([]);
   const [criteria, setCriteria] = useState("0");
+  const [query, setQuery] = useState("");
   const [type, setType] = useState(
     [
       'Tất cả sản phẩm',
@@ -31,7 +32,31 @@ const ProductList = (props) => {
     getProducts();
     console.log(criteria);
   }, [criteria, setCriteria]);
-
+  
+    /**
+   * Update search query when changes happen on input; 
+   */
+    const getSearchQuery = (s_query) => {
+      setQuery(s_query);
+    };
+    /**
+     * Filter products that match the search query; 
+     */
+    useEffect(() => {
+      if (query === "") {
+        getProducts();
+      }
+      
+      const filterBySearch = products.filter((product) => {
+      let name = product.prod_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      let mquery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        if (name.includes(mquery)) {
+          return product;
+        }
+      });
+      
+      setProducts(filterBySearch);
+    }, [query]);
 
   return (
     <>
@@ -43,7 +68,8 @@ const ProductList = (props) => {
               <h2>QUẢN LÝ SẢN PHẨM</h2>
             </Link>
           </div>
-          <Toolbar url="/manage/product/new"/>
+          <Toolbar url="/manage/product/new" functioner={getSearchQuery} search={true} />
+          {/* { query } */}
         </div>
         {/* <Outlet /> */}
         <div className="content">
