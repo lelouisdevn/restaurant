@@ -18,6 +18,10 @@ const Toolbar = (props) => {
   const handleClick = () => {
     setInput(!input);
   }
+  const terminateSearch = () => {
+    setInput(!input);
+    props.functioner("");
+  }
   return (
     <div className="toolbar">
       {/* <FontAwesomeIcon icon={'face-smile-plus'}/> */}
@@ -45,7 +49,7 @@ const Toolbar = (props) => {
           <input defaultValue="" placeholder='Search' autoFocus  className='inputsearch' onChange={handleKeyDown} />
         }
         { input 
-        ? <FontAwesomeIcon icon={faClose} className='sicon' onClick={handleClick} />
+        ? <FontAwesomeIcon icon={faClose} className='sicon' onClick={terminateSearch} />
         : <FontAwesomeIcon icon={faSearch} className='sicon' onClick={handleClick} />
         }
       </div>

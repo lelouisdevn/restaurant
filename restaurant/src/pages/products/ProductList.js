@@ -96,7 +96,7 @@ const ProductList = (props) => {
             </div>
           </div>
           <div className="products">
-            {products ? products.map((product) => (
+            {products.length > 0 ? products.map((product) => (
               <ProductTile key={product._id} product={product} />
             )) : <Loading message="fetching your data...." />}
           </div>

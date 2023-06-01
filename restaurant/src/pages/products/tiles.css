@@ -6,6 +6,7 @@
     border: solid grey 0.25px;
     border-radius: 10px;
     width: fit-content;
+    filter: drop-shadow(1px 1px 1px rgb(182, 181, 181));
 }
 .tile {
     width: 150px;
