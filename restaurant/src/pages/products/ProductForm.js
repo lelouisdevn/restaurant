@@ -7,6 +7,8 @@ import Toolbar from './Toolbar';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Success from './Success';
+import './this.css'
 function ProductForm() {
     // const [isDisplay, setStatus] = useState(false)
     const [name, setName] = useState("");
@@ -16,6 +18,9 @@ function ProductForm() {
     const [desc, setDesc] = useState("")
     const [Category, setCate] = useState("")
     const [categories, setCategory] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [successClass, setSuccessClass] = useState("");
+    const [message, setMessage] = useState("");
 
     const navigate = useNavigate()
     const createProduct = async () => {
@@ -32,7 +37,10 @@ function ProductForm() {
             .then((res) => {
                 console.log(res?.data.product._id)
                 const id = res?.data.product._id;
-                navigate(`/manage/product/${id}`);
+                showModal();
+                setTimeout(() => {
+                    navigate(`/manage/product/${id}`);
+                }, 3000);
             })
     }
 
@@ -54,9 +62,28 @@ function ProductForm() {
         const item = categories.find(e => e.category_name == value);
         const _id = item._id;
         setCate(_id);
-      }
+    }
+    const showModal = () => {
+        setSuccess(true);
+        setSuccessClass("opacity-success");
+        setMessage("Sản phẩm đã được thêm thành công");
+        // getProductById();
+        setTimeout(() => {
+            setSuccess(false);
+            setSuccessClass("");
+        }, 3000);
+  }
+
+    /**
+     * HTML Template;
+    */
     return (
-        <div className='detail-container'>
+        <>
+        {
+            success &&
+            <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+        }
+        <div className={`detail-container ${successClass}`}>
             <div className='fixed-header'>
             <div className='title'>
                 <h2>QUẢN LÝ SẢN PHẨM</h2>
@@ -143,6 +170,7 @@ function ProductForm() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
