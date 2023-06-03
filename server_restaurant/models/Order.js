@@ -21,7 +21,19 @@ const OrderSchema = new Schema({
         type: Date,
         // required: true,
         default: Date(),
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
+    table: {
+        type: Schema.Types.ObjectId,
+        ref: 'Table',
+    },
+    restaurant: {
+        type: Schema.Types.ObjectId,
+        ref: "Restaurant",
+    },
 })
 
 module.exports = mongoose.model('Order', OrderSchema);
