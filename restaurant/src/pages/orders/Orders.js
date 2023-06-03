@@ -80,6 +80,9 @@ function Orders() {
         await axios
             .post(order_url, {
                 order_at: recent,
+                user: "6472e71067760e2a1599227b",
+                table: "646f2abd6ab932270421cff5",
+                restaurant: "64730496807c841ff6a953a3",
             })
             .then((res) => {
                 const order_id = res?.data.order._id;
