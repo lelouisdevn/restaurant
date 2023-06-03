@@ -3,9 +3,10 @@ const Order = require("../models/Order")
 const OrderDetail = require("../models/OrderDetail");
 /**Create a new order */
 router.post('/order/new', async(req, res) => {
+    const {order_at} = req.body;
     try {
         const order = Order({
-
+            order_at: order_at,
         });
         await order.save();
         res.send({order});

@@ -7,14 +7,22 @@ function OrderItem(props) {
      * Increase and decrease product quantity;
      */
     const increase = () => {
-        setQty(qty + 1);
-        orderProduct['qty'] = qty + 1;
+        setQty(parseInt(qty) + 1);
+        orderProduct['qty'] = parseInt(qty) + 1;
         props.functioner(orderProduct);
     }
     const decrease = () => {
-        if (qty>0 && qty-1 != 0) {
-            setQty(qty - 1);
-            orderProduct['qty'] = qty - 1;
+        if (qty>0 && qty-1 !== 0) {
+            setQty(parseInt(qty) - 1);
+            orderProduct['qty'] = parseInt(qty) - 1;
+            props.functioner(orderProduct);
+        }
+    }
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        if (value >= 0 && value <= 10) {
+            setQty(value);
+            orderProduct['qty'] = value;
             props.functioner(orderProduct);
         }
     }
@@ -34,7 +42,7 @@ function OrderItem(props) {
                 <button 
                     onClick={decrease}
                 >-</button>
-                <input value={qty} onChange={(e) => setQty(e.target.value)} />
+                <input value={qty} onChange={handleInputChange} />
                 <button className="right-btn"
                     onClick={increase}
                 >+</button>
