@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import './this.css';
 function Success(props) {
   return (
     <div className='update-modal'>
@@ -23,11 +24,11 @@ function Success(props) {
           </div>
         </>
       }
-      <span style={{ cursor: "pointer" }} onClick={(e) => {
+      <span onClick={(e) => {
         props.setSuccess(false)
         props.setSuccessClass("")
       }}>
-        <FontAwesomeIcon icon={faClose} />
+        <FontAwesomeIcon className="iconc" icon={faClose} />
       </span>
     </div>
   );

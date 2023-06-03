@@ -333,8 +333,8 @@ button.updateButton:hover {
     height: 400px;
     background-color: white;
     border-radius: 10px;
-    border: solid 1px gray;
-    filter: drop-shadow(1px 1px 1px gray);
+    /* border: solid 1px gray; */
+    filter: drop-shadow(1px 1px 10px rgb(182, 181, 181));
     text-align: center;
     margin: auto 0;
     height: 400px;
@@ -348,7 +348,15 @@ button.updateButton:hover {
     right: 10px;
     font-size: 18px;
     line-height: 0;
+    padding: 10px 13px;
+}
+.update-modal span:hover {
+    background-color: rgb(228, 228, 228);
+    padding: 10px 13px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 400ms;
 }
 .opacity-success {
-    opacity: 0.5;
+    opacity: 0.1;
 }
