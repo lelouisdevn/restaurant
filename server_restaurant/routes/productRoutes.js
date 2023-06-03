@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Product = require("../models/Product")
 const Category = require("../models/Category")
-
+// import { ObjectId } from "bson";
+const {ObjectId} = new require("bson");
 /**Get all products with criteria */
 router.get('/products/:hidden', async (req, res) => {
     const criteria = req.params.hidden;
@@ -46,22 +47,30 @@ router.get('/products/category/:id/:criteria', async(req, res) => {
 
 /**Get a single product with provided ID */
 router.get('/product/:id', async (req, res) => {
-    const id = req.params.id;
+    const productId = req.params.id;
     try {
-        const document = await Product.find({ _id: id });
-        const category = await Category.find({_id:document[0].category});
-        
-        const Data = [document[0], category[0]]
-        res.send({ Data });
-    }
-    catch (e) {
-        console.log(e);
+        const document = await Product.aggregate([
+        {
+            $match: { "_id": new ObjectId(productId) },
+        },
+        {
+            $lookup: {
+                from: "categories",
+                localField: "category",
+                foreignField: "_id",
+                as: "categoryInfo",
+            }
+        }
+        ])
+        res.send({document});
+    } catch (error) {
+        console.log(error);
     }
 });
 
 /**Create a new product */
 router.post("/product/new", async (req, res) => {
-    const { prod_name, prod_img, prod_desc, prod_unit, prod_price, category } = req.body;
+    const { prod_name, prod_img, prod_desc, prod_unit, prod_price, category, restaurant } = req.body;
     try {
         const product = new Product({
             prod_name,
@@ -70,6 +79,7 @@ router.post("/product/new", async (req, res) => {
             prod_unit,
             prod_price,
             category,
+            restaurant,
         });
         await product.save();
         res.send({ product });
@@ -95,6 +105,7 @@ router.put("/product/update/:id", async (req, res) => {
                     prod_desc: data.prod_desc,
                     category: data.category,
                     prod_status: data.prod_status,
+                    restaurant: data.restaurant,
                 }
             }
         );

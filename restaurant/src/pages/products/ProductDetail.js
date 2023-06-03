@@ -16,19 +16,21 @@ const ProductDetail = () => {
   console.log(id)
 
   /**
-   * Get a product with provided id
+   * Get a product with provided id;
    */
   const getProductById = async () => {
     const fetchDataURL = `http://localhost:4000/api/product/${id}`;
     await axios
       .get(fetchDataURL)
       .then((res) => {
-        setProduct(res?.data.Data[0])
-        setCateName(res?.data.Data[1].category_name);
+        // setProduct(res?.data.document);
+        // console.log(res?.data.document);
+        setProduct(res?.data.document[0])
+        setCateName(res?.data.document[0].categoryInfo[0].category_name);
       })
   }
   /**
-   * Get all categories in database
+   * fetch all product categories from servers;
    */
   const getCategories = async () => {
     const fetchCategoriesURL = "http://localhost:4000/api/categories";
@@ -39,7 +41,7 @@ const ProductDetail = () => {
       })
   }
   /**
-   * Primary states: product, categories list, category name of this product.
+   * Fetch product, categories data;
    */
   const [product, setProduct] = useState("");
   const [categories, setCategory] = useState("");
@@ -50,15 +52,19 @@ const ProductDetail = () => {
   }, []);
 
   /**
-   * 6 states below are properties of product
+   * SIX product properties;
    */
   const [name, setName] = useState("");
-  const [image, setImage] = useState("")
-  const [unit, setUnit] = useState("")
-  const [price, setPrice] = useState("")
-  const [desc, setDesc] = useState("")
-  const [Category, setCate] = useState("")
+  const [image, setImage] = useState("");
+  const [unit, setUnit] = useState("");
+  const [price, setPrice] = useState("");
+  const [desc, setDesc] = useState("");
+  const [Category, setCate] = useState("");
   const [stt, setStt] = useState("");
+
+  /**
+   * Modal;
+   */
   const [success, setSuccess] = useState(false);
   const [successClass, setSuccessClass] = useState("");
   const [message, setMessage] = useState("");
@@ -69,12 +75,12 @@ const ProductDetail = () => {
   const [isDisplay, setStatus] = useState(false)
 
   /**
-   * Methods on products
+   * Update a product's information;
    */
   const updateProduct = async () => {
-    const updateURL = `http://localhost:4000/api/product/update/${id}`;
+    const updateProduct = `http://localhost:4000/api/product/update/${id}`;
     await axios
-      .put(updateURL, {
+      .put(updateProduct, {
         prod_name: name ? name : product.name,
         prod_img: image ? image : product.img,
         prod_unit: unit ? unit : product.unit,
@@ -86,8 +92,12 @@ const ProductDetail = () => {
       .then((res) => {
         showModal();
       })
-    
+
   }
+
+  /**
+   * Pop-up notification;
+   */
   const showModal = () => {
     setSuccess(true);
     setSuccessClass("opacity-success");
@@ -98,17 +108,28 @@ const ProductDetail = () => {
       setSuccessClass("");
     }, 3000);
   }
+
+  /**
+   * Hide a product by setting status to false;
+   */
   const hideProduct = () => {
     product.prod_status = false;
     setProduct(product);
     updateProduct();
   }
+
+  /**
+   * Display a product by setting status to true;
+   */
   const displayProduct = () => {
     product.prod_status = true;
     setProduct(product);
     updateProduct();
   }
 
+  /**
+   * Handle selection of product category;
+  */
   const handleSelect = (event) => {
     const value = event.target.value;
     const item = categories.find(e => e.category_name == value);
@@ -147,9 +168,7 @@ const ProductDetail = () => {
               </div>
               <Toolbar url="/manage/product/new" />
             </div>
-            {/* <Outlet /> */}
             <div className="content">
-              {/* <div className="header-product"> */}
               <div className="header-product n_right_content" style={{ width: "100%" }}>
                 <Link to="/manage/product" className="fLink">
                   <FontAwesomeIcon icon={faHome} />
@@ -159,8 +178,6 @@ const ProductDetail = () => {
                   <span>/{cateName}</span>
                 </Link>
                 <span>/{product.prod_name}</span>
-
-
               </div>
               <div className="product-content">
                 <div className="n_left">
@@ -223,7 +240,6 @@ const ProductDetail = () => {
                     </div>
                     <div>
                       <label>Mô tả sản phẩm:</label>
-                      {/* <input></input> */}
                       <textarea
                         defaultValue={product.prod_desc}
                         onChange={(e) => setDesc(e.target.value)}

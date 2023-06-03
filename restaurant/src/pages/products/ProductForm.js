@@ -10,32 +10,36 @@ import { useNavigate } from 'react-router-dom';
 import Success from './Success';
 import './this.css'
 function ProductForm() {
-    // const [isDisplay, setStatus] = useState(false)
-    const [name, setName] = useState("");
-    const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/005/988/954/original/hidden-icon-free-vector.jpg")
-    const [unit, setUnit] = useState("")
-    const [price, setPrice] = useState("")
-    const [desc, setDesc] = useState("")
-    const [Category, setCate] = useState("")
-    const [categories, setCategory] = useState("");
+    const [name, setName] = useState("");   // product name;
+    const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/005/988/954/original/hidden-icon-free-vector.jpg");
+    const [unit, setUnit] = useState("");   // product unit
+    const [price, setPrice] = useState(""); // product price;
+    const [desc, setDesc] = useState("");   // product description;
+    const [Category, setCate] = useState("");   // store selected category;
+    const [categories, setCategory] = useState(""); // store categories fetched from servers;
+
     const [success, setSuccess] = useState(false);
     const [successClass, setSuccessClass] = useState("");
     const [message, setMessage] = useState("");
 
     const navigate = useNavigate()
+    /**
+     * Add a new product;
+     */
     const createProduct = async () => {
-        const createURL = 'http://localhost:4000/api/product/new';
+        const createProduct = 'http://localhost:4000/api/product/new';
         await axios
-            .post(createURL, {
+            .post(createProduct, {
                 prod_name: name,
                 prod_img: image,
                 prod_unit: unit,
                 prod_price: price,
                 prod_desc: desc,
-                category: Category
+                category: Category,
+                restaurant: "64730496807c841ff6a953a3",
             })
             .then((res) => {
-                console.log(res?.data.product._id)
+                // console.log(res?.data.product._id)
                 const id = res?.data.product._id;
                 showModal();
                 setTimeout(() => {
@@ -44,38 +48,51 @@ function ProductForm() {
             })
     }
 
+    /**
+     * Get all product categories;
+     */
     const getCategories = async () => {
-        const fetchCategoriesURL = "http://localhost:4000/api/categories";
+        const fetchCategories = "http://localhost:4000/api/categories";
         await axios
-            .get(fetchCategoriesURL)
+            .get(fetchCategories)
             .then((res) => {
                 // console.log(res?.data.categories);
                 setCategory(res?.data.categories);
             })
     }
-    useEffect(() => {
-        getCategories();
-    }, []);
-
+    
+    /**
+     * Handle selecting product category;
+    */
     const handleSelect = (event) => {
         const value = event.target.value;
         const item = categories.find(e => e.category_name == value);
         const _id = item._id;
         setCate(_id);
     }
+
+    /**
+     * Display pop-up noti when succeed in adding product;
+     */
     const showModal = () => {
         setSuccess(true);
         setSuccessClass("opacity-success");
         setMessage("Sản phẩm đã được thêm thành công");
-        // getProductById();
         setTimeout(() => {
             setSuccess(false);
             setSuccessClass("");
         }, 3000);
-  }
+    }
 
     /**
-     * HTML Template;
+     * Fetch all categories when page loaded;
+    */
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    /**
+     * HTML template;
     */
     return (
         <>

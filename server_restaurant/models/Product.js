@@ -28,10 +28,10 @@ const ProductSchema = new Schema({
         default: true,
         // required: true,
     },
-    // restaurant: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Restaurant'
-    // },
+    restaurant: {
+        type: Schema.Types.ObjectId,
+        ref: 'Restaurant'
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
