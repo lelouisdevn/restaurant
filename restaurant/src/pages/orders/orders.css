@@ -62,9 +62,11 @@
 .restInfo>div{
     font-size: 30px;
     margin: 10px 0;
+    font-weight: bold;
 }
 .restInfo .orderInfo {
     /* margin:  */
+    font-weight: normal;
     font-size: 16px;
 }
 .restInfo .orderInfo table {

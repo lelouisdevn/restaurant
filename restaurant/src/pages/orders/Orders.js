@@ -5,13 +5,17 @@ import OrderProductTile from './OrderProductTile';
 import Loading from '../products/Loading';
 import OrderInfo from './OrderInfo';
 import OrderItem from './OrderItem';
+import Success from '../products/Success';
 
 function Orders() {
     const [products, setProducts] = useState("");
-    const [criteria, setCriteria] = useState("0");
+    const [criteria, setCriteria] = useState("1");
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [orderId, setOrderId] = useState("6475fb5e28f89e57150563b4");
     const [isOrdered, setTt] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [successClass, setSuccessClass] = useState("");
+    const [message, setMessage] = useState("");
 
     /**
      * Fetch product data from server;
@@ -29,7 +33,7 @@ function Orders() {
      * Update a list of selected products;
      */
     const updateOrderList = (product) => {
-        if (selectedProducts.find(prod => prod._id == product._id)) {
+        if (selectedProducts.find(prod => prod._id === product._id)) {
             setSelectedProducts(selectedProducts.filter(p => p._id !== product._id));
         } else {
             setSelectedProducts([...selectedProducts, product]);
@@ -42,8 +46,15 @@ function Orders() {
         const prod = selectedProducts.indexOf(product);
         selectedProducts[prod] = product;
         setSelectedProducts(selectedProducts);
-        console.log(selectedProducts);
+        // setSelectedProducts(selectedProducts.filter(p => p.qty > 0));
     }
+    const discardAll = () => {
+        setSelectedProducts([]);
+        setTt(!isOrdered);
+    }
+    // useEffect(() => {
+
+    // }, [])
 
     /**
      * first: get all products;
@@ -65,9 +76,10 @@ function Orders() {
      */
     const order = async () => {
         const order_url = 'http://localhost:4000/api/order/new';
+        const recent = new Date().toLocaleString("vi-VN", {hour12: false});
         await axios
             .post(order_url, {
-
+                order_at: recent,
             })
             .then((res) => {
                 const order_id = res?.data.order._id;
@@ -85,15 +97,32 @@ function Orders() {
                     qty: product.qty,
                     unit_price: product.prod_price,
                 })
+                .then((res) => {
+                    showModal();
+                })
         });
     }
-
+    const showModal = () => {
+        setSuccess(true);
+        setSuccessClass("opacity-success");
+        setMessage("Thông tin đặt món đã được ghi nhận thành công");
+        // getProductById();
+        setTimeout(() => {
+          setSuccess(false);
+          setSuccessClass("");
+        }, 3000);
+      }
 
     /**
      * HTML template for main order page;
     */
     return (
-        <div className="order-container">
+        <>
+        {
+            success &&
+            <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+        }
+        <div className={`order-container ${successClass}`}>
             <div className="order-left">
                 <div className="order-left-content">
                     {
@@ -112,6 +141,11 @@ function Orders() {
             <div className="order-right">
                 <div className="order-right-content">
                     <OrderInfo />
+                    
+                    {/* Display when selected products are not empty; */}
+                    { selectedProducts.length > 0 &&
+                    <>
+                    <h3 style={{fontSize: "20px", margin: "10px 0"}}>YÊU CẦU ĐẶT MÓN</h3>
                     <table>
                         <tr style={{ borderRadius: "10px 10px 0 0" }}>
                             <td>STT</td>
@@ -132,14 +166,19 @@ function Orders() {
                             ))
                         }
                     </table>
+                    </>
+                    }
                     <div className='order-actions'>
+                        <div className='content'>
                         <button className='updateButton' onClick={order} >Đặt món</button>
-                        <button className='updateButton'>Hủy đặt món</button>
+                        <button className='' onClick={discardAll}>Bỏ chọn tất cả</button>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
+        </>
     );
 }
 

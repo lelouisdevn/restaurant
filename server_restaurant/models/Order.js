@@ -13,9 +13,9 @@ const OrderSchema = new Schema({
         // required: true,
     },
     order_at: {
-        type: Date,
+        type: String,
         // required: true,
-        default: Date(),
+        // default: Date(),
     },
     bill_at: {
         type: Date,
