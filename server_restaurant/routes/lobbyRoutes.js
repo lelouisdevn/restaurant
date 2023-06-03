@@ -29,6 +29,36 @@ router.get("/lobbies", async (req, res) => {
   }
 })
 
+// Lấy ra khu vực có id
+router.get("/lobby/id=:id", async (req, res) => {
+  try {
+    
+    let lobby = await Lobby.findById(req.params.id);
+    res.send({ lobby });
+  } catch (error) {
+     console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+})
+
+router.put("/lobby/id=:id", async (req, res) => {
+  try {
+    let lobby = await Lobby.updateOne(
+      { _id: req.params.id },
+      {
+      $set: {
+        lob_arrange: req.body.lob_arrange,
+        lob_num: req.body.lob_num,
+      }
+    }
+    );
+    res.send({ lobby });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+})
+
 //Sửa thông tin của 1 khu vực
 router.put('/lobby/edit/id=:id', async (req, res) => {
   console.log(req.params);
