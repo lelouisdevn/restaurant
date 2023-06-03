@@ -26,6 +26,8 @@ import LayoutStaff from './components/LayoutStaff';
 import LoadingT from './pages/outline/Loading'
 import LayoutOutline from './pages/outline/LayoutOutline';
 import OutLine from './pages/outline/OutLine'
+import SettingMap from "./pages/lobby/SettingMap";
+
 function App() {
   return (
     <div>
@@ -40,6 +42,10 @@ function App() {
             </Route>
             <Route path="lobby">
               <Route index element={<Lobby />} />
+              <Route
+                path="settingmap/:id/:name/:num"
+                element={<SettingMap />}
+              ></Route>{" "}
             </Route>
             <Route path="product">
               <Route index element={<ProductList />} />
@@ -67,9 +73,7 @@ function App() {
             {/* <Route path="orders" element={<LoadingT />} /> */}
             <Route path="orders" element={<Orders />} />
             <Route path="outline" element={<LayoutOutline />}>
-              <Route path="" element={<LoadingT />}>
-               
-              </Route>
+              <Route path="" element={<LoadingT />}></Route>
               {/* <Route
                 path=":id/:arrange/:numRow"
                 element={<OutLine />}
