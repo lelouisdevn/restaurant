@@ -2,7 +2,8 @@ import { AppBar, Tab, Tabs, Toolbar, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import LayoutOutline from "../pages/outline/LayoutOutline";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -31,35 +32,36 @@ const NavbarStaff = () => {
             onChange={handleTabs}
           >
             <Link to={"/staff/orders"}>
-              <Tab label="Đặt món">
-              </Tab>
+              <Tab label="Đặt món"></Tab>
             </Link>
-            <Tab label="Sơ đồ"> </Tab>
+            <Link to={"outline"}>
+              <Tab label="Sơ đồ"> </Tab>
+            </Link>
             <Tab label="Trả món"> </Tab>
             <Tab label="Phiếu tạm tính"> </Tab>
           </Tabs>
         </StyledToolbar>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        {/* Item 1 Detail */}
+      <Outlet />
+   
+      {/* <TabPanel value={value} index={0}>
+        
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item 2 Detail
+        <LayoutOutline />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item 3 Detail
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item 4 Detail
-      </TabPanel>
+      </TabPanel> */}
     </div>
   );
 };
+
 function TabPanel(props) {
   const { children, value, index } = props;
-
-  // console.log("value: ", value);
-  // console.log("index: ", index);
   return <div>{value === index && <h1>{children}</h1>}</div>;
 }
 

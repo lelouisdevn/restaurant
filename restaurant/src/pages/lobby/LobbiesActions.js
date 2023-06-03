@@ -7,10 +7,12 @@ import {
   Tooltip,
   Typography
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Delete, Edit, Preview, AddBox } from "@mui/icons-material";
 import React, { useState } from "react";
 import { styled } from "@mui/system";
 import axios from "axios";
+import FindInPageIcon from "@mui/icons-material/FindInPage";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -169,6 +171,13 @@ const LobbiesActions = ({ params, parentCallback }) => {
           <Delete />
         </IconButton>
       </Tooltip>
+      <Link to={`settingmap/${item._id}/${item.lob_name}/${item.lob_tbl_num}`}>
+        <Tooltip title="Thiết lập sơ đồ">
+          <IconButton>
+            <FindInPageIcon />
+          </IconButton>
+        </Tooltip>
+      </Link>
 
       {/*  Modal xóa */}
       <StyledModal
