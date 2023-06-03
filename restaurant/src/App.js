@@ -23,6 +23,9 @@ import CategoryForm from './pages/categories/CategoryForm';
 import CategoryProducts from './pages/products/CategoryProducts';
 import Orders from './pages/orders/Orders';
 import LayoutStaff from './components/LayoutStaff';
+import LoadingT from './pages/outline/Loading'
+import LayoutOutline from './pages/outline/LayoutOutline';
+import OutLine from './pages/outline/OutLine'
 function App() {
   return (
     <div>
@@ -38,32 +41,41 @@ function App() {
             <Route path="lobby">
               <Route index element={<Lobby />} />
             </Route>
-            <Route path="product" >
+            <Route path="product">
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetail />} />
-              <Route path='new' element={<ProductForm />} />
-              <Route path='all/category/:id' element={<CategoryProducts />} />
+              <Route path="new" element={<ProductForm />} />
+              <Route path="all/category/:id" element={<CategoryProducts />} />
             </Route>
-            <Route path="category" >
+            <Route path="category">
               <Route index element={<Category />} />
               <Route path=":id" element={<CategoryDetail />} />
               <Route path="new" element={<CategoryForm />} />
             </Route>
-            <Route path="user" element={<User/>}>
-              <Route index element={<UserList />}/>
+            <Route path="user" element={<User />}>
+              <Route index element={<UserList />} />
               <Route path="add" element={<UserAdd />}></Route>
-              <Route path=":id" element={<UserDetail/>}/>
+              <Route path=":id" element={<UserDetail />} />
             </Route>
             <Route path="info">
               <Route index element={<Info />} />
               <Route path="edit/:id" element={<InfoEdit />}></Route>
             </Route>
           </Route>
-          
-          <Route path="/staff/*" element={<LayoutStaff />} >
-            <Route path='orders' element={<Orders />} />
+
+          <Route path="/staff/*" element={<NavbarStaff />}>
+            {/* <Route path="orders" element={<LoadingT />} /> */}
+            <Route path="orders" element={<Orders />} />
+            <Route path="outline" element={<LayoutOutline />}>
+              <Route path="" element={<LoadingT />}>
+               
+              </Route>
+              {/* <Route
+                path=":id/:arrange/:numRow"
+                element={<OutLine />}
+              /> */}
+            </Route>
           </Route>
-          
         </Routes>
       </BrowserRouter>
     </div>
