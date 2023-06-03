@@ -90,7 +90,11 @@ const ProductDetail = () => {
         prod_status: stt ? stt : product.prod_status,
       })
       .then((res) => {
-        showModal();
+        const message = {
+          "noti": "Thông tin sản phẩm đã được cập nhật thành công",
+          "icon": "faCheckCircle",
+        };
+        showModal(message);
       })
 
   }
@@ -98,10 +102,10 @@ const ProductDetail = () => {
   /**
    * Pop-up notification;
    */
-  const showModal = () => {
+  const showModal = (message) => {
     setSuccess(true);
     setSuccessClass("opacity-success");
-    setMessage("Thông tin sản phẩm đã được cập nhật thành công");
+    setMessage(message);
     getProductById();
     setTimeout(() => {
       setSuccess(false);

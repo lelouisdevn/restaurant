@@ -15,7 +15,7 @@ function Orders() {
     const [isOrdered, setTt] = useState(false);
     const [success, setSuccess] = useState(false);
     const [successClass, setSuccessClass] = useState("");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState({});
 
     /**
      * Fetch product data from server;
@@ -74,6 +74,17 @@ function Orders() {
     /**
      * Silent! and OrderDetail;
      */
+    const handleOrder = () => {
+        if (selectedProducts.length > 0) {
+            order();
+        }else {
+            const message = {
+                "noti": "Vui lòng chọn sản phẩm trước khi nhấn đặt món",
+                "icon": "faClose",
+            };
+            showModal(message);
+        }
+    }
     const order = async () => {
         const order_url = 'http://localhost:4000/api/order/new';
         const recent = new Date().toLocaleString("vi-VN", {hour12: false});
@@ -101,15 +112,19 @@ function Orders() {
                     unit_price: product.prod_price,
                 })
                 .then((res) => {
-                    showModal();
+                    const message = {
+                        "noti": "Thông tin đặt món đã được ghi nhận thành công",
+                        "icon": "faCheckCircle",
+                    };
+                    showModal(message);
                 })
         });
     }
-    const showModal = () => {
+    const showModal = (message) => {
         setSuccess(true);
         setSuccessClass("opacity-success");
-        setMessage("Thông tin đặt món đã được ghi nhận thành công");
-        // getProductById();
+        // setMessage("Thông tin đặt món đã được ghi nhận thành công");
+        setMessage(message);
         setTimeout(() => {
           setSuccess(false);
           setSuccessClass("");
@@ -173,7 +188,7 @@ function Orders() {
                     }
                     <div className='order-actions'>
                         <div className='content'>
-                        <button className='updateButton' onClick={order} >Đặt món</button>
+                        <button className='updateButton' onClick={handleOrder} >Đặt món</button>
                         <button className='' onClick={discardAll}>Bỏ chọn tất cả</button>
                         </div>
                     </div>

@@ -41,7 +41,11 @@ function ProductForm() {
             .then((res) => {
                 // console.log(res?.data.product._id)
                 const id = res?.data.product._id;
-                showModal();
+                const message = {
+                    "noti": "Sản phẩm đã được thêm thành công",
+                    "icon": "faCheckCircle",
+                  };
+                showModal(message);
                 setTimeout(() => {
                     navigate(`/manage/product/${id}`);
                 }, 3000);
@@ -74,10 +78,10 @@ function ProductForm() {
     /**
      * Display pop-up noti when succeed in adding product;
      */
-    const showModal = () => {
+    const showModal = (message) => {
         setSuccess(true);
         setSuccessClass("opacity-success");
-        setMessage("Sản phẩm đã được thêm thành công");
+        setMessage(message);
         setTimeout(() => {
             setSuccess(false);
             setSuccessClass("");
