@@ -1,6 +1,6 @@
 import './orders.css';
 
-function OrderInfo() {
+function OrderInfo(props) {
     const [restaurant, setRestaurant] = [{
         "name": "Nhà hàng TTT",
         "addr": "Đường 3/2, phường Xuân Khánh, quận Ninh Kiều, TP. Cần Thơ",
@@ -21,18 +21,15 @@ function OrderInfo() {
                         </td>
                         <td>{restaurant.phone}</td>
                     </tr>
-                    {/* <tr>
+                    <tr>
+                        <td>Bàn:</td>
+                        <td>201</td>
+                    </tr>
+                    <tr>
                         <td>Nhân viên:</td>
                         <td>Ngô Trần Vĩnh Thái</td>
                     </tr>
-                    <tr>
-                        <td>Ngày:</td>
-                        <td>{new Date().toLocaleString("vi-VN", {hour12: false})}</td>
-                    </tr>
-                    <tr>
-                        <td>Bàn</td>
-                        <td>12</td>
-                    </tr> */}
+                    
                 </table>
             </div>
         </div>
