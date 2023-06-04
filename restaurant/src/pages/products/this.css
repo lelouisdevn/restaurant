@@ -28,15 +28,10 @@
     margin: 10px;
     padding: 5px 0;
     font-size: 30px;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
-    /* color: black; */
     font-weight: 100;
-    /* position: sticky;
-    top: 64.1px;
-    z-index: 11;
-    border-radius: 10px;
-    background-color: #1976d2; */
 }
 
 .fixed-header {
@@ -250,13 +245,12 @@ button.updateButton:hover {
 
 .img-container {
     background: #212121;
+    width: -webkit-fill-available;
     width: -moz-available;
     height: calc(100vh - 64px);
     transition: 500ms;
     position: absolute;
     z-index: 9;
-    /* transition: all 2s ease-out; */
-
 }
 
 .productimg {
