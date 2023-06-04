@@ -27,6 +27,7 @@ import LoadingT from './pages/outline/Loading'
 import LayoutOutline from './pages/outline/LayoutOutline';
 import OutLine from './pages/outline/OutLine'
 import SettingMap from "./pages/lobby/SettingMap";
+import OrderList from './pages/orders/manage/OrderList';
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
           <Route path="/staff/*" element={<NavbarStaff />}>
             {/* <Route path="orders" element={<LoadingT />} /> */}
             <Route path="orders" element={<Orders />} />
+            <Route path='orders/all' element={<OrderList />} />
             <Route path="outline" element={<LayoutOutline />}>
               <Route path="" element={<LoadingT />}></Route>
               {/* <Route
