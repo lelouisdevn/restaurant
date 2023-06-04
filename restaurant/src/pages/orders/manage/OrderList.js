@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderListItem from "./OrderListItem"
 import Success from "../../products/Success";
 import OrderItem from '../OrderItem'
 import OrderDetail from "./OrderDetail";
 import OrderInfo from '../OrderInfo'
 function OrderList() {
+    /**
+     * Static data, this can be replaced with data fetched from servers;
+     */
     const [orderList, setOrderList] = useState([
         {
             "table": "107",
@@ -50,16 +53,65 @@ function OrderList() {
         }
     ]);
 
+    /**
+     * Data;
+     */
     const [selectedOrder, setSelectedOrder] = useState("");
     const [products, setProducts] = useState([]);
-    const handleSelectOrder = (order) => {
-        setSelectedOrder(order);
-        setProducts(order.details);
-    }
-
+    const [orderStatus, setOrderStatus] = useState(["dangchebien", "daphucvu",]);
+    const [selectedStatus, setSelectedStatus] = useState("");
+    
+    /**
+     * For popup notification banner;
+     * This is temporarily unused;
+    */ 
     const [success, setSuccess] = useState(false);
     const [successClass, setSuccessClass] = useState("");
     const [message, setMessage] = useState({});
+
+    /**
+     * Get the order selected;
+    */
+    const handleSelectOrder = (order) => {
+        setSelectedOrder(order);
+        const product = order.details;
+        setProducts(product);
+    }
+
+    /**
+     * Update product quantity;
+     */
+    const updateQty = (product) => {
+        const index = products.indexOf(product);
+        products[index] = product;
+        setProducts(products);
+    }
+
+    /**
+     * Show popup notification banner when an action is done;
+     */
+    const showModal = (message) => {
+        setSuccess(true);
+        setSuccessClass("opacity-success");
+        setMessage(message);
+        setTimeout(() => {
+          setSuccess(false);
+          setSuccessClass("");
+        }, 3000);
+      }
+
+    /**
+     * Discard any changes made previously;
+     */
+    const discardQtyChanges = () => {
+        // getOrderById();
+        let message = {
+            "noti": "Các thay đổi đã được loại bỏ",
+            "icon": "success",
+        }
+        showModal(message);
+    }
+
 
     /**
      * HTML template;
@@ -106,6 +158,7 @@ function OrderList() {
                                                 stt={products.indexOf(product) + 1}
                                                 key={product.id}
                                                 item={product}
+                                                updateQty={updateQty}
                                             />
                                         ))
                                     }
@@ -121,14 +174,21 @@ function OrderList() {
                                 </table>
                                 <div className='order-actions'>
                                     <div className='content'>
-                                        {/* <button className='updateButton' >Cập nhật đơn</button> */}
-                                        <select style={{padding: "10px 10px", borderRadius: "10px", border: "solid 1px lightgray"}}>
+                                        <select 
+                                            style={{padding: "10px 10px", borderRadius: "10px", border: "solid 1px lightgray", margin: "0 7px"}}
+                                            onChange={(e) => setSelectedStatus(e.target.value)}
+                                        >
                                             <option selected disabled>Cập nhật trạng thái</option>
-                                            <option>Đã đặt</option>
-                                            <option>Đang chế biến</option>
-                                            <option>Đã phục vụ</option>
-                                            <option>Đã thanh toán</option>
+                                            {/* <option value={1}>Đã đặt</option> */}
+                                            <option value={1}>Đang chế biến</option>
+                                            <option value={2}>Đã phục vụ</option>
+                                            {/* <option value={4}>Đã thanh toán</option> */}
                                         </select>
+                                        <button className="updateButton">Cập nhật yêu cầu</button>
+                                        <button className="updateButton"
+                                            onClick={discardQtyChanges}
+                                        >Hoàn tác</button>
+                                        <button className="updateButton">Thanh toán</button>
                                         <button>Hủy đơn</button>
                                     </div>
                                 </div>

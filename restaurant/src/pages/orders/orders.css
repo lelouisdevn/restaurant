@@ -125,7 +125,7 @@
     background: #3E8989;
     padding: 7px 10px;
     border-radius: 0 0 10px 10px;
-    text-align: justify;
+    text-align: center;
 }
 .orderlist-item .item-status span {
     margin: 10px 7px;
@@ -138,4 +138,5 @@
     background-color: rgb(230, 229, 229);
     border-radius: 100px;
     transition: 400ms;
+    color: black;
 }
