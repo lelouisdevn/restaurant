@@ -34,6 +34,9 @@ const NavbarStaff = () => {
             <Link to={"/staff/orders"}>
               <Tab label="Đặt món"></Tab>
             </Link>
+            <Link to={"/staff/orders/all"}>
+              <Tab label="Danh sách gọi món"></Tab>
+            </Link>
             <Link to={"outline"}>
               <Tab label="Sơ đồ"> </Tab>
             </Link>
