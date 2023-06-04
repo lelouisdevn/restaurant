@@ -12,8 +12,7 @@ their restaurants and use our highly designed features for managing their restau
 
 COPYRIGHTS
 ----------
-This project is not a commercial product but we're likely to preserve all rights,
-you can try and implement this project for educational purposes;
+This project is not a commercial product but we want to reserve all rights, you can try and implement this project for educational purposes;
 
 INSTALLATION
 ------------
