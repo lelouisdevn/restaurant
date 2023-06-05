@@ -343,11 +343,11 @@ button.updateButton:hover {
     font-size: 18px;
     line-height: 0;
     padding: 10px 13px;
+    border-radius: 50%;
 }
 .update-modal span:hover {
-    background-color: rgb(228, 228, 228);
+    background-color: rgba(228,230,235,255);
     padding: 10px 13px;
-    border-radius: 50px;
     cursor: pointer;
     transition: 400ms;
 }

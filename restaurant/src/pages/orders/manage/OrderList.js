@@ -65,8 +65,8 @@ function OrderList() {
      * For popup notification banner;
      * This is temporarily unused;
     */ 
-    const [success, setSuccess] = useState(false);
-    const [successClass, setSuccessClass] = useState("");
+    const [success, setSuccess] = useState(true);
+    const [successClass, setSuccessClass] = useState("opacity-success");
     const [message, setMessage] = useState({});
 
     /**
@@ -116,6 +116,7 @@ function OrderList() {
     /**
      * HTML template;
     */
+
     return (
         <>
             {
