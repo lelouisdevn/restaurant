@@ -46,7 +46,7 @@ function Category() {
                 <div className="products">
                     {categories ? categories.map((category) => (
                         <CategoryTile key={category._id} category={category} />
-                    )) : <Loading message="fetching your data...." />}
+                    )) : <Loading message="Đang tải dữ liệu từ server...." />}
                 </div>
             </div>
         </div>

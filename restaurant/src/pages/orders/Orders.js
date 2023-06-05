@@ -153,7 +153,7 @@ function Orders() {
                                         functioner={updateOrderList}
                                         isOrdered={isOrdered} 
                                     />)
-                            : <Loading message="loading products...." />
+                            : <Loading message="Đang tải dữ liệu từ server...." />
                     }
                 </div>
             </div>
