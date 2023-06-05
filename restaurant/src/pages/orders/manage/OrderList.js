@@ -65,8 +65,8 @@ function OrderList() {
      * For popup notification banner;
      * This is temporarily unused;
     */ 
-    const [success, setSuccess] = useState(true);
-    const [successClass, setSuccessClass] = useState("opacity-success");
+    const [success, setSuccess] = useState(false);
+    const [successClass, setSuccessClass] = useState("");
     const [message, setMessage] = useState({});
 
     /**
@@ -86,6 +86,20 @@ function OrderList() {
         products[index] = product;
         setProducts(products);
     }
+
+    const changeStatus = (status) => {
+        setSelectedStatus(status);
+    }
+    useEffect(() => {
+        console.log(selectedStatus);
+        console.log(selectedOrder);
+        const message = {
+            "noti": "Đơn hàng đã được xóa thành công",
+            "icon": "faClose",
+        };
+        setMessage(message);
+        showModal(message);
+    }, [selectedStatus]);
 
     /**
      * Show popup notification banner when an action is done;
@@ -107,9 +121,19 @@ function OrderList() {
         // getOrderById();
         let message = {
             "noti": "Các thay đổi đã được loại bỏ",
-            "icon": "success",
+            "icon": "faCheckCircle",
         }
         showModal(message);
+    }
+
+    const cancelOrder = () => {
+        setSuccess(true);
+        setSuccessClass("opacity-success");
+        const message = {
+            "noti": "Bạn có chắc muốn xóa đơn hàng này không?",
+            "icon": "faTrash",
+        };
+        setMessage(message);
     }
 
 
@@ -121,7 +145,7 @@ function OrderList() {
         <>
             {
                 success &&
-                <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+                <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} functioner={changeStatus} />
             }
             <div className={`order-container ${successClass}`}>
                 <div className="order-left">
@@ -190,7 +214,7 @@ function OrderList() {
                                             onClick={discardQtyChanges}
                                         >Hoàn tác</button>
                                         <button className="updateButton">Thanh toán</button>
-                                        <button>Hủy đơn</button>
+                                        <button onClick={cancelOrder}>Hủy đơn</button>
                                     </div>
                                 </div>
                             </>
