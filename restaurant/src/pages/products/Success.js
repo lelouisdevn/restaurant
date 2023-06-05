@@ -22,7 +22,7 @@ function Success(props) {
   };
   const deleteOrder = () => {
     props.functioner("huydon");
-    hidePopup();
+    // hidePopup();
   }
   const hidePopup = () => {
     props.setSuccess(false)
