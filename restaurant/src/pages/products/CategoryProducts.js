@@ -82,7 +82,7 @@ const CategoryProducts = () => {
                     <div className="products">
                         {products ? products.map((product) => (
                             <ProductTile key={product._id} product={product} />
-                        )) : <Loading message="fetching your data...." />}
+                        )) : <Loading message="Đang tải các sản phẩm...." />}
                     </div>
                 </div>
             </div>

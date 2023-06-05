@@ -352,3 +352,17 @@ button.updateButton:hover {
 .opacity-success {
     opacity: 0.1;
 }
+.btn-dlt {
+    margin: 15px 0;
+    padding: 0 20px;
+    border: solid 1px crimson;
+    border-radius: 10px;
+    width: 80%;
+    color: crimson;
+    font-size: 18px;
+}
+.btn-dlt:hover {
+    background-color: crimson;
+    color: white;
+    transition: 400ms;
+}
