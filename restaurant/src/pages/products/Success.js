@@ -9,20 +9,8 @@ function Success(props) {
     position: "absolute",
     zIndex: 10,
   };
-  const btnstyle = {
-    margin: "15px 0",
-    padding: "0 20px",
-    borderRadius: "10px",
-    width: "80%",
-    color: "crimson",
-    borderRadius: "10px",
-    border: "solid 1px crimson",
-    fontSize: "18px",
-
-  };
   const deleteOrder = () => {
     props.functioner("huydon");
-    // hidePopup();
   }
   const hidePopup = () => {
     props.setSuccess(false)
@@ -51,7 +39,7 @@ function Success(props) {
                         <FontAwesomeIcon icon={faTrash} />
                       </div>
                       <div>{props.message.noti}</div>
-                      <button style={btnstyle} onClick={deleteOrder}>Xoá</button>
+                      <button className="btn-dlt" onClick={deleteOrder} >Xóa</button>
                     </div>
                   </>
                 :
