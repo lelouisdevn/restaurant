@@ -11,12 +11,16 @@ const StyledToolbar = styled(Toolbar)({
   height: "100%"
 });
 
-const NavbarStaff = () => {
+const NavbarStaff = () => { 
+
   const [value, setValue] = useState(0);
   const handleTabs = (e, value) => {
     // console.log(value);
     setValue(value);
   };
+  const setOut = () => {
+    localStorage.clear();
+  }
   return (
     <div>
       <AppBar position="static">
@@ -42,7 +46,11 @@ const NavbarStaff = () => {
             </Link>
             <Tab label="Trả món"> </Tab>
             <Tab label="Phiếu tạm tính"> </Tab>
+            <Link to={"/login"} onClick={() => setOut()}>
+              <Tab label="Thoát"> </Tab>
+            </Link>
           </Tabs>
+            
         </StyledToolbar>
       </AppBar>
       <Outlet />

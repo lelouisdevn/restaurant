@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -10,12 +10,36 @@ const Login = () => {
     const [password, setPassword] = useState(null);
     const [restaurant, setRestaurant] = useState("chocu@ttt.mi.com");
     const [PorT, setPorT] = useState(true);
+    const [UserID, setUserID] = useState([]); 
+    const [RestaurantID, setRestaurantID] = useState([]); 
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
     
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        navigate("/manage/home")
-        
-    };
+    try {
+      await axios
+        .post("http://localhost:4000/api/login", {
+          username: username,
+          password: password,
+          restaurant: restaurant,
+        })
+        .then((res) => {
+          localStorage.setItem(UserID, res?.data.login._id);
+          localStorage.setItem(RestaurantID, res?.data.login.restaurant);
+          console.log(localStorage.getItem(UserID));
+          if(res?.data.login.role === "1"){
+            navigate("/manage/home");
+          }else if(res?.data.login.role === "2"){
+            navigate("/staff/orders");
+          }
+          
+        });
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+
+    
+  };
   return (
     <section className="h-screen">
       <div className="h-full">
