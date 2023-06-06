@@ -21,14 +21,13 @@ router.post('/order/new', async(req, res) => {
 
 /**Add a new order detail; */
 router.post('/order/detail/new', async(req, res) => {
-    const { Product, Order, qty, unit_price, note } = req.body;
+    const { Product, Order, qty, unit_price } = req.body;
     try {
         const detail = new OrderDetail({
             Product,
             Order,
             qty,
             unit_price,
-            note,
         });
         await detail.save();
         res.send({detail});
