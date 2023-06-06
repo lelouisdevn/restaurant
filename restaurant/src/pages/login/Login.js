@@ -4,15 +4,20 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+
 const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
-    const [restaurant, setRestaurant] = useState("chocu@ttt.mi.com");
+    const [restaurant, setRestaurant] = useState("sagarestaurant@rest.vn");
+    
     const [PorT, setPorT] = useState(true);
-    const [UserID, setUserID] = useState([]); 
-    const [RestaurantID, setRestaurantID] = useState([]); 
-
+    // const [UserID, setUserID] = useState([]); 
+    // const [RestaurantID, setRestaurantID] = useState([]); 
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     
@@ -24,15 +29,31 @@ const Login = () => {
           restaurant: restaurant,
         })
         .then((res) => {
-          localStorage.setItem("UserID", res?.data.login._id);
-          localStorage.setItem("RestaurantID", res?.data.login.restaurant);
-          console.log(localStorage.getItem(UserID));
-          if(res?.data.login.role === "1"){
+          console.log(res?.data);
+          console.log(res?.data.rest.rest_name);
+          localStorage.setItem("UserID", res?.data.login[0].user._id);
+          localStorage.setItem("RestaurantID", res?.data.login[0].info._id);
+          console.log(localStorage.getItem("UserID"));
+          console.log(localStorage.getItem("RestaurantID"));
+
+          if(res?.data.login[0].user.role === "1"){
             navigate("/manage/home");
-          }else if(res?.data.login.role === "2"){
+          }else if(res?.data.login[0].user.role === "2"){
             navigate("/staff/orders");
           }
-          
+          if(res?.data.err == "err"){
+            toast.error('🦄 Nhập sai thông tin!', {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
+          }
+
         });
     } catch (error) {
       console.log("Error: ", error);
@@ -66,16 +87,15 @@ const Login = () => {
 
                 <div className="mb-6">
                   <label
-                    htmlFor="username"
+                    htmlFor="restaurant"
                     className="block mb-2 text-sm font-medium text-white"
                   >
-                    Mã nhà hàng
+                    Tên nhà hàng
                   </label>
                   <input
-                    type="username"
-                    id="username"
+                    type="restaurant"
+                    id="restaurant"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 md:p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    // placeholder="chocu.ttt.com"
                     value={restaurant}
                     onChange={(e) => {
                       setRestaurant(e.target.value);
@@ -99,7 +119,7 @@ const Login = () => {
                     onChange={(e) => {
                       setUsername(e.target.value);
                     }}
-                    // required
+                     required
                   />
                 </div>
                 <div className="mb-6">
@@ -119,7 +139,7 @@ const Login = () => {
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
-                //   required
+                       required
                     />
                     {PorT ? (
                       <VisibilityOffIcon
@@ -147,6 +167,7 @@ const Login = () => {
                 </button>
               </div>
             </form>
+            <ToastContainer />
           </div>
         </div>
       </div>
