@@ -1,25 +1,18 @@
 import './orders.css';
 
 function OrderInfo(props) {
-    const [restaurant, setRestaurant] = [{
-        "name": "Nhà hàng TTT",
-        "addr": "Đường 3/2, phường Xuân Khánh, quận Ninh Kiều, TP. Cần Thơ",
-        "phone": "0123456789",
-    }]
     return(
         <div className="restInfo">
-            <div>{restaurant.name}</div>
+            <div>{props.restaurant.rest_name}</div>
             <div className='orderInfo'>
                 <table>
                     <tr>
                         <td>Địa chỉ:</td>
-                        <td>{restaurant.addr}</td>
+                        <td>{props.restaurant.rest_addr}</td>
                     </tr>
                     <tr>
-                        <td>
-                            Số điện thoại:
-                        </td>
-                        <td>{restaurant.phone}</td>
+                        <td>Số điện thoại:</td>
+                        <td>{props.restaurant.rest_phone}</td>
                     </tr>
                     <tr>
                         <td>Bàn:</td>
@@ -27,9 +20,8 @@ function OrderInfo(props) {
                     </tr>
                     <tr>
                         <td>Nhân viên:</td>
-                        <td>Ngô Trần Vĩnh Thái</td>
+                        <td>{props.user.staff_name}</td>
                     </tr>
-                    
                 </table>
             </div>
         </div>

@@ -91,6 +91,8 @@ function OrderList() {
     const [successClass, setSuccessClass] = useState("");
     const [message, setMessage] = useState({});
 
+    const [user, setUser] = useState({});
+    const [restaurant, setRestaurant] = useState({});
     const getAllOrders = () => {
 
     }
@@ -190,9 +192,6 @@ function OrderList() {
 
     }
 
-
-
-
     /**
      * HTML template;
     */
@@ -204,6 +203,7 @@ function OrderList() {
                 <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} functioner={changeStatus} />
             }
             <div className={`order-container ${successClass}`}>
+                { selectedOrder ?
                 <div className="order-left">
                     <div className="order-left-content">
                         {
@@ -218,12 +218,25 @@ function OrderList() {
                         }
                     </div>
                 </div>
-                <div className="order-right">
-                    <div className="order-right-content">
+                :
+                <div style={{textAlign: "center"}} >
                         {
-                            selectedOrder ?
+                            orderList
+                                ? orderList.map((order) => (
+                                    <OrderListItem
+                                        order={order}
+                                        handleSelectOrder={handleSelectOrder}
+                                    />
+                                ))
+                                : <></>
+                        }
+                    </div>
+                }
+                { selectedOrder &&
+                <div className='order-right'>
+                    <div className="order-right-content">
                             <>
-                                <OrderInfo order={selectedOrder} />
+                                <OrderInfo user={user} restaurant={restaurant} />
                                 <h3 style={{fontSize: "25px", fontWeight: "bold"}}>ĐƠN HÀNG</h3>
                                 <table>
                                     <tr style={{ borderRadius: "10px 10px 0 0" }}>
@@ -272,12 +285,9 @@ function OrderList() {
                                     </div>
                                 </div>
                             </>
-                            : <div>
-                                Chọn 1 order đi nào hihi    
-                            </div>
-                        }
-                    </div>
+                    </div>   
                 </div>
+                }
             </div>
         </>
     )

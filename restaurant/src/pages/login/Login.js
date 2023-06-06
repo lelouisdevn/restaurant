@@ -24,8 +24,8 @@ const Login = () => {
           restaurant: restaurant,
         })
         .then((res) => {
-          localStorage.setItem(UserID, res?.data.login._id);
-          localStorage.setItem(RestaurantID, res?.data.login.restaurant);
+          localStorage.setItem("UserID", res?.data.login._id);
+          localStorage.setItem("RestaurantID", res?.data.login.restaurant);
           console.log(localStorage.getItem(UserID));
           if(res?.data.login.role === "1"){
             navigate("/manage/home");

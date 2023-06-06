@@ -8,14 +8,30 @@ import OrderItem from './OrderItem';
 import Success from '../products/Success';
 
 function Orders() {
+    /**
+     * Data;
+    */
     const [products, setProducts] = useState("");
     const [criteria, setCriteria] = useState("1");
     const [selectedProducts, setSelectedProducts] = useState([]);
-    const [orderId, setOrderId] = useState("6475fb5e28f89e57150563b4");
+    const [orderId, setOrderId] = useState("");
     const [isOrdered, setTt] = useState(false);
+    const [reloadOrderDetail, setReloadOrderDetail] = useState(false);
+    const [total, setTotal] = useState(0);
+
+    /**
+     * Pop-up banner;
+     */
     const [success, setSuccess] = useState(false);
     const [successClass, setSuccessClass] = useState("");
     const [message, setMessage] = useState({});
+
+
+    /**
+     * User, Restaurant and Table IDs;
+     */
+    const [user, setUser] = useState({});
+    const [restaurant, setRestaurant] = useState({});
 
     /**
      * Fetch product data from server;
@@ -27,6 +43,8 @@ function Orders() {
             .then((res) => {
                 setProducts(res?.data.document)
             })
+        // console.log("ID user: ", localStorage.getItem("UserID"));
+        // console.log("ID nha hang: ", localStorage.getItem("RestaurantID"));
     }
 
     /**
@@ -38,6 +56,7 @@ function Orders() {
         } else {
             setSelectedProducts([...selectedProducts, product]);
         }
+        setReloadOrderDetail(!reloadOrderDetail);
     }
     /**
      * Update product quantity;
@@ -46,27 +65,69 @@ function Orders() {
         const prod = selectedProducts.indexOf(product);
         selectedProducts[prod] = product;
         setSelectedProducts(selectedProducts);
-        // setSelectedProducts(selectedProducts.filter(p => p.qty > 0));
+        setReloadOrderDetail(!reloadOrderDetail);
     }
+
+    /**
+     * Remove all selected products;
+     */
     const discardAll = () => {
         setSelectedProducts([]);
         setTt(!isOrdered);
     }
 
     /**
-     * first: get all products;
-     * second: insert order details;
-     * third: get total number of money for this order;
+     * Calculate the total payment when selected products or product quantity changes;
+    */
+    useEffect(() => {
+        let total = 0;
+        selectedProducts.forEach((product) => {
+            total += (parseInt(product.qty) * parseInt(product.prod_price));
+        })
+        setTotal(total);
+    }, [reloadOrderDetail]);
+
+    /**
+     * 
     */
     useEffect(() => {
         getProducts();
     }, [selectedProducts]);
-    
+
+    /**
+     * Get User Informatioin with Id;
+     */
+    const getUserInfoById = async () => {
+        const userId = localStorage.getItem("UserID");
+        const getUserInfo = `http://localhost:4000/api/users/id=${userId}`;
+        const response = await axios
+            .get(getUserInfo)
+
+        if (response.status == 200) {
+            setUser(response.data.user[0]);
+            console.log(response.data.user[0]);
+        }
+    }
+
+    /**
+     * Get Restaurant Information with Id:
+     */
+    // const getRestaurantById = async () => {
+    //     const restaurantId = localStorage.getItem("RestaurantID");
+    //     const getRestaurantInfo = `http://localhost:4000/api/info/id=${restaurantId}`;
+    //     const response = await axios
+    //         .get(getRestaurantInfo)
+
+    //     if (response.status == 200) {
+    //         setRestaurant(response.data.info[0]);
+    //     }
+    // }
+
+    /**When the page is loaded; get user info and restaurant info*/
     useEffect(() => {
-        console.log(orderId);
-        orderDetail();
-        setSelectedProducts([]);
-    }, [orderId]);
+        getUserInfoById();
+        // getRestaurantById();
+    }, []);
 
     /**
      * Silent! and OrderDetail;
@@ -78,7 +139,7 @@ function Orders() {
                 total += (parseInt(product.qty) * parseInt(product.prod_price));
             })
             order(total);
-        }else {
+        } else {
             const message = {
                 "noti": "Vui lòng chọn sản phẩm trước khi nhấn đặt món",
                 "icon": "faClose",
@@ -88,14 +149,14 @@ function Orders() {
     }
     const order = async (total) => {
         const order_url = 'http://localhost:4000/api/order/new';
-        const recent = new Date().toLocaleString("vi-VN", {hour12: false});
+        const recent = new Date().toLocaleString("vi-VN", { hour12: false });
         await axios
             .post(order_url, {
                 order_at: recent,
                 total: total,
-                user: "6472e71067760e2a1599227b",
+                user: user._id,
                 table: "646f2abd6ab932270421cff5",
-                restaurant: "64730496807c841ff6a953a3",
+                restaurant: restaurant._id,
             })
             .then((res) => {
                 const order_id = res?.data.order._id;
@@ -122,81 +183,99 @@ function Orders() {
                 })
         });
     }
+    /**
+    * Add order details when OrderId is created;
+    */
+    useEffect(() => {
+        orderDetail();
+        setSelectedProducts([]);
+    }, [orderId]);
+
+    /**
+     * Show modal;
+     */
     const showModal = (message) => {
         setSuccess(true);
         setSuccessClass("opacity-success");
         setMessage(message);
         setTimeout(() => {
-          setSuccess(false);
-          setSuccessClass("");
+            setSuccess(false);
+            setSuccessClass("");
         }, 3000);
-      }
+    }
 
     /**
      * HTML template for main order page;
     */
     return (
         <>
-        {
-            success &&
-            <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
-        }
-        <div className={`order-container ${successClass}`}>
-            <div className="order-left">
-                <div className="order-left-content">
-                    {
-                        products
-                            ? products.map(
-                                (product) =>
-                                    <OrderProductTile 
-                                        product={product} key={product._id} 
-                                        functioner={updateOrderList}
-                                        isOrdered={isOrdered} 
-                                    />)
-                            : <Loading message="Đang tải dữ liệu từ server...." />
-                    }
-                </div>
-            </div>
-            <div className="order-right">
-                <div className="order-right-content">
-                    <OrderInfo />
-                    
-                    {/* Display when selected products are not empty; */}
-                    { selectedProducts.length > 0 &&
-                    <>
-                    <h3 style={{fontSize: "20px", margin: "10px 0"}}>YÊU CẦU ĐẶT MÓN</h3>
-                    <table>
-                        <tr style={{ borderRadius: "10px 10px 0 0" }}>
-                            <td>STT</td>
-                            <td>Món</td>
-                            <td>Số lượng</td>
-                            <td>Đơn giá</td>
-                            <td style={{ width: "100px" }}>Tổng</td>
-                        </tr>
+            {
+                success &&
+                <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+            }
+            <div className={`order-container ${successClass}`}>
+                <div className="order-left">
+                    <div className="order-left-content">
                         {
-                            selectedProducts.map((product) => (
-                                <OrderItem
-                                    key={product._id}
-                                    
-                                    stt={selectedProducts.indexOf(product) + 1}
-                                    selectedProduct={product}
-                                    functioner={updateQty}
-                                />
-                            ))
+                            products
+                                ? products.map(
+                                    (product) =>
+                                        <OrderProductTile
+                                            product={product} key={product._id}
+                                            functioner={updateOrderList}
+                                            isOrdered={isOrdered}
+                                        />)
+                                : <Loading message="Đang tải dữ liệu từ server...." />
                         }
-                    </table>
-                    </>
-                    }
-                    <div className='order-actions'>
-                        <div className='content'>
-                        <button className='updateButton' onClick={handleOrder} >Đặt món</button>
-                        <button className='' onClick={discardAll}>Bỏ chọn tất cả</button>
-                        </div>
                     </div>
                 </div>
+                <div className="order-right">
+                    <div className="order-right-content">
+                        <OrderInfo user={user} restaurant={restaurant} />
 
+                        {/* Display when selected products are not empty; */}
+                        {selectedProducts.length > 0 &&
+                            <>
+                                <h3 style={{ fontSize: "20px", margin: "10px 0" }}>YÊU CẦU ĐẶT MÓN</h3>
+                                <table>
+                                    <tr style={{ borderRadius: "10px 10px 0 0" }}>
+                                        <td>STT</td>
+                                        <td>Món</td>
+                                        <td>Số lượng</td>
+                                        <td>Đơn giá</td>
+                                        <td style={{ width: "100px" }}>Tổng</td>
+                                    </tr>
+                                    {
+                                        selectedProducts.map((product) => (
+                                            <OrderItem
+                                                key={product._id}
+
+                                                stt={selectedProducts.indexOf(product) + 1}
+                                                selectedProduct={product}
+                                                functioner={updateQty}
+                                            />
+                                        ))
+                                    }
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Tổng:</td>
+                                        <td>{total}</td>
+                                    </tr>
+                                </table>
+                            </>
+                        }
+                        <div className='order-actions'>
+                            <div className='content'>
+                                <button className='updateButton' onClick={handleOrder} >Đặt món</button>
+                                <button className='' onClick={discardAll}>Bỏ chọn tất cả</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
         </>
     );
 }

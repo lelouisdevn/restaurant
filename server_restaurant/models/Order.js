@@ -5,26 +5,27 @@ const OrderSchema = new Schema({
     status: {
         type: String,
         default: "dadat",
-        // required: true,
+        required: true,
     },
     total: {
         type: Number,
         default: 0,
-        // required: true,
+        required: true,
     },
     order_at: {
         type: String,
-        // required: true,
+        required: true,
         // default: Date(),
     },
     bill_at: {
         type: Date,
         // required: true,
-        default: Date(),
+        // default: Date(),
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
+        required: true,
     },
     table: {
         type: Schema.Types.ObjectId,
@@ -33,6 +34,7 @@ const OrderSchema = new Schema({
     restaurant: {
         type: Schema.Types.ObjectId,
         ref: "Restaurant",
+        required: true,
     },
 })
 

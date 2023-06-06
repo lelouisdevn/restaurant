@@ -140,3 +140,7 @@
     transition: 400ms;
     color: black;
 }
+
+.fWidth {
+    width: 100%;
+}
