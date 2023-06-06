@@ -10,6 +10,10 @@ import axios from 'axios'
 function CategoryForm() {
     const [name, setName] = useState("");
     const [image, setImage] = useState("https://static.vecteezy.com/system/resources/previews/005/988/954/original/hidden-icon-free-vector.jpg");
+    const [url, setUrl] = useState({
+        "add": "/manage/product/new",
+        "hide": "product/hide"
+      })
 
     const navigate = useNavigate();
     const createCategory = async () => {
@@ -31,7 +35,7 @@ function CategoryForm() {
                         <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                     </Link>
                 </div>
-                <Toolbar />
+                <Toolbar url={url} />
             </div>
             {/* <Outlet /> */}
             <div className="content">

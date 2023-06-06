@@ -8,10 +8,10 @@ import { useEffect, useState } from "react";
 import Loading from "../products/Loading";
 
 function Category() {
-    // const categories = [
-    //     { '_id': '2b4cbrb7yrshb', 'cate_name': 'food', 'category_img': 'https://media.istockphoto.com/id/477338550/vector/fast-food-cartoon-set.jpg?s=170667a&w=0&k=20&c=r-ZAh_cU7Fue1KJI34kUSfe-5SuHlLywuxfXv1MrdqM=' },
-    //     { '_id': '2b4098b7yrshb', 'cate_name': 'drink', 'category_img': 'https://bakewithshivesh.com/wp-content/uploads/2022/04/IMG_9331-scaled.jpg' }
-    // ]
+    const [url, setUrl] = useState({
+        "add": "/manage/category/new",
+        "hide": "product/hide"
+      })
     const [categories, setCate] = useState("");
     const getCategories = async () => {
         const url = 'http://localhost:4000/api/categories'
@@ -33,7 +33,8 @@ function Category() {
                     <h2>QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
                 </Link>
             </div>
-            <Toolbar url="/manage/category/new"/>
+            {/* <Toolbar url="/manage/category/new"/> */}
+            <Toolbar url={url} />
             </div>
             {/* <Outlet /> */}
             <div className="content">
