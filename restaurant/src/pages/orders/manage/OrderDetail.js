@@ -40,6 +40,13 @@ function OrderDetail(props) {
             </td>
             <td>{item.unit_price}</td>
             <td>{item.qty * item.unit_price}</td>
+            <td>
+                <select className="slbtn">
+                    <option selected disabled>{item.status}</option>
+                    <option>Dang che bien</option>
+                    <option>Da phuc vu</option>
+                </select>
+            </td>
         </tr>
         </>
     );
