@@ -19,6 +19,7 @@ const ProductList = (props) => {
       'Sản phẩm đã ẩn'
     ]
   );
+  const [message, setMessage] = useState("Đang tải dữ liệu từ server....");
 
   const getProducts = async () => {
     const url = `http://localhost:4000/api/products/${criteria}`;
@@ -32,31 +33,34 @@ const ProductList = (props) => {
     getProducts();
     console.log(criteria);
   }, [criteria, setCriteria]);
-  
-    /**
-   * Update search query when changes happen on input; 
+
+  /**
+ * Update search query when changes happen on input; 
+ */
+  const getSearchQuery = (s_query) => {
+    setQuery(s_query);
+  };
+  /**
+   * Filter products that match the search query; 
    */
-    const getSearchQuery = (s_query) => {
-      setQuery(s_query);
-    };
-    /**
-     * Filter products that match the search query; 
-     */
-    useEffect(() => {
-      if (query === "") {
-        getProducts();
-      }
-      
-      const filterBySearch = products.filter((product) => {
+  useEffect(() => {
+    if (query === "") {
+      getProducts();
+    }
+
+    const filterBySearch = products.filter((product) => {
       let name = product.prod_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       let mquery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        if (name.includes(mquery)) {
-          return product;
-        }
-      });
-      
-      setProducts(filterBySearch);
-    }, [query]);
+      if (name.includes(mquery)) {
+        return product;
+      }
+    });
+
+    setProducts(filterBySearch);
+    if (filterBySearch.length == 0 && query != "") {
+      setMessage(`Không tìm thấy sản phẩm với từ khóa "${query}"`);
+    }
+  }, [query]);
 
   return (
     <>
@@ -98,7 +102,7 @@ const ProductList = (props) => {
           <div className="products">
             {products.length > 0 ? products.map((product) => (
               <ProductTile key={product._id} product={product} />
-            )) : <Loading message="fetching your data...." />}
+            )) : <Loading message={message} />}
           </div>
         </div>
       </div>
