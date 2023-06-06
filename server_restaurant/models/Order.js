@@ -19,8 +19,6 @@ const OrderSchema = new Schema({
     },
     bill_at: {
         type: Date,
-        // required: true,
-        // default: Date(),
     },
     user: {
         type: Schema.Types.ObjectId,
