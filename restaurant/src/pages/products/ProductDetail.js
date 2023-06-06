@@ -14,6 +14,10 @@ import Success from './Success';
 const ProductDetail = () => {
   const { id } = useParams();
   console.log(id)
+  const [url, setUrl] = useState({
+    "add": "/manage/product/new",
+    "hide": "product/hide"
+  })
 
   /**
    * Get a product with provided id;
@@ -61,6 +65,7 @@ const ProductDetail = () => {
   const [desc, setDesc] = useState("");
   const [Category, setCate] = useState("");
   const [stt, setStt] = useState("");
+  
 
   /**
    * Modal;
@@ -179,7 +184,7 @@ const ProductDetail = () => {
                   <h2>QUẢN LÝ SẢN PHẨM</h2>
                 </Link>
               </div>
-              <Toolbar url="/manage/product/new" />
+              <Toolbar url={url} />
             </div>
             <div className="content">
               <div className="header-product n_right_content" style={{ width: "100%" }}>

@@ -18,6 +18,11 @@ function ProductForm() {
     const [Category, setCate] = useState("");   // store selected category;
     const [categories, setCategory] = useState(""); // store categories fetched from servers;
 
+    const [url, setUrl] = useState({
+        "add": "/manage/product/new",
+        "hide": "product/hide"
+      })
+
     const [success, setSuccess] = useState(false);
     const [successClass, setSuccessClass] = useState("");
     const [message, setMessage] = useState("");
@@ -39,7 +44,6 @@ function ProductForm() {
                 restaurant: "64730496807c841ff6a953a3",
             })
             .then((res) => {
-                // console.log(res?.data.product._id)
                 const id = res?.data.product._id;
                 const message = {
                     "noti": "Sản phẩm đã được thêm thành công",
@@ -60,7 +64,6 @@ function ProductForm() {
         await axios
             .get(fetchCategories)
             .then((res) => {
-                // console.log(res?.data.categories);
                 setCategory(res?.data.categories);
             })
     }
@@ -118,7 +121,7 @@ function ProductForm() {
             <div className='title'>
                 <h2>QUẢN LÝ SẢN PHẨM</h2>
             </div>
-            <Toolbar />
+            <Toolbar url={url} />
             </div>
             <div className='content'>
                 <div className="header-product n_right_content" style={{width: "100%"}}>

@@ -9,37 +9,62 @@ import axios from 'axios';
 import { useState } from 'react';
 import Loading from './Loading';
 const ProductList = (props) => {
+  const [url, setUrl] = useState({
+    "add": "/manage/product/new",
+    "hide": "product/hide"
+  })
   const [products, setProducts] = useState([]);
-  const [criteria, setCriteria] = useState("0");
+  const [criteria, setCriteria] = useState(0);
   const [query, setQuery] = useState("");
   const [type, setType] = useState(
     [
-      'Tất cả sản phẩm',
-      'Sản phẩm đang bán',
-      'Sản phẩm đã ẩn'
+      {
+        "name": 'Tất cả sản phẩm', 
+        "status": "",
+      },
+      {
+        "name": 'Sản phẩm đang bán', 
+        "status": "true",
+      },
+      {
+        "name": 'Sản phẩm đã ẩn',
+        "status": "false",
+      },
     ]
   );
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [message, setMessage] = useState("Đang tải dữ liệu từ server....");
+  const [isSorted, setSort] = useState("false");
 
+  /**
+   * Get all products of a restaurant from server;
+   */
   const getProducts = async () => {
-    const url = `http://localhost:4000/api/products/${criteria}`;
+    const restaurantId = localStorage.getItem("RestaurantID");
+    const url = `http://localhost:4000/api/products`;
     await axios
-      .get(url)
+      .post(url, {
+        restaurantId: restaurantId,
+        status: type[criteria].status,
+      })
       .then((res) => {
         setProducts(res?.data.document)
       })
   }
   useEffect(() => {
     getProducts();
-    console.log(criteria);
   }, [criteria, setCriteria]);
 
+  useEffect(() => {
+    console.log(selectedCategory);
+  }, [selectedCategory]);
   /**
  * Update search query when changes happen on input; 
  */
   const getSearchQuery = (s_query) => {
     setQuery(s_query);
   };
+
   /**
    * Filter products that match the search query; 
    */
@@ -62,6 +87,39 @@ const ProductList = (props) => {
     }
   }, [query]);
 
+  /** Sort products*/
+  const sortAZ = () => {
+    const sortedProducts = products.sort((a,b)=> {
+      if (a.prod_name < b.prod_name) {
+        return -1;
+      }else if (a.prod_name > b.prod_name) {
+        return 1;
+      }
+      return 0;
+    });
+    setProducts(sortedProducts);
+    setSort("sortaz");
+  }
+  const sortZA = () => {
+    const sortedProducts = products.sort((a,b)=> {
+      if (a.prod_name < b.prod_name) {
+        return 1;
+      }else if (a.prod_name > b.prod_name) {
+        return -1;
+      }
+      return 0;
+    });
+    setProducts(sortedProducts);
+    setSort("sortza");
+  }
+  const sort = () => {
+    if (isSorted === "sortaz") {
+      sortZA();
+    }else {
+      sortAZ();
+    }
+  }
+
   return (
     <>
 
@@ -72,21 +130,18 @@ const ProductList = (props) => {
               <h2>QUẢN LÝ SẢN PHẨM</h2>
             </Link>
           </div>
-          <Toolbar url="/manage/product/new" functioner={getSearchQuery} search={true} />
-          {/* { query } */}
+          <Toolbar url={url} functioner={getSearchQuery} search={true} sort={sort} sortType={isSorted} />
         </div>
-        {/* <Outlet /> */}
         <div className="content">
           <div className="header-product n_right_content" style={{ width: "100%" }}>
             <div className='left-menu'>
               <Link to="/manage/product" className="fLink">
                 <FontAwesomeIcon icon={faHome} />
                 <span> Sản phẩm</span>
-                <span>/{type[criteria]}</span>
+                <span>/{type[criteria].name}</span>
               </Link>
             </div>
             <div className='right-menu'>
-              {/* <span>{criteria}</span> */}
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
                 <option disabled selected>Bộ lọc</option>
                 <option value="2">

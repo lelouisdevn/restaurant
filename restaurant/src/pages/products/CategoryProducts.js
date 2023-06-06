@@ -16,16 +16,26 @@ const CategoryProducts = () => {
     const [criteria, setCriteria] = useState(0);
     const [type, setType] = useState(
         [
-          'Tất cả sản phẩm',
-          'Sản phẩm đang bán',
-          'Sản phẩm đã ẩn'
+            'Tất cả sản phẩm',
+            'Sản phẩm đang bán',
+            'Sản phẩm đã ẩn'
         ]
-      );
+    );
+    const [url, setUrl] = useState({
+        "add": "/manage/product/new",
+        "hide": "product/hide"
+      })
+    const [isSorted, setSort] = useState("false");
+
     const getProducts = async () => {
         const url = `http://localhost:4000/api/products/category/${id}/${criteria}`;
+        const restaurantId = localStorage.getItem("RestaurantID");
         await axios
-            .get(url)
+            .post(url, {
+                restaurant: restaurantId,
+            })
             .then((res) => {
+                console.log(res?.data.products);
                 setProducts(res?.data.products)
             })
     }
@@ -41,7 +51,44 @@ const CategoryProducts = () => {
         getProducts();
         getCategory();
     }, [criteria]);
-    // console.log(products);
+
+    useEffect(() => {
+        getProducts();
+    }, [id]);
+
+    /** Sort product*/
+    const sortAZ = () => {
+        const sortedProducts = products.sort((a, b) => {
+            if (a.prod_name < b.prod_name) {
+                return -1;
+            } else if (a.prod_name > b.prod_name) {
+                return 1;
+            }
+            return 0;
+        });
+        setProducts(sortedProducts);
+        setSort("sortaz");
+    }
+    const sortZA = () => {
+        const sortedProducts = products.sort((a, b) => {
+            if (a.prod_name < b.prod_name) {
+                return 1;
+            } else if (a.prod_name > b.prod_name) {
+                return -1;
+            }
+            return 0;
+        });
+        setProducts(sortedProducts);
+        setSort("sortza");
+    }
+    const sort = () => {
+        // sortAZ();
+        if (isSorted === "sortaz") {
+            sortZA();
+        } else {
+            sortAZ();
+        }
+    }
 
     return (
         <>
@@ -53,9 +100,8 @@ const CategoryProducts = () => {
                             <h2>QUẢN LÝ SẢN PHẨM</h2>
                         </Link>
                     </div>
-                    <Toolbar url="/manage/product/new" />
+                    <Toolbar url={url} sort={sort} sortType={isSorted} />
                 </div>
-                {/* <Outlet /> */}
                 <div className="content">
                     <div className="header-product n_right_content" style={{ width: "100%" }}>
                         <div className='left-menu'>

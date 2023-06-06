@@ -2,18 +2,36 @@ const router = require('express').Router();
 const Product = require("../models/Product")
 const Category = require("../models/Category")
 // import { ObjectId } from "bson";
-const {ObjectId} = new require("bson");
+const { ObjectId } = new require("bson");
 /**Get all products with criteria */
-router.get('/products/:hidden', async (req, res) => {
-    const criteria = req.params.hidden;
-    const methods = [
-        {}, 
-        {"prod_status":true}, 
-        {"prod_status": false},
-    ];
+router.post('/products', async (req, res) => {
+    const { restaurantId, status } = req.body;
+    let prod_stt;
+    
+    if (status == "true") {
+        prod_stt = true;
+    }else if (status == "false") {
+        prod_stt = false;
+    }
     try {
-        const document = await Product.find(methods[criteria]);
-        res.send({ document })
+        if (status != "") {
+            const document = await Product.find(
+                {
+                    restaurant: restaurantId,
+                    prod_status: status,
+                },
+
+            );
+            res.send({ document })
+        }else {
+            const document = await Product.find(
+                {
+                    restaurant: restaurantId,
+                },
+
+            );
+            res.send({ document })
+        }
     }
     catch (e) {
         console.log(e)
@@ -21,25 +39,38 @@ router.get('/products/:hidden', async (req, res) => {
 });
 
 /**Get all products with category and display criteria */
-router.get('/products/category/:id/:criteria', async(req, res) => {
+router.post('/products/category/:id/:criteria', async (req, res) => {
     const categoryId = req.params.id;
     const criteria = req.params.criteria;
+    const {restaurant} = req.body;
+    // console.log(restaurantId)
     const methods = [
         {},
         true,
         false,
     ]
-    
+
     try {
-        if (criteria == 0){
-            const products = await Product.find({category: categoryId});
-            res.send({products});
+        if (criteria == 0) {
+            const products = await Product.find(
+                { 
+                    category: categoryId,
+                    restaurant: restaurant,
+                }
+            );
+            res.send({ products });
         }
         else {
-            const products = await Product.find({category: categoryId, prod_status: methods[criteria]});
-            res.send({products});
+            const products = await Product.find(
+                { 
+                    category: categoryId,
+                    prod_status: methods[criteria],
+                    restaurant: restaurant,
+                }
+            );
+            res.send({ products });
         }
-        
+
     } catch (error) {
         console.log(error);
     }
@@ -50,19 +81,19 @@ router.get('/product/:id', async (req, res) => {
     const productId = req.params.id;
     try {
         const document = await Product.aggregate([
-        {
-            $match: { "_id": new ObjectId(productId) },
-        },
-        {
-            $lookup: {
-                from: "categories",
-                localField: "category",
-                foreignField: "_id",
-                as: "categoryInfo",
+            {
+                $match: { "_id": new ObjectId(productId) },
+            },
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "category",
+                    foreignField: "_id",
+                    as: "categoryInfo",
+                }
             }
-        }
         ])
-        res.send({document});
+        res.send({ document });
     } catch (error) {
         console.log(error);
     }
