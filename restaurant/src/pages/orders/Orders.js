@@ -7,13 +7,14 @@ import OrderInfo from './OrderInfo';
 import OrderItem from './OrderItem';
 import Success from '../products/Success';
 import { useParams } from 'react-router-dom'; 
+import VND from '../../components/currency';
 function Orders() {
     const { id , name} = useParams();
     if (id !== undefined) {
       console.log("id truyen: ", id+ name);
     }
     const [products, setProducts] = useState("");
-    const [criteria, setCriteria] = useState("1");
+    const [criteria, setCriteria] = useState("");
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [orderId, setOrderId] = useState("");
     const [isOrdered, setTt] = useState(false);
@@ -38,14 +39,17 @@ function Orders() {
      * Fetch product data from server;
      */
     const getProducts = async () => {
-        const url = `http://localhost:4000/api/products/${criteria}`;
+        const url = `http://localhost:4000/api/products`;
+        const restaurantId = localStorage.getItem("RestaurantID");
         await axios
-            .get(url)
-            .then((res) => {
-                setProducts(res?.data.document)
+            .post(url, {
+                restaurantId: restaurantId,
+                status: criteria,
             })
-        // console.log("ID user: ", localStorage.getItem("UserID"));
-        // console.log("ID nha hang: ", localStorage.getItem("RestaurantID"));
+            .then((res) => {
+                console.log(res?.data.document);
+                setProducts(res?.data.document);
+            })
     }
 
     /**
@@ -113,21 +117,21 @@ function Orders() {
     /**
      * Get Restaurant Information with Id:
      */
-    // const getRestaurantById = async () => {
-    //     const restaurantId = localStorage.getItem("RestaurantID");
-    //     const getRestaurantInfo = `http://localhost:4000/api/info/id=${restaurantId}`;
-    //     const response = await axios
-    //         .get(getRestaurantInfo)
+    const getRestaurantById = async () => {
+        const restaurantId = localStorage.getItem("RestaurantID");
+        const getRestaurantInfo = `http://localhost:4000/api/info/id=${restaurantId}`;
+        const response = await axios
+            .get(getRestaurantInfo)
 
-    //     if (response.status == 200) {
-    //         setRestaurant(response.data.info[0]);
-    //     }
-    // }
+        if (response.status == 200) {
+            setRestaurant(response.data.info[0]);
+        }
+    }
 
     /**When the page is loaded; get user info and restaurant info*/
     useEffect(() => {
         getUserInfoById();
-        // getRestaurantById();
+        getRestaurantById();
     }, []);
 
     /**
@@ -156,7 +160,7 @@ function Orders() {
                 order_at: recent,
                 total: total,
                 user: user._id,
-                table: "646f2abd6ab932270421cff5",
+                table: id,
                 restaurant: restaurant._id,
             })
             .then((res) => {
@@ -262,7 +266,7 @@ function Orders() {
                                         <td></td>
                                         <td></td>
                                         <td>Tổng:</td>
-                                        <td>{total}</td>
+                                        <td>{VND.format(total)}</td>
                                     </tr>
                                 </table>
                             </>
