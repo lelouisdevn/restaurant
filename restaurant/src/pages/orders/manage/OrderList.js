@@ -18,12 +18,14 @@ function OrderList() {
                     "prod_name": "com ga xoi mo",
                     "qty": "2",
                     "unit_price": "25000",
+                    "status": "dadat"
                 },
                 {
                     "id": "2",
                     "prod_name": "nuoc mia",
                     "qty": "3",
                     "unit_price": "10000",
+                    "status": "dangphucvu",
                 }
             ],
             "order_at": "13:10:45 4/6/2023 ",
@@ -39,12 +41,14 @@ function OrderList() {
                     "prod_name": "bun rieu cua dong",
                     "qty": "2",
                     "unit_price": "25000",
+                    "status": "dadat"
                 },
                 {
                     "id": "4",
                     "prod_name": "ca phe sua da",
                     "qty": "3",
                     "unit_price": "15000",
+                    "status": "dadat"
                 }
             ],
             "order_at": "15:10:45 4/6/2023 ",
@@ -60,12 +64,14 @@ function OrderList() {
                     "prod_name": "bun rieu cua dong",
                     "qty": "2",
                     "unit_price": "25000",
+                    "status": "dangphucvu",
                 },
                 {
                     "id": "4",
                     "prod_name": "ca phe sua da",
                     "qty": "3",
                     "unit_price": "15000",
+                    "status": "dangchebien",
                 }
             ],
             "order_at": "15:10:45 4/6/2023 ",
@@ -245,6 +251,7 @@ function OrderList() {
                                         <td>Số lượng</td>
                                         <td>Đơn giá</td>
                                         <td style={{ width: "100px" }}>Tổng</td>
+                                        <td>Trạng thái</td>
                                     </tr>
                                     {
                                         products.map((product) => (
@@ -264,12 +271,13 @@ function OrderList() {
                                         <td>
                                             { selectedOrder.total }
                                         </td>
+                                        <td></td>
                                     </tr>
                                 </table>
                                 <div className='order-actions'>
                                     <div className='content'>
                                         <select 
-                                            style={{padding: "10px 10px", borderRadius: "10px", border: "solid 1px lightgray", margin: "0 7px"}}
+                                            className="slbtn"
                                             onChange={(e) => setSelectedStatus(e.target.value)}
                                         >
                                             <option selected disabled>Cập nhật trạng thái</option>
