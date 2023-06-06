@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import VND from '../../components/currency';
 function OrderItem(props) {
     const [orderProduct, setOProduct] = useState(props.selectedProduct);
     const [qty, setQty] = useState(1);
@@ -47,8 +48,8 @@ function OrderItem(props) {
                     onClick={increase}
                 >+</button>
             </td>
-            <td>{orderProduct.prod_price}</td>
-            <td>{qty * orderProduct.prod_price}</td>
+            <td>{VND.format(orderProduct.prod_price)}</td>
+            <td>{VND.format(qty * orderProduct.prod_price)}</td>
         </tr>
     )
 }

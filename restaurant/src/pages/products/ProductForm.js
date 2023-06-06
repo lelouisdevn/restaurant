@@ -95,6 +95,15 @@ function ProductForm() {
         getCategories();
     }, []);
 
+    const style = {
+        width: "calc(100% - 354px)",
+        height: "calc(100vh - 64px)",
+        position: "absolute",
+        zIndex: 10,
+        left: "50%",
+        transform: "translateX(-50%)",
+      };
+
     /**
      * HTML template;
     */
@@ -102,7 +111,7 @@ function ProductForm() {
         <>
         {
             success &&
-            <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+            <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} style={style} />
         }
         <div className={`detail-container ${successClass}`}>
             <div className='fixed-header'>

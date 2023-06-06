@@ -142,6 +142,15 @@ const ProductDetail = () => {
   }
 
 
+  const style = {
+    width: "calc(100% - 354px)",
+    height: "calc(100vh - 64px)",
+    position: "absolute",
+    zIndex: 10,
+    left: "50%",
+    transform: "translateX(-50%)",
+  };
+
   /**
    * HTML template
    */
@@ -149,13 +158,13 @@ const ProductDetail = () => {
     <>
       {
         success &&
-        <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+        <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} style={style} />
       }
       {
         isDisplay ?
           <div className='img-container'>
             <img className='fullScreenImage' src={product.prod_img} />
-            <div onClick={() => setStatus(false)}>
+            <div onClick={() => setStatus(!isDisplay)}>
               <FontAwesomeIcon icon={faClose} />
             </div>
           </div>
@@ -191,7 +200,7 @@ const ProductDetail = () => {
                   <div>
                     <button
                       className='updateButton'
-                      onClick={() => setStatus(true)}
+                      onClick={() => setStatus(!isDisplay)}
                     >
                       Toàn màn hình
                     </button>

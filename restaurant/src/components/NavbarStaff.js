@@ -13,12 +13,16 @@ const StyledToolbar = styled(Toolbar)({
   height: "100%"
 });
 
-const NavbarStaff = () => {
+const NavbarStaff = () => { 
+
   const [value, setValue] = useState(0);
   const handleTabs = (e, value) => {
     console.log(value);
     setValue(value);
   };
+  const setOut = () => {
+    localStorage.clear();
+  }
   return (
     <div>
       <AppBar position="static">
@@ -31,15 +35,23 @@ const NavbarStaff = () => {
             onChange={handleTabs}
             aria-label="nav tabs example"
           >
-
-            <Link to={"/staff/orders"}>
+            {/* Đặt mónmón */}
+            {/* <Link to={"/staff/orders"}>
               <Tab
                 icon={<NoteAltIcon />}
                 iconPosition="start"
                 label="Đặt món"
+                ></Tab>
+              </Link> */}
+            <Link to={"/staff/orders/all"}>
+              <Tab
+              icon={<NoteAltIcon />}
+              iconPosition="start"
+              label="Danh sách gọi món"
               ></Tab>
             </Link>
 
+            {/* Sơ đồ */}
             <Link to={"/staff/outline"}>
               <Tab
                 icon={<FontAwesomeIcon icon={faMap} />}
@@ -48,14 +60,24 @@ const NavbarStaff = () => {
               ></Tab>
             </Link>
 
-            {/* <Tab label="Trả món"> </Tab> */}
-
+            {/* Phiếu tạm tính */}
             <Tab
               icon={<FontAwesomeIcon icon={faReceipt} />}
               iconPosition="start"
               label="Phiếu tạm tính"
             ></Tab>
+
+            {/* <Link to={"/staff/orders/all"}>
+              <Tab label="Danh sách gọi món"></Tab>
+            </Link> 
+            <Tab label="Trả món"> </Tab> */}
+            
+            <Link to={"/login"} onClick={() => setOut()}>
+              <Tab label="Thoát"> </Tab>
+            </Link>
+
           </Tabs>
+            
         </StyledToolbar>
       </AppBar>
       <Outlet />

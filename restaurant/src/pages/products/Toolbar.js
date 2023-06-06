@@ -46,7 +46,7 @@ const Toolbar = (props) => {
       { isSearch &&
       <div className='search'>
         { input &&
-          <input defaultValue="" placeholder='Search' autoFocus  className='inputsearch' onChange={handleKeyDown} />
+          <input defaultValue="" type='search' placeholder='Search' autoFocus  className='inputsearch' onChange={handleKeyDown} />
         }
         { input 
         ? <FontAwesomeIcon icon={faClose} className='sicon' onClick={terminateSearch} />

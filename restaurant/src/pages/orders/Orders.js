@@ -6,7 +6,7 @@ import Loading from '../products/Loading';
 import OrderInfo from './OrderInfo';
 import OrderItem from './OrderItem';
 import Success from '../products/Success';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'; 
 function Orders() {
     const { id , name} = useParams();
     if (id !== undefined) {
@@ -56,9 +56,6 @@ function Orders() {
         setSelectedProducts([]);
         setTt(!isOrdered);
     }
-    // useEffect(() => {
-
-    // }, [])
 
     /**
      * first: get all products;
@@ -80,7 +77,11 @@ function Orders() {
      */
     const handleOrder = () => {
         if (selectedProducts.length > 0) {
-            order();
+            let total = 0;
+            selectedProducts.forEach((product) => {
+                total += (parseInt(product.qty) * parseInt(product.prod_price));
+            })
+            order(total);
         }else {
             const message = {
                 "noti": "Vui lòng chọn sản phẩm trước khi nhấn đặt món",
@@ -89,12 +90,13 @@ function Orders() {
             showModal(message);
         }
     }
-    const order = async () => {
+    const order = async (total) => {
         const order_url = 'http://localhost:4000/api/order/new';
         const recent = new Date().toLocaleString("vi-VN", {hour12: false});
         await axios
             .post(order_url, {
                 order_at: recent,
+                total: total,
                 user: "6472e71067760e2a1599227b",
                 table: "646f2abd6ab932270421cff5",
                 restaurant: "64730496807c841ff6a953a3",
@@ -127,7 +129,6 @@ function Orders() {
     const showModal = (message) => {
         setSuccess(true);
         setSuccessClass("opacity-success");
-        // setMessage("Thông tin đặt món đã được ghi nhận thành công");
         setMessage(message);
         setTimeout(() => {
           setSuccess(false);
@@ -156,7 +157,7 @@ function Orders() {
                                         functioner={updateOrderList}
                                         isOrdered={isOrdered} 
                                     />)
-                            : <Loading message="loading products...." />
+                            : <Loading message="Đang tải dữ liệu từ server...." />
                     }
                 </div>
             </div>
@@ -181,7 +182,7 @@ function Orders() {
                                 <OrderItem
                                     key={product._id}
                                     
-                                    stt={selectedProducts.indexOf(product)}
+                                    stt={selectedProducts.indexOf(product) + 1}
                                     selectedProduct={product}
                                     functioner={updateQty}
                                 />

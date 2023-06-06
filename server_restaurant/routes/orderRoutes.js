@@ -3,10 +3,11 @@ const Order = require("../models/Order")
 const OrderDetail = require("../models/OrderDetail");
 /**Create a new order */
 router.post('/order/new', async(req, res) => {
-    const {order_at, user, table, restaurant } = req.body;
+    const {order_at, total, user, table, restaurant } = req.body;
     try {
         const order = Order({
             order_at: order_at,
+            total: total,
             user: user,
             table: table,
             restaurant: restaurant,
@@ -55,5 +56,7 @@ router.put('/order/update/:orderId', async(req, res) => {
         console.log(error);
     }
 })
+
+
 
 module.exports = router;

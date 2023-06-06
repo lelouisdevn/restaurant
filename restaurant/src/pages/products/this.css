@@ -28,15 +28,10 @@
     margin: 10px;
     padding: 5px 0;
     font-size: 30px;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
-    /* color: black; */
     font-weight: 100;
-    /* position: sticky;
-    top: 64.1px;
-    z-index: 11;
-    border-radius: 10px;
-    background-color: #1976d2; */
 }
 
 .fixed-header {
@@ -250,13 +245,12 @@ button.updateButton:hover {
 
 .img-container {
     background: #212121;
+    width: -webkit-fill-available;
     width: -moz-available;
     height: calc(100vh - 64px);
     transition: 500ms;
     position: absolute;
     z-index: 9;
-    /* transition: all 2s ease-out; */
-
 }
 
 .productimg {
@@ -333,12 +327,10 @@ button.updateButton:hover {
     height: 400px;
     background-color: white;
     border-radius: 10px;
-    /* border: solid 1px gray; */
     filter: drop-shadow(1px 1px 10px rgb(182, 181, 181));
     text-align: center;
     margin: auto 0;
     height: 400px;
-    /* line-height: 400px; */
     transition: 0.4s ease-in-out;
     font-size: 20px;
 }
@@ -349,14 +341,28 @@ button.updateButton:hover {
     font-size: 18px;
     line-height: 0;
     padding: 10px 13px;
+    border-radius: 50%;
 }
 .update-modal span:hover {
-    background-color: rgb(228, 228, 228);
+    background-color: rgba(228,230,235,255);
     padding: 10px 13px;
-    border-radius: 50px;
     cursor: pointer;
     transition: 400ms;
 }
 .opacity-success {
     opacity: 0.1;
+}
+.btn-dlt {
+    margin: 15px 0;
+    padding: 0 20px;
+    border: solid 1px crimson;
+    border-radius: 10px;
+    width: 80%;
+    color: crimson;
+    font-size: 18px;
+}
+.btn-dlt:hover {
+    background-color: crimson;
+    color: white;
+    transition: 400ms;
 }

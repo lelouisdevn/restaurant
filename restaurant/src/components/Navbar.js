@@ -1,3 +1,4 @@
+import { Link, Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
 import {
   AppBar,
@@ -31,6 +32,9 @@ const Icons = styled(Box)(({ them }) => ({
 }));
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const setOut = () => {
+    localStorage.clear();
+  }
   return (
     <AppBar position="sticky">
       <StyledToolbar>
@@ -49,6 +53,9 @@ const Navbar = () => {
             onClick={(e) => setOpen(true)}
           />
           <Typography variant="span"> Tonny</Typography>
+          <Link to={"/login"} onClick={() => setOut()}>
+            <Typography variant="span"> Thoát</Typography>
+          </Link>
         </Icons>
       </StyledToolbar>
       <Menu
