@@ -1,6 +1,6 @@
 import './orders.css';
 
-function OrderInfo() {
+function OrderInfo({nameTable}) {
     const [restaurant, setRestaurant] = [{
         "name": "Nhà hàng TTT",
         "addr": "Đường 3/2, phường Xuân Khánh, quận Ninh Kiều, TP. Cần Thơ",
@@ -21,6 +21,10 @@ function OrderInfo() {
                         </td>
                         <td>{restaurant.phone}</td>
                     </tr>
+                    <tr>
+                        <td>Bàn</td>
+                        <td>{nameTable}</td>
+                    </tr>
                     {/* <tr>
                         <td>Nhân viên:</td>
                         <td>Ngô Trần Vĩnh Thái</td>
@@ -32,7 +36,8 @@ function OrderInfo() {
                     <tr>
                         <td>Bàn</td>
                         <td>12</td>
-                    </tr> */}
+                    </tr>
+                     */}
                 </table>
             </div>
         </div>
