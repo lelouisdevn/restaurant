@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import RectangleIcon from "@mui/icons-material/Rectangle";
 import OutLine from "./OutLine";
 import LoadingT from "./Loading";
+
 const LayoutOutline = () => {
   const [idlobby, setIdLobby] = useState();
   const [arrange, setArrange] = useState();
@@ -18,12 +19,12 @@ const LayoutOutline = () => {
     setNumRow(num);
     setisLoading(false);
   };
-  const selectTableFunction = async (list) => {
-    setLs(list);
-  };
+  // const selectTableFunction = async (list) => {
+  //   setLs(list);
+  // };
   return (
     <div display="flex">
-      <Box
+      {/* <Box
         height={40}
         display="flex"
         justifyContent="center"
@@ -38,7 +39,7 @@ const LayoutOutline = () => {
               </Typography>
             ))}
         </Typography>
-      </Box>
+      </Box> */}
       <Box
         direction="row"
         display="flex"
@@ -89,7 +90,7 @@ const LayoutOutline = () => {
                 id={idlobby}
                 arrange={arrange}
                 numRow={numRow}
-                selectTableCallback={selectTableFunction}
+                // selectTableCallback={selectTableFunction}
               />
             </Box>
           )}
