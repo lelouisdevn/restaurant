@@ -20,6 +20,11 @@ const OrderDetailSchema = new Schema({
         type: Number,
         required: true,
     },
+    status: {
+        type: String,
+        required: true,
+        default: "dadat",
+    }
 })
 
 module.exports = mongoose.model("OrderDetail", OrderDetailSchema);
