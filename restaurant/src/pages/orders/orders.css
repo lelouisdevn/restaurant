@@ -144,3 +144,10 @@
 .fWidth {
     width: 100%;
 }
+
+.slbtn {
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 1px lightgray;
+    margin: 0 7px;
+}

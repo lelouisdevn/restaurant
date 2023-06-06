@@ -57,6 +57,7 @@
     color: black;
     margin: 20px 30px;
     padding: 2px;
+    position: relative;
 }
 
 .toolbar div {
@@ -117,10 +118,6 @@
     text-align: center;
 }
 
-.product div {
-    /* text-align: right; */
-
-}
 
 .product-content {
     margin: 10px 5px;
@@ -285,6 +282,10 @@ button.updateButton:hover {
     background: none;
     padding: 0;
     margin: 0;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .toolbar .search:hover {
@@ -300,7 +301,7 @@ button.updateButton:hover {
     text-align: left;
     margin: 0 10px;
     height: 40px;
-    width: 75px;
+    width: 100px;
     border: solid 1px grey;
     border-radius: 10px;
     color: black;
@@ -365,4 +366,44 @@ button.updateButton:hover {
     background-color: crimson;
     color: white;
     transition: 400ms;
+}
+
+.menu li > .hd-menu {
+    display: none;
+    position: relative;
+}
+
+.menu li > .dd-menu {
+    display: block;
+    position: absolute;
+    color: black;
+    /* padding: 10px; */
+    margin: 0;
+    border-radius: 10px;
+    background: whitesmoke;
+    left: 0;
+    width: 200px;
+    border: solid 1px lightgray;
+    filter: drop-shadow(1px 1px 5px lightgray);
+}
+
+.menu li .dd-menu li {
+    /* margin: 5px; */
+    padding: 7px 10px;
+    border-bottom: solid 1px lightgray;
+}
+
+.menu li .dd-menu li:hover {
+    background-color: rgb(182, 181, 181);
+    border-radius: 10px;
+}
+.cls-dd-btn {
+    padding: 0;
+    text-align: center;
+    padding: 0!important;
+    border-bottom: none!important;
+}
+.cls-dd-btn:hover {
+    background-color: rgba(228,230,235,255);
+    border-radius: 0 0 10px 10px!important;
 }
