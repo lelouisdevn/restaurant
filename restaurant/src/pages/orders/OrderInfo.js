@@ -14,10 +14,23 @@ function OrderInfo(props) {
                         <td>Số điện thoại:</td>
                         <td>{props.restaurant.rest_phone}</td>
                     </tr>
-                    <tr>
-                        <td>Bàn:</td>
-                        <td>201</td>
+                    <tr> 
+                        <td>Bàn</td>
+                        <td>{props.nameTable}</td>
                     </tr>
+                    {/* <tr>
+                        <td>Nhân viên:</td>
+                        <td>Ngô Trần Vĩnh Thái</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày:</td>
+                        <td>{new Date().toLocaleString("vi-VN", {hour12: false})}</td>
+                    </tr>
+                    <tr>
+                        <td>Bàn</td>
+                        <td>12</td>
+                    </tr>
+                     */} 
                     <tr>
                         <td>Nhân viên:</td>
                         <td>{props.user.staff_name}</td>

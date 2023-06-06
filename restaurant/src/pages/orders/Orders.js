@@ -6,11 +6,12 @@ import Loading from '../products/Loading';
 import OrderInfo from './OrderInfo';
 import OrderItem from './OrderItem';
 import Success from '../products/Success';
-
+import { useParams } from 'react-router-dom'; 
 function Orders() {
-    /**
-     * Data;
-    */
+    const { id , name} = useParams();
+    if (id !== undefined) {
+      console.log("id truyen: ", id+ name);
+    }
     const [products, setProducts] = useState("");
     const [criteria, setCriteria] = useState("1");
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -231,7 +232,7 @@ function Orders() {
                 </div>
                 <div className="order-right">
                     <div className="order-right-content">
-                        <OrderInfo user={user} restaurant={restaurant} />
+                            <OrderInfo user={user} restaurant={restaurant} nameTable={name}  />
 
                         {/* Display when selected products are not empty; */}
                         {selectedProducts.length > 0 &&

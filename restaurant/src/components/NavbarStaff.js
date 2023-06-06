@@ -1,9 +1,11 @@
-import { AppBar, Tab, Tabs, Toolbar, Typography } from "@mui/material";
+import { AppBar, Tab, Tabs, Toolbar } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, Outlet } from "react-router-dom";
-import LayoutOutline from "../pages/outline/LayoutOutline";
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
+import { faMap, faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -15,7 +17,7 @@ const NavbarStaff = () => {
 
   const [value, setValue] = useState(0);
   const handleTabs = (e, value) => {
-    // console.log(value);
+    console.log(value);
     setValue(value);
   };
   const setOut = () => {
@@ -26,38 +28,61 @@ const NavbarStaff = () => {
       <AppBar position="static">
         <StyledToolbar>
           <MenuIcon />
-          {/* <Typography variant="h6">Restaurant TTT</Typography> */}
-
           <Tabs
             indicatorColor="secondary"
             textColor="inherit"
-            // sx={{backgroundColor:'red'}}
             value={value}
             onChange={handleTabs}
+            aria-label="nav tabs example"
           >
-            <Link to={"/staff/orders"}>
-              <Tab label="Đặt món"></Tab>
-            </Link>
+            {/* Đặt mónmón */}
+            {/* <Link to={"/staff/orders"}>
+              <Tab
+                icon={<NoteAltIcon />}
+                iconPosition="start"
+                label="Đặt món"
+                ></Tab>
+              </Link> */}
             <Link to={"/staff/orders/all"}>
+              <Tab
+              icon={<NoteAltIcon />}
+              iconPosition="start"
+              label="Danh sách gọi món"
+              ></Tab>
+            </Link>
+
+            {/* Sơ đồ */}
+            <Link to={"/staff/outline"}>
+              <Tab
+                icon={<FontAwesomeIcon icon={faMap} />}
+                iconPosition="start"
+                label="Sơ đồ"
+              ></Tab>
+            </Link>
+
+            {/* Phiếu tạm tính */}
+            <Tab
+              icon={<FontAwesomeIcon icon={faReceipt} />}
+              iconPosition="start"
+              label="Phiếu tạm tính"
+            ></Tab>
+
+            {/* <Link to={"/staff/orders/all"}>
               <Tab label="Danh sách gọi món"></Tab>
-            </Link>
-            <Link to={"outline"}>
-              <Tab label="Sơ đồ"> </Tab>
-            </Link>
-            <Tab label="Trả món"> </Tab>
-            <Tab label="Phiếu tạm tính"> </Tab>
+            </Link> 
+            <Tab label="Trả món"> </Tab> */}
+            
             <Link to={"/login"} onClick={() => setOut()}>
               <Tab label="Thoát"> </Tab>
             </Link>
+
           </Tabs>
             
         </StyledToolbar>
       </AppBar>
       <Outlet />
-   
-      {/* <TabPanel value={value} index={0}>
-        
-      </TabPanel>
+
+      {/* <TabPanel value={value} index={0}></TabPanel>
       <TabPanel value={value} index={1}>
         <LayoutOutline />
       </TabPanel>
@@ -67,6 +92,7 @@ const NavbarStaff = () => {
       <TabPanel value={value} index={3}>
         Item 4 Detail
       </TabPanel> */}
+      
     </div>
   );
 };

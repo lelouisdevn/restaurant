@@ -5,6 +5,7 @@ import '../products/tiles.css'
 import Loading from '../products/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import VND from '../../components/currency'
 const OrderProductTitle = (props) => {
   const [product, setProduct] = useState(props.product);
   const [status, setStatus] = useState(true);
@@ -29,7 +30,7 @@ const OrderProductTitle = (props) => {
           </div>
           <div className="productName">
             <h4>{product.prod_name}</h4>
-            <h4>{product.prod_price}</h4>
+            <h4>{VND.format(product.prod_price)}</h4>
           </div>
           <button
             onClick={handleClick}
