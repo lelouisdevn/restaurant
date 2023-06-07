@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { faHome, faRefresh } from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faDisplay, faFile, faHome, faRefresh, faSquare, faTable } from "@fortawesome/free-solid-svg-icons";
 import './this.css';
 import ProductTile from './ProductTile';
 import Toolbar from './Toolbar';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Loading from './Loading';
 import { useNavigate } from 'react-router-dom';
+import ProductGrid from './ProductGrid';
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
@@ -16,7 +17,7 @@ const ProductList = (props) => {
   })
   const [products, setProducts] = useState([]);
   const [criteria, setCriteria] = useState(0);
-  const [category, setCategory] = useState("");
+  // const [category, setCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
 
 
@@ -80,7 +81,7 @@ const ProductList = (props) => {
       },
     ]
   );
-  const [selectedCategory, setSelectedCategory] = useState("");
+  // const [selectedCategory, setSelectedCategory] = useState("");
   const [message, setMessage] = useState("Đang tải dữ liệu từ server....");
   const [isSorted, setSort] = useState("false");
 
@@ -172,12 +173,15 @@ const ProductList = (props) => {
   const [refresh, setRefresh] = useState("");
   const refershPage = () => {
     setRefresh("refresh");
+    setQuery("");
     setTimeout(() => {
       setCriteria(0);
       navigate('/manage/product');
       setRefresh("");
     }, 1500);
   }
+
+  const [displayType, setDisplayType] = useState("tiles");
   return (
     <>
 
@@ -205,6 +209,22 @@ const ProductList = (props) => {
               <span style={{margin: "0 5px"}} onClick={refershPage}>
                 <FontAwesomeIcon icon={faRefresh} className={refresh} />
               </span>
+
+              
+
+              {
+                displayType == "tiles" ?
+                <span style={{margin: "0 5px", width: "100px"}} onClick={() => {
+                  setDisplayType("grid");
+                }}>
+                  <FontAwesomeIcon icon={faTable} />
+                </span> :
+                <span style={{margin: "0 5px", width: "100px"}} onClick={() => {
+                  setDisplayType("tiles");
+                }}>
+                  <FontAwesomeIcon icon={faFile} />
+                </span>
+              }
               
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
                 <option disabled selected>Bộ lọc</option>
@@ -219,9 +239,22 @@ const ProductList = (props) => {
             </div>
           </div>
           <div className="products">
-            {products.length > 0 ? products.map((product) => (
-              <ProductTile key={product._id} product={product} />
-            )) : <Loading message={message} />}
+            { displayType == "tiles" ?
+            <>
+              {products.length > 0 ? products.map((product) => (
+                <ProductTile key={product._id} product={product} />
+              )) : <Loading message={message} />}
+            </> :
+            <>
+              {
+                products.length > 0 && products.map((product) => (
+                  <ProductGrid 
+                    stt={products.indexOf(product) + 1}
+                    key={product._id} product={product} />
+                ))
+              }
+            </>
+            }
           </div>
         </div>
       </div>

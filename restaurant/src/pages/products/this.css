@@ -203,6 +203,7 @@ button.updateButton:hover {
     padding: 7px 15px;
     /* width: 100px; */
     border-radius: 10px;
+    margin-left: 5px;
 }
 
 .n_right_content label {
