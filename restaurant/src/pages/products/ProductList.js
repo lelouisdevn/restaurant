@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Outlet } from 'react-router-dom';
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { Link, Outlet, useParams } from 'react-router-dom';
+import { faHome, faRefresh } from "@fortawesome/free-solid-svg-icons";
 import './this.css';
 import ProductTile from './ProductTile';
 import Toolbar from './Toolbar';
 import axios from 'axios';
 import { useState } from 'react';
 import Loading from './Loading';
+import { useNavigate } from 'react-router-dom';
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
@@ -15,15 +16,62 @@ const ProductList = (props) => {
   })
   const [products, setProducts] = useState([]);
   const [criteria, setCriteria] = useState(0);
+  const [category, setCategory] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+
+
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (id != undefined) {
+      // setCategory(id);
+      // console.log(id);
+      getCategoryName();
+      getProductsCategory();
+    }else {
+      getProducts();
+    }
+  }, [id]);
+  // useEffect(() => {
+  //   if (category != "") {
+  //     getCategoryName();
+  //     getProductsCategory();
+  //   }
+  // }, [category]);
+
+  const getCategoryName = async () => {
+    const getCateName = `http://localhost:4000/api/category/${id}`;
+    await axios
+      .get(getCateName)
+      .then((res) => {
+        setCategoryName(res?.data.category[0].category_name);
+      })
+  }
+  const getProductsCategory = async () => {
+    const url = `http://localhost:4000/api/products/category/${id}/${criteria}`;
+    const restaurantId = localStorage.getItem("RestaurantID");
+    await axios
+      .post(url, {
+        restaurant: restaurantId,
+      })
+      .then((res) => {
+        console.log(res?.data.products);
+        setProducts(res?.data.products)
+      })
+  }
+
+
+
   const [query, setQuery] = useState("");
   const [type, setType] = useState(
     [
       {
-        "name": 'Tất cả sản phẩm', 
+        "name": 'Tất cả sản phẩm',
         "status": "",
       },
       {
-        "name": 'Sản phẩm đang bán', 
+        "name": 'Sản phẩm đang bán',
         "status": "true",
       },
       {
@@ -50,14 +98,15 @@ const ProductList = (props) => {
       .then((res) => {
         setProducts(res?.data.document)
       })
+    // setCategoryName("");
   }
-  useEffect(() => {
-    getProducts();
-  }, [criteria, setCriteria]);
-
-  useEffect(() => {
-    console.log(selectedCategory);
-  }, [selectedCategory]);
+  useEffect(() =>{
+    if (id == undefined) {
+      getProducts();
+    }else {
+      getProductsCategory();
+    }
+  }, [criteria]);
   /**
  * Update search query when changes happen on input; 
  */
@@ -71,6 +120,7 @@ const ProductList = (props) => {
   useEffect(() => {
     if (query === "") {
       getProducts();
+      // navigate('/manage/products');
     }
 
     const filterBySearch = products.filter((product) => {
@@ -89,10 +139,10 @@ const ProductList = (props) => {
 
   /** Sort products*/
   const sortAZ = () => {
-    const sortedProducts = products.sort((a,b)=> {
+    const sortedProducts = products.sort((a, b) => {
       if (a.prod_name < b.prod_name) {
         return -1;
-      }else if (a.prod_name > b.prod_name) {
+      } else if (a.prod_name > b.prod_name) {
         return 1;
       }
       return 0;
@@ -101,10 +151,10 @@ const ProductList = (props) => {
     setSort("sortaz");
   }
   const sortZA = () => {
-    const sortedProducts = products.sort((a,b)=> {
+    const sortedProducts = products.sort((a, b) => {
       if (a.prod_name < b.prod_name) {
         return 1;
-      }else if (a.prod_name > b.prod_name) {
+      } else if (a.prod_name > b.prod_name) {
         return -1;
       }
       return 0;
@@ -115,11 +165,14 @@ const ProductList = (props) => {
   const sort = () => {
     if (isSorted === "sortaz") {
       sortZA();
-    }else {
+    } else {
       sortAZ();
     }
   }
-
+  const refershPage = () => {
+    setCriteria(0);
+    navigate('/manage/product');
+  }
   return (
     <>
 
@@ -138,10 +191,16 @@ const ProductList = (props) => {
               <Link to="/manage/product" className="fLink">
                 <FontAwesomeIcon icon={faHome} />
                 <span> Sản phẩm</span>
+                <span>{ id !== undefined && `/${categoryName}` }</span>
                 <span>/{type[criteria].name}</span>
               </Link>
             </div>
             <div className='right-menu'>
+              
+              <span style={{margin: "0 5px"}} onClick={refershPage}>
+                <FontAwesomeIcon icon={faRefresh} />
+              </span>
+              
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
                 <option disabled selected>Bộ lọc</option>
                 <option value="2">
