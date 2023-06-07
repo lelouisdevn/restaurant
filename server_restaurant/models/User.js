@@ -30,10 +30,6 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    restaurant: {
-        type: Schema.Types.ObjectId,
-        ref: 'Restaurant'
-    },
     role: {
         type: String,
         required: true,

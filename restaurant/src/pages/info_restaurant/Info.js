@@ -6,9 +6,6 @@ import axios from "axios";
 
 
 const Info = () => {
-    // const {id,setID} = useParams();
-    // setID = "64730496807c841ff6a953a3";
-
     const [info, setInfo] = useState([]);
 
     const [rest_name, setInfoName] = useState("");
@@ -18,7 +15,7 @@ const Info = () => {
 
     const getInfo = async () => {
         await axios
-          .get("http://localhost:4000/api/info")
+          .get(`http://localhost:4000/api/info/id=${localStorage.getItem("RestaurantID")}`)
           .then((res) => {
             const temp = res?.data.info[0];
             setInfo(temp);

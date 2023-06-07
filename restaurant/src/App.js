@@ -60,9 +60,9 @@ function App() {
               <Route path="new" element={<CategoryForm />} />
             </Route>
             <Route path="user" element={<User />}>
-              <Route index element={<UserList />} />
+              <Route index element={<UserList />}/>
+              <Route path=":idUser" element={<UserDetail />} />
               <Route path="add" element={<UserAdd />}></Route>
-              <Route path=":id" element={<UserDetail />} />
             </Route>
             <Route path="info">
               <Route index element={<Info />} />

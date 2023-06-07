@@ -6,21 +6,21 @@ import axios from "axios";
 
 
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [restaurant, setRestaurant] = useState("sagarestaurant@rest.vn");
-    
-    const [PorT, setPorT] = useState(true);
-    // const [UserID, setUserID] = useState([]); 
-    // const [RestaurantID, setRestaurantID] = useState([]); 
-  
+  const navigate = useNavigate();
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [restaurant, setRestaurant] = useState("sagarestaurant@rest.vn");
+
+  const [PorT, setPorT] = useState(true);
+  // const [UserID, setUserID] = useState([]); 
+  // const [RestaurantID, setRestaurantID] = useState([]); 
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    
+
     try {
       await axios
         .post("http://localhost:4000/api/login", {
@@ -36,30 +36,28 @@ const Login = () => {
           console.log(localStorage.getItem("UserID"));
           console.log(localStorage.getItem("RestaurantID"));
 
-          if(res?.data.login[0].user.role === "1"){
+          if (res?.data.login[0].user.role === "1") {
             navigate("/manage/home");
-          }else if(res?.data.login[0].user.role === "2"){
+          } else if (res?.data.login[0].user.role === "2") {
             navigate("/staff/orders");
-          }
-          if(res?.data.err == "err"){
-            toast.error('🦄 Nhập sai thông tin!', {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              });
           }
 
         });
     } catch (error) {
       console.log("Error: ", error);
+      toast.error('🦄 Nhập sai thông tin!', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
 
-    
+
   };
   return (
     <section className="h-screen">
@@ -119,7 +117,7 @@ const Login = () => {
                     onChange={(e) => {
                       setUsername(e.target.value);
                     }}
-                     required
+                    required
                   />
                 </div>
                 <div className="mb-6">
@@ -139,7 +137,7 @@ const Login = () => {
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
-                       required
+                      required
                     />
                     {PorT ? (
                       <VisibilityOffIcon
