@@ -14,7 +14,7 @@ function Orders() {
       console.log("id truyen: ", id+ name);
     }
     const [products, setProducts] = useState("");
-    const [criteria, setCriteria] = useState("");
+    const [criteria, setCriteria] = useState("true");
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [orderId, setOrderId] = useState("");
     const [isOrdered, setTt] = useState(false);
