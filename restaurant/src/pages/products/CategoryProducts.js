@@ -54,6 +54,7 @@ const CategoryProducts = () => {
 
     useEffect(() => {
         getProducts();
+        getCategory();
     }, [id]);
 
     /** Sort product*/
@@ -100,7 +101,7 @@ const CategoryProducts = () => {
                             <h2>QUẢN LÝ SẢN PHẨM</h2>
                         </Link>
                     </div>
-                    <Toolbar url={url} sort={sort} sortType={isSorted} />
+                    <Toolbar url={url} sort={sort} sortType={isSorted} isSort={true} />
                 </div>
                 <div className="content">
                     <div className="header-product n_right_content" style={{ width: "100%" }}>

@@ -130,7 +130,7 @@ const ProductList = (props) => {
               <h2>QUẢN LÝ SẢN PHẨM</h2>
             </Link>
           </div>
-          <Toolbar url={url} functioner={getSearchQuery} search={true} sort={sort} sortType={isSorted} />
+          <Toolbar url={url} functioner={getSearchQuery} search={true} sort={sort} sortType={isSorted} isSort={true} />
         </div>
         <div className="content">
           <div className="header-product n_right_content" style={{ width: "100%" }}>
