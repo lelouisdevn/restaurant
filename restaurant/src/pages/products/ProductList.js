@@ -247,11 +247,11 @@ const ProductList = (props) => {
             </> :
             <>
               {
-                products.length > 0 && products.map((product) => (
+                products.length > 0 ? products.map((product) => (
                   <ProductGrid 
                     stt={products.indexOf(product) + 1}
                     key={product._id} product={product} />
-                ))
+                )) : <Loading message={message} />
               }
             </>
             }
