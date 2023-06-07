@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './grid.css'
+import VND from '../../components/currency';
 function ProductGrid (props) {
 return(
     <>
@@ -12,7 +13,7 @@ return(
                 {props.product.prod_name}
                 </Link>
             </div>
-            <div>{props.product.prod_price}</div>
+            <div>{VND.format(props.product.prod_price)}</div>
             <div>{props.product.prod_unit}</div>
             <div className='grid-desc'>{props.product.prod_desc}</div>
             <div>

@@ -205,27 +205,27 @@ const ProductList = (props) => {
               </Link>
             </div>
             <div className='right-menu'>
-              
+
               <span style={{margin: "0 5px"}} onClick={refershPage}>
                 <FontAwesomeIcon icon={faRefresh} className={refresh} />
               </span>
 
-              
+
 
               {
                 displayType == "tiles" ?
                 <span style={{margin: "0 5px", width: "100px"}} onClick={() => {
-                  setDisplayType("grid");
-                }}>
-                  <FontAwesomeIcon icon={faTable} />
-                </span> :
+                    setDisplayType("grid");
+                  }}>
+                    <FontAwesomeIcon icon={faTable} />
+                  </span> :
                 <span style={{margin: "0 5px", width: "100px"}} onClick={() => {
-                  setDisplayType("tiles");
-                }}>
-                  <FontAwesomeIcon icon={faFile} />
-                </span>
+                    setDisplayType("tiles");
+                  }}>
+                    <FontAwesomeIcon icon={faFile} />
+                  </span>
               }
-              
+
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
                 <option disabled selected>Bộ lọc</option>
                 <option value="2">
@@ -240,20 +240,29 @@ const ProductList = (props) => {
           </div>
           <div className="products">
             { displayType == "tiles" ?
-            <>
-              {products.length > 0 ? products.map((product) => (
-                <ProductTile key={product._id} product={product} />
-              )) : <Loading message={message} />}
-            </> :
-            <>
-              {
-                products.length > 0 ? products.map((product) => (
-                  <ProductGrid 
-                    stt={products.indexOf(product) + 1}
-                    key={product._id} product={product} />
-                )) : <Loading message={message} />
-              }
-            </>
+              <>
+                {products.length > 0 ? products.map((product) => (
+                  <ProductTile key={product._id} product={product} />
+                )) : <Loading message={message} />}
+              </> :
+              <>
+                <div className="grid" style={{textAlign: "center", borderRadius: "10px 10px 0 0"}}>
+                  <div style={{ width: "6%" }}>STT</div>
+                  <div>Tên sản phẩm</div>
+                  <div>Đơn giá</div>
+                  <div>Đơn vị tính</div>
+                  <div className='grid-desc'>Mô tả sản phẩm</div>
+                  <div>Hình ảnh sản phẩm</div>
+                </div>
+
+                {
+                  products.length > 0 ? products.map((product) => (
+                    <ProductGrid
+                      stt={products.indexOf(product) + 1}
+                      key={product._id} product={product} />
+                  )) : <Loading message={message} />
+                }
+              </>
             }
           </div>
         </div>
