@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function UserDetail() {
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { idUser } = useParams();
     //console.log(id)
     const [user, setUser] = useState([]);
 
@@ -29,7 +29,7 @@ function UserDetail() {
 
     const getUser = async () => {
         await axios
-          .get(`http://localhost:4000/api/users/id=${id}`)
+          .get(`http://localhost:4000/api/users/id=${localStorage.getItem("RestaurantID")}/idUser=${idUser}`)
           .then((res) => {
             const temp = res?.data.user[0];
             setUser(temp);
@@ -42,7 +42,7 @@ function UserDetail() {
     const handleEdit = async () => {
         try {
           await axios
-            .put(`http://localhost:4000/api/users/edit/id=${id}`, {
+            .put(`http://localhost:4000/api/users/edit/idUser=${idUser}`, {
                 staff_name: staff_name ? staff_name : user.staff_name,
                 staff_dob: staff_dob ? staff_dob : user.staff_dob,
                 staff_phone: staff_phone ? staff_phone : user.staff_phone,
@@ -73,7 +73,7 @@ function UserDetail() {
     const handleDelete = async () => {
         try {
           await axios
-            .put(`http://localhost:4000/api/users/delete/id=${id}`)
+            .put(`http://localhost:4000/api/users/delete/idUser=${idUser}`)
             .then((res) => {
               
               toast.success("🦄 Xóa người dùng thành công!", {
@@ -98,18 +98,14 @@ function UserDetail() {
     }, []);
 
     
-   
-
     function rolechar(i){
         const qly = "Quản Lý";
         const order = " Order ";
-        const tng = "Thu Ngân";
-        if (i == "0") {
+        const tng = "Bếp";
+        if (i == "1") {
             return qly;
-        } else if(i == "1") {
+        } else if(i == "2") {
             return order;
-        }else{
-            return tng;
         }
 
     }

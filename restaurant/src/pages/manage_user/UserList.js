@@ -1,11 +1,23 @@
-
+import {
+    List,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText
+  } from "@mui/material";
 import React,  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import UserBase from './UserBase';
+//import UserBase from './UserBase';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function UserList() {
-    
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
+    const id = localStorage.getItem("RestaurantID");
+    const handleItemClick = (event, path) => {
+        event.preventDefault();
+        navigate(path);
+    };
 
     useEffect(() => {
         getUsers();
@@ -13,21 +25,46 @@ function UserList() {
 
     const getUsers = async () => {
         await axios
-          .get("http://localhost:4000/api/users")
+          .get(`http://localhost:4000/api/users/id=${id}`)
           .then((res) => {
             const temp = res?.data.users;
             setUsers(temp);
-            console.log(temp);
+            //console.log(temp[0].user);
           })
           .catch((error) => {
             console.log("Error: ", error);
           });
-      }
+    }
+    function rolechar(i){
+        const qly = "Quản Lý";
+        const order = "Order";
+        const tng = "Bếp";
+        if (i == "1") {
+            return qly;
+        } else if(i == "2") {
+            return order;
+        }else{
+            return tng;
+        }
+    }
     return (
         <table className='table-auto bg-indigo-900 rounded p-5 m-5'>
             <tbody>
                 <tr className="flex flex-wrap ">
-                    {users.map((user)=> <UserBase key={user._id} user={user} />)}
+                    {(users).map((row,index) => (
+                        <td key={index}>
+                            <Link to={`${row.user._id}`}>
+                            <ul className="list-inside bg-slate-50 rounded-lg p-2 m-3 max-w-100" >
+                                    <li className="bg-indigo-200 rounded p-2">Nhân Viên:  {rolechar(row.user.role)}</li>
+                                    <li>Tên: {row.user.staff_name}</li>
+                                    <li>Giới Tính: {row.user.staff_gender}</li>
+                                    <li>SĐT: {row.user.staff_phone}</li>
+                                    <li>Địa Chỉ: {row.user.staff_addr}</li>
+                                    <li>Ngày Sinh: {row.user.staff_dob}</li>
+                                </ul>
+                            </Link>
+                        </td>
+                    ))}
                 </tr>
             </tbody>
         </table>

@@ -16,7 +16,8 @@ function UserAdd(){
     const [username, setusername] = useState("");
     const [password, setpassword] = useState("");
     const [role, setRole] = useState("");
-
+    const [restaurant, setRestaurant] = useState("");
+    
     const handleUserAdd = async () =>{
         //console.log("hello");
         try{
@@ -30,6 +31,7 @@ function UserAdd(){
                 username: username,
                 password: password,
                 role: role,
+                restaurant: localStorage.getItem("RestaurantID"),
             })
             .then((res) =>{
 
@@ -55,6 +57,7 @@ function UserAdd(){
             <table className="table w-full bg-indigo-200 rounded-lg text-center ">
                 <tbody className='font-bold staff-content'>
                     <br/>
+                    <input value={localStorage.getItem("RestaurantID")} hidden></input>
                     <tr>
                         <td>Tên:</td>
                         <td>
