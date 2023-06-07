@@ -25,10 +25,10 @@ const OrderSchema = new Schema({
         ref: "User",
         required: true,
     },
-    table: {
-        type: Schema.Types.ObjectId,
-        ref: 'Table',
-    },
+    // table: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Table',
+    // },
     restaurant: {
         type: Schema.Types.ObjectId,
         ref: "Restaurant",
