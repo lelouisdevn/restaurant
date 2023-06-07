@@ -9,7 +9,6 @@ router.post('/order/new', async(req, res) => {
             order_at: order_at,
             total: total,
             user: user,
-            table: table,
             restaurant: restaurant,
         });
         await order.save();

@@ -104,7 +104,8 @@ function Orders() {
      */
     const getUserInfoById = async () => {
         const userId = localStorage.getItem("UserID");
-        const getUserInfo = `http://localhost:4000/api/users/id=${userId}`;
+        const restaurantId = localStorage.getItem("RestaurantID");
+        const getUserInfo = `http://localhost:4000/api/users/id=${restaurantId}/idUser=${userId}`;
         const response = await axios
             .get(getUserInfo)
 
@@ -160,7 +161,6 @@ function Orders() {
                 order_at: recent,
                 total: total,
                 user: user._id,
-                table: id,
                 restaurant: restaurant._id,
             })
             .then((res) => {
