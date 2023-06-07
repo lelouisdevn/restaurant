@@ -20,7 +20,7 @@ import Category from './pages/categories/Category'
 import CategoryDetail from './pages/categories/CategoryDetail';
 import NavbarStaff from './components/NavbarStaff';
 import CategoryForm from './pages/categories/CategoryForm';
-import CategoryProducts from './pages/products/CategoryProducts';
+// import CategoryProducts from './pages/products/CategoryProducts';
 import Orders from './pages/orders/Orders';
 import LayoutStaff from './components/LayoutStaff';
 import LoadingT from './pages/outline/Loading'
@@ -52,7 +52,7 @@ function App() {
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetail />} />
               <Route path="new" element={<ProductForm />} />
-              <Route path="all/category/:id" element={<CategoryProducts />} />
+              <Route path="all/category/:id" element={<ProductList />} />
             </Route>
             <Route path="category">
               <Route index element={<Category />} />
