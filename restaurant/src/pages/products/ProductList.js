@@ -169,9 +169,14 @@ const ProductList = (props) => {
       sortAZ();
     }
   }
+  const [refresh, setRefresh] = useState("");
   const refershPage = () => {
-    setCriteria(0);
-    navigate('/manage/product');
+    setRefresh("refresh");
+    setTimeout(() => {
+      setCriteria(0);
+      navigate('/manage/product');
+      setRefresh("");
+    }, 1500);
   }
   return (
     <>
@@ -198,7 +203,7 @@ const ProductList = (props) => {
             <div className='right-menu'>
               
               <span style={{margin: "0 5px"}} onClick={refershPage}>
-                <FontAwesomeIcon icon={faRefresh} />
+                <FontAwesomeIcon icon={faRefresh} className={refresh} />
               </span>
               
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
