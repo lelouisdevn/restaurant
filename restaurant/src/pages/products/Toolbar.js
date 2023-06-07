@@ -13,6 +13,7 @@ const Toolbar = (props) => {
   const [input, setInput] = useState(false);
   const [isSearch, setSearchStatus] = useState(props.search);
   const [categories, setCategories] = useState([]);
+  const [isSort, setSortStatus] = useState(props.isSort);
 
   // Search;
   const handleKeyDown = (event) => {
@@ -98,6 +99,7 @@ const Toolbar = (props) => {
       {/* dropdown menu */}
 
       {/* Sort */}
+      { isSort &&
       <div onClick={sort}>
         {
           props.sortType == 'sortaz' ?
@@ -111,6 +113,7 @@ const Toolbar = (props) => {
             </>
         }
       </div>
+      }
       {/* Sort */}
 
       {/* Search */}
