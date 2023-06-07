@@ -66,7 +66,7 @@
     background: rgb(237, 237, 237);
     border-radius: 10px;
     color: black;
-    border: solid 1px rgb(166, 164, 164);
+    border: solid 1px rgb(199, 199, 199);
     padding: 7px 20px;
     cursor: pointer;
 }
@@ -396,19 +396,30 @@ button.updateButton:hover {
     /* margin: 5px; */
     padding: 7px 10px;
     border-bottom: solid 1px lightgray;
+    margin: 5px 7px;
 }
 
 .menu li .dd-menu li:hover {
     background-color: rgb(182, 181, 181);
     border-radius: 10px;
+    transition: 400ms;
 }
 .cls-dd-btn {
     padding: 0;
     text-align: center;
-    padding: 0!important;
+    padding: 3px 0!important;
     border-bottom: none!important;
 }
+.cls-dd-btn span {
+    padding: 7px 11px;
+    border-radius: 50%;
+    margin: 0;
+}
 .cls-dd-btn:hover {
-    background-color: rgba(228,230,235,255);
-    border-radius: 0 0 10px 10px!important;
+    background: none!important;
+}
+.cls-dd-btn:hover > span {
+    background-color: lightgrey!important;
+    border-radius: 50%!important;
+    transition: 400ms;
 }

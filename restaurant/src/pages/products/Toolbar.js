@@ -74,7 +74,7 @@ const Toolbar = (props) => {
       <div style={{ position: "relative" }} onClick={showDropdownMenu}>
         <ul className='menu'>
           <li>
-            <span>
+            <span style={{margin: "0"}}>
               <FontAwesomeIcon icon={faListDots} />
               <span> Loại sản phẩm</span>
             </span>
@@ -90,7 +90,9 @@ const Toolbar = (props) => {
                 ))
               }
               <li className='cls-dd-btn'>
-                <FontAwesomeIcon icon={faArrowUp} />
+                <span>
+                  <FontAwesomeIcon icon={faClose} />
+                </span>
               </li>
             </ul>
           </li>
