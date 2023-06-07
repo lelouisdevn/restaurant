@@ -41,7 +41,7 @@ const Sidebar = () => {
             <ListItemText primary="Trang chủ" />
           </ListItemButton>
 
-          <ListItemButton
+          {/* <ListItemButton
             selected={selectedIndex === 1}
             onClick={(event) =>
               handleListItemClick(event, 1, "/manage/category")
@@ -51,7 +51,7 @@ const Sidebar = () => {
               <InboxIcon />
             </ListItemIcon>
             <ListItemText primary="Danh mục sản phẩm" />
-          </ListItemButton>
+          </ListItemButton> */}
           <ListItemButton
             selected={selectedIndex === 2}
             onClick={(event) =>
