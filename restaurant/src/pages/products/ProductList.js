@@ -17,7 +17,7 @@ const ProductList = (props) => {
     "features": "features"
   })
   const [products, setProducts] = useState([]);
-  const [criteria, setCriteria] = useState(0);
+  const [criteria, setCriteria] = useState(1);
   const [categoryName, setCategoryName] = useState("");
 
 
@@ -175,7 +175,7 @@ const ProductList = (props) => {
     setRefresh("refresh");
     setQuery("");
     setTimeout(() => {
-      setCriteria(0);
+      setCriteria(1); // 1 => 'sp đang bán'
       navigate('/manage/product');
       setRefresh("");
     }, 1500);
