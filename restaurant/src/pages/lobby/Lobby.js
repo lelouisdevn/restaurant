@@ -25,6 +25,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Outlet } from "react-router-dom";
+import ReactLoading from "react-loading";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -40,7 +41,8 @@ const Lobby = () => {
   const [table, setTable] = useState([]);
   const [lobbies, setLobbies] = useState([]);
   const [isLoading, setisLoading] = useState(true);
-
+  const [err, setErr] = useState();
+  const idRes = localStorage.getItem("RestaurantID");
   const callbackFunction = async (id, name) => {
     setNameL(name);
     await axios
@@ -58,19 +60,21 @@ const Lobby = () => {
   };
 
   useEffect(() => {
-    getLobbies();
-  }, []);
+    getLobbies(idRes);
+  }, [idRes]);
 
-  const getLobbies = async () => {
+  const getLobbies = async (id) => {
     await axios
-      .get("http://localhost:4000/api/lobbies")
+      .get(`http://localhost:4000/api/lobbies/restaurant=${id}`)
       .then((res) => {
         const temp = res?.data.lobbies;
-        setLobbies(temp);
-        // console.log(temp);
+        console.log("temp: ", temp); 
+          setLobbies(temp);
+        
       })
       .catch((error) => {
-        console.log("Error: ", error);
+        // console.log("Error: ", error);
+        setErr(error);
       });
   };
 
@@ -117,119 +121,137 @@ const Lobby = () => {
             <Button>Thêm mới</Button>
           </Box>
         </Stack>
-        <div className="lbtable" style={{ marginBottom: 20 }}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead bgcolor="#F7F7F7" mr={-10}>
-                <TableRow>
-                  <TableCell variant="head" sx={{ fontWeight: 600 }}>
-                    STT
-                  </TableCell>
-                  <TableCell variant="head" sx={{ fontWeight: 600 }}>
-                    Tên khu vực
-                  </TableCell>
-                  <TableCell
-                    variant="head"
-                    sx={{ fontWeight: 600 }}
-                    align="right"
-                  >
-                    Số bàn
-                  </TableCell>
-
-                  <TableCell
-                    variant="head"
-                    sx={{ fontWeight: 600 }}
-                    align="right"
-                  >
-                    Thao tác
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {lobbies.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell scope="row">{row.lob_name}</TableCell>
-                    <TableCell align="right">{row.lob_tbl_num}</TableCell>
-                    <TableCell align="right">
-                      <LobbiesActions
-                        params={row}
-                        parentCallback={callbackFunction}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-
-        <Divider />
-
-        {isLoading ? null : (
-          <div className="lbtable" style={{ marginTop: 20, marginBottom: 10 }}>
-            <Box pl={8} pb={4}>
-              <Typography variant="h6">
-                Danh sách bàn thuộc{" "}
-                <Typography variant="span"> {nameL}</Typography>
-              </Typography>
-            </Box>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead bgcolor="#F7F7F7" mr={-10}>
-                  <TableRow>
-                    <TableCell variant="head" sx={{ fontWeight: 600 }}>
-                      STT
-                    </TableCell>
-                    <TableCell variant="head" sx={{ fontWeight: 600 }}>
-                      Mã bàn
-                    </TableCell>
-                    <TableCell
-                      variant="head"
-                      sx={{ fontWeight: 600 }}
-                      align="right"
-                    >
-                      Số người ngồi
-                    </TableCell>
-                    <TableCell
-                      variant="head"
-                      sx={{ fontWeight: 600 }}
-                      align="right"
-                    >
-                      Trạng thái
-                    </TableCell>
-                    <TableCell
-                      variant="head"
-                      sx={{ fontWeight: 600 }}
-                      align="right"
-                    >
-                      Thao tác{" "}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {table.map((row, index) => (
-                    <TableRow key={index}>
-                      <TableCell component="th" scope="row">
-                        {index + 1}
+        {err ? (
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <ReactLoading
+              type="spokes"
+              color="grey"
+              height={100}
+              width={150}
+            ></ReactLoading> 
+          </Box>
+        ) : (
+          <>
+            <div className="lbtable" style={{ marginBottom: 20 }}>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableHead bgcolor="#F7F7F7" mr={-10}>
+                    <TableRow>
+                      <TableCell variant="head" sx={{ fontWeight: 600 }}>
+                        STT
                       </TableCell>
-                      <TableCell scope="row">{row.tbl_id}</TableCell>
-                      <TableCell align="right">{row.tbl_seat_num}</TableCell>
-                      <TableCell align="right">{row.tbl_status}</TableCell>
-                      <TableCell align="right">
-                        <TablesActions
-                          params={row}
-                          parentCallback={callbackFunction}
-                        />
+                      <TableCell variant="head" sx={{ fontWeight: 600 }}>
+                        Tên khu vực
+                      </TableCell>
+                      <TableCell
+                        variant="head"
+                        sx={{ fontWeight: 600 }}
+                        align="right"
+                      >
+                        Số bàn
+                      </TableCell>
+
+                      <TableCell
+                        variant="head"
+                        sx={{ fontWeight: 600 }}
+                        align="right"
+                      >
+                        Thao tác
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
+                  </TableHead>
+                  <TableBody>
+                    {lobbies.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell scope="row">{row.lob_name}</TableCell>
+                        <TableCell align="right">{row.lob_tbl_num}</TableCell>
+                        <TableCell align="right">
+                          <LobbiesActions
+                            params={row}
+                            parentCallback={callbackFunction}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+
+            <Divider />
+
+            {isLoading ? null : (
+              <div
+                className="lbtable"
+                style={{ marginTop: 20, marginBottom: 10 }}
+              >
+                <Box pl={8} pb={4}>
+                  <Typography variant="h6">
+                    Danh sách bàn thuộc{" "}
+                    <Typography variant="span"> {nameL}</Typography>
+                  </Typography>
+                </Box>
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead bgcolor="#F7F7F7" mr={-10}>
+                      <TableRow>
+                        <TableCell variant="head" sx={{ fontWeight: 600 }}>
+                          STT
+                        </TableCell>
+                        <TableCell variant="head" sx={{ fontWeight: 600 }}>
+                          Mã bàn
+                        </TableCell>
+                        <TableCell
+                          variant="head"
+                          sx={{ fontWeight: 600 }}
+                          align="right"
+                        >
+                          Số người ngồi
+                        </TableCell>
+                        <TableCell
+                          variant="head"
+                          sx={{ fontWeight: 600 }}
+                          align="right"
+                        >
+                          Trạng thái
+                        </TableCell>
+                        <TableCell
+                          variant="head"
+                          sx={{ fontWeight: 600 }}
+                          align="right"
+                        >
+                          Thao tác{" "}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {table.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell component="th" scope="row">
+                            {index + 1}
+                          </TableCell>
+                          <TableCell scope="row">{row.tbl_id}</TableCell>
+                          <TableCell align="right">
+                            {row.tbl_seat_num}
+                          </TableCell>
+                          <TableCell align="right">{row.tbl_status}</TableCell>
+                          <TableCell align="right">
+                            <TablesActions
+                              params={row}
+                              parentCallback={callbackFunction}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            )}
+          </>
         )}
       </Container>
       <Outlet />

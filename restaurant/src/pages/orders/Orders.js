@@ -163,10 +163,19 @@ function Orders() {
                 user: user._id,
                 restaurant: restaurant._id,
             })
-            .then((res) => {
+            .then( async (res) => {
                 const order_id = res?.data.order._id;
                 setOrderId(order_id);
                 setTt(!isOrdered);
+                await axios
+                   .post(`http://localhost:4000/api/tabledetail`, {
+                     table: id,
+                     order: order_id
+                   })
+                   .then((res) => {
+                     const temp = res?.data;
+                    //  console.log("them chi tiet ban: ", temp);
+                   });
             });
     }
     const orderDetail = async () => {
