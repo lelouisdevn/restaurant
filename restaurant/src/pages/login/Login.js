@@ -3,6 +3,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 import { ToastContainer, toast } from "react-toastify";
@@ -25,20 +26,16 @@ const Login = () => {
       await axios
         .post("http://localhost:4000/api/login", {
           username: username,
-          password: password,
-          restaurant: restaurant,
+          password: password
         })
         .then((res) => {
-          console.log(res?.data);
-          console.log(res?.data.rest.rest_name);
-          localStorage.setItem("UserID", res?.data.login[0].user._id);
-          localStorage.setItem("RestaurantID", res?.data.login[0].info._id);
-          console.log(localStorage.getItem("UserID"));
-          console.log(localStorage.getItem("RestaurantID"));
+          //console.log(res?.data.login[0].role);
+          localStorage.setItem("UserID", res?.data.login[0]._id);
+          //console.log(localStorage.getItem("UserID"));
 
-          if (res?.data.login[0].user.role === "1") {
-            navigate("/manage/home");
-          } else if (res?.data.login[0].user.role === "2") {
+          if (res?.data.login[0].role === "1") {
+            navigate("/rest");
+          } else if (res?.data.login[0].role === "2") {
             navigate("/staff/orders/all");
           }
 
@@ -83,7 +80,7 @@ const Login = () => {
                   </div>
                               ) : null} */}
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <label
                     htmlFor="restaurant"
                     className="block mb-2 text-sm font-medium text-white"
@@ -100,7 +97,7 @@ const Login = () => {
                     }}
                     required
                   />
-                </div>
+                </div> */}
                 <div className="mb-6">
                   <label
                     htmlFor="username"
@@ -163,6 +160,8 @@ const Login = () => {
                 >
                   Login
                 </button>
+                
+                
               </div>
             </form>
             <ToastContainer />

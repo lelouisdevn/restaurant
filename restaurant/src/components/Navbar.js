@@ -12,7 +12,9 @@ import {
   Typography
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -32,8 +34,42 @@ const Icons = styled(Box)(({ them }) => ({
 }));
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const id = localStorage.getItem("UserID");
+  const [rest, setRest] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
+
+ 
   const setOut = () => {
     localStorage.clear();
+  }
+
+  useEffect(() => {
+    getRest(id);
+  }, [id]);
+
+  // console.log(rest);
+  // console.log("lay du lieu rest[0]: ", (rest[0].info));
+  const getRest = async (id) =>{
+    await axios
+      .get(`http://localhost:4000/api/getallrestfromone/id=${id}`)
+      .then((res) =>{
+        const temp = res?.data.rest;
+        setRest(temp);
+        //console.log(temp);
+      })
+      .catch((error) =>{
+        console.log("Error: ",error);
+      }) .finally(() => {
+        setisLoading(false);
+      }); 
+      
+  }
+  
+  const handleRestClick = async(id) =>{
+    localStorage.setItem("RestaurantID",id);
+    navigate("/manage/home");
+    
   }
   return (
     <AppBar position="sticky">
@@ -70,7 +106,9 @@ const Navbar = () => {
         }}
       >
         <MenuItem>Thông tin cá nhân</MenuItem>
-        <MenuItem>Nhà hàng của tôi</MenuItem>
+        {isLoading? null: rest.map((row)=>(
+          <MenuItem onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</MenuItem>
+        ))}
         <MenuItem //   onClick={handleClose}
         >
           <Link to={"/login"} onClick={() => setOut()}>

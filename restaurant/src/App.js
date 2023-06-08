@@ -32,6 +32,7 @@ import Multioption from './pages/products/Multioption';
 import SetUpPage from './pages/settuppage/setUpPage';
 import SelectRest from './pages/settuppage/selectRest';
 import CreateRest from './pages/settuppage/CreateRest';
+import Rest from './pages/login/Rest';
 
 function App() {
   return (
@@ -48,6 +49,9 @@ function App() {
           </Route>
 
           
+          <Route path="/login/*" element={<Login />}>
+          </Route>
+          <Route path="rest" element={<Rest/>}/>
           <Route path="/manage/*" element={<Layout />}>
             
             <Route path="home">
