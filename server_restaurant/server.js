@@ -40,6 +40,7 @@ const user = require('./routes/userRoutes');
 const info = require('./routes/infoRoutes');
 const order = require('./routes/orderRoutes')
 const login = require('./routes/loginRoutes');
+const manage = require('./routes/navbarRoutes');
 
 app.use("/api", lobby);
 app.use("/api", table);
@@ -50,6 +51,8 @@ app.use("/api", user);
 app.use("/api", info);
 app.use("/api", order);
 app.use("/api", login);
+app.use("/api", manage);
+
 
 const PORT = 4000;
 app.listen(PORT, () => {

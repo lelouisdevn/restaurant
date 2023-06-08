@@ -32,17 +32,7 @@ router.post("/user", async (req, res) => {
          return res.status(422).send({ Error: error.message });
     }
 })
-// Lấy thông tin của 1 người dùng
 
-router.get("/user/id=:id", async (req, res) => {
-  try {
-    let user = await User.find({ _id: req.params.id });
-    res.send({ user });
-  } catch (error) {
-    console.log("Data err: ", error);
-    return res.status(422).send({ Error: error.message });
-  }
-});
 // Lấy ra tất cả nguoi dung
 router.get("/users/id=:id", async (req, res) => {
   
@@ -55,7 +45,7 @@ router.get("/users/id=:id", async (req, res) => {
       }
       i++;
     }
-    console.log(users);
+    // console.log(users);
     res.send({ users });
   } catch (error) {
     console.log("Data err: ", error);

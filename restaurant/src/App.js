@@ -29,6 +29,7 @@ import OutLine from './pages/outline/OutLine'
 import SettingMap from "./pages/lobby/SettingMap";
 import OrderList from './pages/orders/manage/OrderList';
 import Multioption from './pages/products/Multioption';
+import Rest from './pages/login/Rest';
 
 function App() {
   return (
@@ -37,7 +38,9 @@ function App() {
         <Routes>
           <Route path="*" element={<Navigate to="/login" replace />}></Route>
 
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login/*" element={<Login />}>
+          </Route>
+          <Route path="rest" element={<Rest/>}/>
           <Route path="/manage/*" element={<Layout />}>
             <Route path="home">
               <Route index element={<Home />} />
