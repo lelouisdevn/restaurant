@@ -14,7 +14,6 @@ import Success from './Success';
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
-    "features": "features"
   })
   const [products, setProducts] = useState([]);
   const [criteria, setCriteria] = useState(1);
@@ -34,12 +33,6 @@ const ProductList = (props) => {
       getProducts();
     }
   }, [id]);
-  // useEffect(() => {
-  //   if (category != "") {
-  //     getCategoryName();
-  //     getProductsCategory();
-  //   }
-  // }, [category]);
 
   const getCategoryName = async () => {
     const getCateName = `http://localhost:4000/api/category/${id}`;
@@ -202,30 +195,6 @@ const ProductList = (props) => {
     left: "50%",
     transform: "translateX(-50%)",
   };
-  const showModal = (message) => {
-    setSuccess(true);
-    setSuccessClass("opacity-success");
-    setMessage(message);
-    // getProductById();
-    setTimeout(() => {
-      setSuccess(false);
-      setSuccessClass("");
-    }, 3000);
-  }
-  const cancelActions = () => {
-    setSelectedProducts([]);
-    setCancelStatus(!isCancelled);
-  }
-  const hideSelectedProducts = () => {
-    setSelectedProducts([]);
-    setCancelStatus(!isCancelled);
-    console.log(selectedProducts);
-    const message = {
-      "noti": "Ẩn thành công",
-      "icon": "faCdwhu"
-    }
-    showModal(message);
-  }
   return (
     <>
       { 
@@ -266,17 +235,7 @@ const ProductList = (props) => {
             <div className='right-menu'>
 
               
-              {
-              selectedProducts.length > 0 &&
-                <span>
-                  <span onClick={cancelActions}>
-                    <FontAwesomeIcon icon={faClose} />
-                  </span>
-                  <span onClick={hideSelectedProducts}>
-                    <FontAwesomeIcon icon={faEyeSlash} />
-                  </span>
-                </span>
-              }
+              
               
 
               <span onClick={refershPage}>

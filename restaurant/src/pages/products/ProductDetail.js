@@ -16,7 +16,6 @@ const ProductDetail = () => {
   console.log(id)
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
-    "hide": "product/hide"
   })
 
   /**

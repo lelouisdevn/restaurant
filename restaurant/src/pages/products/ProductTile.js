@@ -48,28 +48,7 @@ const ProductTitle = (props) => {
                 }</h4>
             </div>
           </Link>
-          <button
-            className='features'
-            onClick={handleClick}
-          >
-            {status
-              ? <span>
-                <FontAwesomeIcon icon={faCircle}
-                style={{ color: "white", border: "solid grey 1px", borderRadius: "10px", marginRight: "5px", marginTop: "5px" }} />
-              </span>
-              : <FontAwesomeIcon icon={faCircle}
-                style={{ 
-                  color: "#1976d2", 
-                  border: "solid white 1px", 
-                  transition: "400ms", 
-                  borderRadius: "10px", 
-                  marginRight: "5px", 
-                  marginTop: "5px",
-                  opacity: "1",
-                }} />
-            }
-
-          </button>
+          
         </div>
         : <Loading />}
     </div>
