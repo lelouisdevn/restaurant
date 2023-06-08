@@ -107,10 +107,13 @@
 
 .header-product .right-menu span {
     background-color: lightgray;
-    padding: 5px 10px;
+    padding: 5px 10px!important;
     border-radius: 10px;
     font-size: 16px;
     border: solid 1px grey;
+    margin: 3px 5px;
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
 }
 
 .products {

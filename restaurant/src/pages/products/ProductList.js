@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { faChartPie, faDisplay, faFile, faHome, faRefresh, faSquare, faTable } from "@fortawesome/free-solid-svg-icons";
+import { faCancel, faChartPie, faDisplay, faEyeSlash, faFile, faHome, faRefresh, faSquare, faTable, faClose } from "@fortawesome/free-solid-svg-icons";
 import './this.css';
 import ProductTile from './ProductTile';
 import Toolbar from './Toolbar';
@@ -10,14 +10,14 @@ import { useState } from 'react';
 import Loading from './Loading';
 import { useNavigate } from 'react-router-dom';
 import ProductGrid from './ProductGrid';
+import Success from './Success';
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
-    "hide": "product/hide"
+    "features": "features"
   })
   const [products, setProducts] = useState([]);
   const [criteria, setCriteria] = useState(0);
-  // const [category, setCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
 
 
@@ -30,7 +30,7 @@ const ProductList = (props) => {
       // console.log(id);
       getCategoryName();
       getProductsCategory();
-    }else {
+    } else {
       getProducts();
     }
   }, [id]);
@@ -101,10 +101,10 @@ const ProductList = (props) => {
       })
     // setCategoryName("");
   }
-  useEffect(() =>{
+  useEffect(() => {
     if (id == undefined) {
       getProducts();
-    }else {
+    } else {
       getProductsCategory();
     }
   }, [criteria]);
@@ -182,17 +182,76 @@ const ProductList = (props) => {
   }
 
   const [displayType, setDisplayType] = useState("tiles");
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isCancelled, setCancelStatus] = useState(false);
+  const updateSelectedProductList = (product) => {
+    if (selectedProducts.find(prod => prod._id === product._id)) {
+      setSelectedProducts(selectedProducts.filter(prod => prod._id !== product._id));
+    } else {
+      setSelectedProducts([...selectedProducts, product]);
+    }
+  }
+  const [success, setSuccess] = useState(false);
+  const [successClass, setSuccessClass] = useState("");
+  // const [message, setMessage] = useState("");
+  const style = {
+    width: "calc(100% - 354px)",
+    height: "calc(100vh - 64px)",
+    position: "absolute",
+    zIndex: 10,
+    left: "50%",
+    transform: "translateX(-50%)",
+  };
+  const showModal = (message) => {
+    setSuccess(true);
+    setSuccessClass("opacity-success");
+    setMessage(message);
+    // getProductById();
+    setTimeout(() => {
+      setSuccess(false);
+      setSuccessClass("");
+    }, 3000);
+  }
+  const cancelActions = () => {
+    setSelectedProducts([]);
+    setCancelStatus(!isCancelled);
+  }
+  const hideSelectedProducts = () => {
+    setSelectedProducts([]);
+    setCancelStatus(!isCancelled);
+    console.log(selectedProducts);
+    const message = {
+      "noti": "Ẩn thành công",
+      "icon": "faCdwhu"
+    }
+    showModal(message);
+  }
   return (
     <>
-
-      <div className='detail-container' >
+      { 
+        success &&
+        <Success 
+          setSuccess={setSuccess}
+          setSuccessClass={setSuccessClass}
+          message={message}
+          style={style}
+        />
+      }
+      <div className={`detail-container ${successClass}`}>
         <div className='fixed-header'>
           <div className="title">
             <Link to="/manage/product" className="fLink">
               <h2>QUẢN LÝ SẢN PHẨM</h2>
             </Link>
           </div>
-          <Toolbar url={url} functioner={getSearchQuery} search={true} sort={sort} sortType={isSorted} isSort={true} />
+          <Toolbar
+            url={url}
+            functioner={getSearchQuery}
+            search={true}
+            sort={sort}
+            sortType={isSorted}
+            isSort={true}
+          />
         </div>
         <div className="content">
           <div className="header-product n_right_content" style={{ width: "100%" }}>
@@ -200,26 +259,38 @@ const ProductList = (props) => {
               <Link to="/manage/product" className="fLink">
                 <FontAwesomeIcon icon={faHome} />
                 <span> Sản phẩm</span>
-                <span>{ id !== undefined && `/${categoryName}` }</span>
+                <span>{id !== undefined && `/${categoryName}`}</span>
                 <span>/{type[criteria].name}</span>
               </Link>
             </div>
             <div className='right-menu'>
 
-              <span style={{margin: "0 5px"}} onClick={refershPage}>
+              
+              {
+              selectedProducts.length > 0 &&
+                <span>
+                  <span onClick={cancelActions}>
+                    <FontAwesomeIcon icon={faClose} />
+                  </span>
+                  <span onClick={hideSelectedProducts}>
+                    <FontAwesomeIcon icon={faEyeSlash} />
+                  </span>
+                </span>
+              }
+              
+
+              <span onClick={refershPage}>
                 <FontAwesomeIcon icon={faRefresh} className={refresh} />
               </span>
 
-
-
               {
                 displayType == "tiles" ?
-                <span style={{margin: "0 5px", width: "100px"}} onClick={() => {
+                  <span style={{ margin: "0 5px", width: "100px" }} onClick={() => {
                     setDisplayType("grid");
                   }}>
                     <FontAwesomeIcon icon={faTable} />
                   </span> :
-                <span style={{margin: "0 5px", width: "100px"}} onClick={() => {
+                  <span style={{ margin: "0 5px", width: "100px" }} onClick={() => {
                     setDisplayType("tiles");
                   }}>
                     <FontAwesomeIcon icon={faFile} />
@@ -239,14 +310,19 @@ const ProductList = (props) => {
             </div>
           </div>
           <div className="products">
-            { displayType == "tiles" ?
+            {/* Display products as tiles or a grid  */}
+            {displayType == "tiles" ?
               <>
                 {products.length > 0 ? products.map((product) => (
-                  <ProductTile key={product._id} product={product} />
+                  <ProductTile
+                    isCancelled={isCancelled}
+                    key={product._id} product={product}
+                    updateSelectedProductList={updateSelectedProductList}
+                  />
                 )) : <Loading message={message} />}
               </> :
               <>
-                <div className="grid" style={{textAlign: "center", borderRadius: "10px 10px 0 0"}}>
+                <div className="grid" style={{ textAlign: "center", borderRadius: "10px 10px 0 0" }}>
                   <div style={{ width: "6%" }}>STT</div>
                   <div>Tên sản phẩm</div>
                   <div>Đơn giá</div>

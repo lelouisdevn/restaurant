@@ -30,3 +30,16 @@
     margin: 0;
     padding: 0;
 }
+.features{
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none!important;
+    background: none!important;
+    padding: 0!important;
+    margin: 0!important;
+    opacity: 0.5;
+}
+.container:hover .features{
+    opacity: 1;
+}

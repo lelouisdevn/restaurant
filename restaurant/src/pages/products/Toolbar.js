@@ -65,10 +65,12 @@ const Toolbar = (props) => {
           <span> Thêm</span>
         </div>
       </Link>
-      <div className='product-dlt'>
-        <FontAwesomeIcon icon={faRemove} />
-        <span> Ẩn</span>
-      </div>
+      <Link to={props.url.features}>
+        <div className='product-dlt'>
+          <FontAwesomeIcon icon={faRemove} />
+          <span> Ẩn</span>
+        </div>
+      </Link>
 
       {/* dropdown menu */}
       <div style={{ position: "relative" }} onClick={showDropdownMenu}>
