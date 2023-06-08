@@ -74,7 +74,7 @@ function App() {
 
           <Route path="/staff/*" element={<NavbarStaff />}>
             {/* <Route path="orders" element={<LoadingT />} /> */}
-            <Route path="orders" element={<Orders />} /> 
+            {/* <Route path="orders" element={<Orders />} />  */}
             <Route path="order/table/:id/:name" element={<Orders />} /> 
             <Route path='orders/all' element={<OrderList />} /> 
             <Route path="outline" element={<LayoutOutline />}>

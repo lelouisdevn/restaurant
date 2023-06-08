@@ -53,9 +53,6 @@ const Navbar = () => {
             onClick={(e) => setOpen(true)}
           />
           <Typography variant="span"> Tonny</Typography>
-          <Link to={"/login"} onClick={() => setOut()}>
-            <Typography variant="span"> Thoát</Typography>
-          </Link>
         </Icons>
       </StyledToolbar>
       <Menu
@@ -72,11 +69,14 @@ const Navbar = () => {
           horizontal: "right"
         }}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
+        <MenuItem>Thông tin cá nhân</MenuItem>
+        <MenuItem>Nhà hàng của tôi</MenuItem>
         <MenuItem //   onClick={handleClose}
         >
-          Logout
+          <Link to={"/login"} onClick={() => setOut()}>
+            <Typography variant="span"> Thoát</Typography>
+          </Link>
+         
         </MenuItem>
       </Menu>
     </AppBar>

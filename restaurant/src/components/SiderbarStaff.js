@@ -30,7 +30,7 @@ const SiderbarStaff = ({parentCallback}) => {
 
   const getLobbies = async () => {
     await axios
-      .get("http://localhost:4000/api/lobbies")
+      .get("http://localhost:4000/api/all/lobbies")
       .then((res) => {
         const temp = res?.data.lobbies;
         setLobbies(temp);

@@ -18,15 +18,36 @@ router.post("/lobby", async (req, res) => {
 })
 
  // Lấy ra tất cả khu vực
-router.get("/lobbies", async (req, res) => {
+router.get("/all/lobbies", async (req, res) => {
+  
   try {
-    let lobbies = await Lobby.find({lob_status: 1});
-    res.send({ lobbies });
-  } catch (error) {
-    console.log("Data err: ", error);
-    return res.status(422).send({ Error: error.message });
-    
-  }
+       
+      let lobbies = await Lobby.find({lob_status: 1});
+      
+        return res.send({ lobbies });
+      
+    } catch (error) {
+      console.log("Data err: ", error);
+      return res.status(422).send({ Error: error.message });
+      
+    }
+})
+
+router.get("/lobbies/restaurant=:idRes", async (req, res) => {
+  console.log("reqq: ", req.params.idRes);
+
+  try {
+      if (req.params.idRes !== null) {
+      let lobbies = await Lobby.find({lob_status: 1, restaurant: req.params.idRes});
+      if (lobbies) {
+        return res.send({ lobbies });
+      }
+    }
+    } catch (error) {
+      // console.log("Data err: ", error);
+      return res.status(422).send({ Error: error.message });
+      
+    }
 })
 
 // Lấy ra khu vực có id
