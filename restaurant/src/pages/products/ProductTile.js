@@ -17,8 +17,24 @@ const ProductTitle = (props) => {
     setStatus(!status);
   }
 
+  const [blurtile, setBlurTile] = useState("");
+  useEffect(() => {
+    if (props.criteria != "2" && product.prod_status === false) {
+      setBlurTile("blurtile");
+    }else {
+      setBlurTile("");
+    }
+  }, []);
+  useEffect(() => {
+    if (props.criteria != "2" && product.prod_status === false) {
+      setBlurTile("blurtile");
+    }else {
+      setBlurTile("");
+    }
+  }, [props.criteria]);
+
   return (
-    <div className="container" style={{position: "relattive"}}>
+    <div className={`container ${blurtile}`} style={{position: "relattive"}}>
       {product ?
         <div>
           <Link to={`/manage/product/${product._id}`} className="fLink">

@@ -318,6 +318,7 @@ const ProductList = (props) => {
                     isCancelled={isCancelled}
                     key={product._id} product={product}
                     updateSelectedProductList={updateSelectedProductList}
+                    criteria={criteria}
                   />
                 )) : <Loading message={message} />}
               </> :

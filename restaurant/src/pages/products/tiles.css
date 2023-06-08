@@ -43,3 +43,8 @@
 .container:hover .features{
     opacity: 1;
 }
+
+.blurtile {
+    opacity: 0.5!important;
+    /* color: crimson!important; */
+}
