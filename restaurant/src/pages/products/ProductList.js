@@ -91,6 +91,9 @@ const ProductList = (props) => {
       })
       .then((res) => {
         setProducts(res?.data.document)
+        if (res?.data.document.length == 0) {
+          setMessage("Nhà hàng của bạn chưa có sản phẩm nào!");
+        }
       })
     // setCategoryName("");
   }
@@ -170,6 +173,7 @@ const ProductList = (props) => {
     setTimeout(() => {
       setCriteria(1); // 1 => 'sp đang bán'
       navigate('/manage/product');
+      getProducts();
       setRefresh("");
     }, 1500);
   }

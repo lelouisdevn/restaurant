@@ -21,13 +21,14 @@
 }
 
 .order-right-content {
-    position: fixed;
+    position: absolute;
     width: calc(40% - 7px);
     padding: 7px 10px;
     text-align: center;
     border: 1px solid grey;
     border-radius: 10px;
     height: calc(100vh - 64px - 35px);
+    overflow-y: scroll;
 }
 .order-container table {
     width: 100%;
@@ -77,10 +78,8 @@
     border: solid 1px lightgrey;
 }
 .order-actions {
-    position: fixed;
-    bottom: 20px;
-    /* border: solid 1px lightgray; */
-    width: calc(40% - 27px);
+    position: absolute;
+    width: calc(100% - 20px);
     padding: 7px 0;
     border-radius: 10px;
 }
