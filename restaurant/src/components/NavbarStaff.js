@@ -3,7 +3,6 @@ import { styled } from "@mui/system";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, Outlet } from "react-router-dom";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import { faMap, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -35,21 +34,14 @@ const NavbarStaff = () => {
             onChange={handleTabs}
             aria-label="nav tabs example"
           >
-            {/* Đặt mónmón */}
-            {/* <Link to={"/staff/orders"}>
-              <Tab
-                icon={<NoteAltIcon />}
-                iconPosition="start"
-                label="Đặt món"
-                ></Tab>
-              </Link> */}
+            {/* Đặt món
             <Link to={"/staff/orders/all"}>
               <Tab
               icon={<NoteAltIcon />}
               iconPosition="start"
               label="Danh sách gọi món"
               ></Tab>
-            </Link>
+            </Link> */}
 
             {/* Sơ đồ */}
             <Link to={"/staff/outline"}>
@@ -66,11 +58,6 @@ const NavbarStaff = () => {
               iconPosition="start"
               label="Phiếu tạm tính"
             ></Tab>
-
-            {/* <Link to={"/staff/orders/all"}>
-              <Tab label="Danh sách gọi món"></Tab>
-            </Link> 
-            <Tab label="Trả món"> </Tab> */}
             
             <Link to={"/login"} onClick={() => setOut()}>
               <Tab label="Thoát"> </Tab>
@@ -81,25 +68,9 @@ const NavbarStaff = () => {
         </StyledToolbar>
       </AppBar>
       <Outlet />
-
-      {/* <TabPanel value={value} index={0}></TabPanel>
-      <TabPanel value={value} index={1}>
-        <LayoutOutline />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item 3 Detail
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item 4 Detail
-      </TabPanel> */}
-      
+ 
     </div>
   );
 };
-
-function TabPanel(props) {
-  const { children, value, index } = props;
-  return <div>{value === index && <h1>{children}</h1>}</div>;
-}
 
 export default NavbarStaff;

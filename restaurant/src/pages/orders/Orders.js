@@ -70,6 +70,7 @@ function Orders() {
     const updateQty = (product) => {
         const prod = selectedProducts.indexOf(product);
         selectedProducts[prod] = product;
+        console.log("than phan nam tron update qty: ", selectedProducts);
         setSelectedProducts(selectedProducts);
         setReloadOrderDetail(!reloadOrderDetail);
     }
@@ -276,10 +277,7 @@ function Orders() {
                                         ))
                                     }
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Tổng:</td>
+                                        <td colspan='4'>Tổng:</td>
                                         <td>{VND.format(total)}</td>
                                     </tr>
                                 </table>
