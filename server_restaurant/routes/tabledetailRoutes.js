@@ -24,6 +24,7 @@ router.post("/tabledetail", async (req, res) => {
 router.get("/table/status=1", async (req, res) => {
   try {
     let table = await TableDetail.find({ status: 1 });
+    console.log("table:", table);
     res.send({ table });
   } catch (error) {
     console.log("Database err", error);
@@ -31,13 +32,12 @@ router.get("/table/status=1", async (req, res) => {
   }
 });
 
-//
 router.get("/lobby/:id/detailtable/status=1", async (req, res) => {
   let sit = [];
   try {
     let table = await Table.find({ lobby: req.params.id, tbl_status: 0 });
     for (let i = 0; i < table.length; i++) {
-      let detailTable = await TableDetail.find({ table: table[i]._id })
+      let detailTable = await TableDetail.find({ table: table[i]._id, status:1 })
         .populate("table")
         .exec();
       if (detailTable.length === 1) {
@@ -117,4 +117,25 @@ router.get("/tabledetails", async (req, res) => {
   }
 });
 
+router.get("/table=:id/orderdetail", async (req, res) => {
+  console.log("Ok lấy ra các order của 1 bàn ");
+  let listOrderPro = []
+  let detailOrder = [];
+  try {
+    let tabledetail = await TableDetail.findOne({ status: 1, table: req.params.id }).populate("table order").exec();
+    // console.log("order in tabledetail: ", tabledetail[0]);
+    let orderdetail = await OrderDetail.find({ Order: tabledetail.order }).populate("Product").exec();
+    // console.log("orderdetail: ", orderdetail);
+    for (let i = 0; i < orderdetail.length; i++){
+      listOrderPro.push(orderdetail[i]);
+    }
+    console.log("danh sach san pham order: ", listOrderPro);
+    detailOrder.push({ tabledetail: tabledetail, listpro: listOrderPro });
+    // console.log("mang: ", detailOrder[0]);
+    res.send({ detailOrder });
+   } catch (error) {
+     console.log("Database err", error);
+     return res.status(422).send({ Error: error.message });
+   }
+})
 module.exports = router;
