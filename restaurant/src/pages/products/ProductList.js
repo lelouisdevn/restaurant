@@ -201,9 +201,9 @@ const ProductList = (props) => {
   };
   return (
     <>
-      { 
+      {
         success &&
-        <Success 
+        <Success
           setSuccess={setSuccess}
           setSuccessClass={setSuccessClass}
           message={message}
@@ -234,14 +234,14 @@ const ProductList = (props) => {
                 <span> Sản phẩm</span>
                 <span>{id !== undefined && `/${categoryName}`}</span>
                 <span>/{type[criteria].name}</span>
+                <span>
+                  {
+                    products.length === 0 ? <></> : <> ({products.length})</>
+                  }
+                </span>
               </Link>
             </div>
             <div className='right-menu'>
-
-              
-              
-              
-
               <span onClick={refershPage}>
                 <FontAwesomeIcon icon={faRefresh} className={refresh} />
               </span>
@@ -261,7 +261,6 @@ const ProductList = (props) => {
               }
 
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
-                {/* <option disabled selected>Bộ lọc</option> */}
                 <option value="2">
                   Sản phẩm đã ẩn
                 </option>
@@ -273,7 +272,6 @@ const ProductList = (props) => {
             </div>
           </div>
           <div className="products">
-            {/* Display products as tiles or a grid  */}
             {displayType == "tiles" ?
               <>
                 {products.length > 0 ? products.map((product) => (
@@ -305,6 +303,11 @@ const ProductList = (props) => {
               </>
             }
           </div>
+          {/* <div className='product-number'>
+            {
+              products.length != 0 && <div>Có <span style={{fontWeight: "bold"}}>{products.length}</span> sản phẩm</div>
+            }
+          </div> */}
         </div>
       </div>
 
