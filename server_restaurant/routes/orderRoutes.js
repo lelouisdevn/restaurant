@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { ObjectId } = require('mongodb');
 const Order = require("../models/Order")
 const OrderDetail = require("../models/OrderDetail");
 const TableDetail = require("../models/TableDetail");
@@ -38,10 +39,23 @@ router.post('/order/detail/new', async(req, res) => {
 });
 
 
-router.post('/order/getAll', async(req, res) => {
-    const {tableId} = req.body;
+router.post('/order/getOrderByTableId', async(req, res) => {
+    const { tableId } = req.body;
     try {
-        const tables = await TableDetail.find({table: tableId});
+        const tables = await TableDetail.find({table: tableId, status: 1});
+        // const tables = await TableDetail.aggregate([
+        //     {
+        //         $match: { "order": new ObjectId(tableId) },
+        //     },
+        //     {
+        //         $lookup: {
+        //             from: "orders",
+        //             localField: "order",
+        //             foreignField: "_id",
+        //             as: "pay",
+        //         }
+        //     }
+        // ])
         res.send({tables});
     } catch (error) {
         console.log(error);
@@ -52,8 +66,34 @@ router.post('/order/getAll', async(req, res) => {
 router.post('/order/get/', async(req, res) => {
     const {orderId} = req.body;
     try {
-        const order = await Order.find({_id: orderId});
-        res.send({order});
+        // const tables = await TableDetail.aggregate([
+        //     {
+        //         $match: { "order": new ObjectId(orderId) },
+        //     },
+        //     {
+        //         $lookup: {
+        //             from: "orders",
+        //             localField: "order",
+        //             foreignField: "_id",
+        //             as: "pay",
+        //         }
+        //     }
+        // ])
+        const tables = await TableDetail.find({
+            order: orderId,
+        })
+        // res.send({tables});
+        // tables.map((table) => {
+        const updated = await TableDetail.updateMany(
+            {order: orderId,},
+            {
+                $set: {
+                    status: 0,
+                }
+            }
+        )
+        // })
+        res.send({updated});
     } catch (error) {
         console.log(error);
     }
