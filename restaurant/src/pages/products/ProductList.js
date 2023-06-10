@@ -261,7 +261,7 @@ const ProductList = (props) => {
               }
 
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
-                <option disabled selected>Bộ lọc</option>
+                {/* <option disabled selected>Bộ lọc</option> */}
                 <option value="2">
                   Sản phẩm đã ẩn
                 </option>
