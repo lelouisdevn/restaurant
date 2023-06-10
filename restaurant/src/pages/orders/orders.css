@@ -67,13 +67,13 @@
 .restInfo .orderInfo {
     /* margin:  */
     font-weight: normal;
-    font-size: 16px;
+    font-size: 17px;
 }
 .restInfo .orderInfo table {
-    text-align: left;
+    text-align: left; 
 }
 .restInfo .orderInfo table td {
-    padding: 3px 10px;
+    padding: 5px 10px;
     border: solid 1px lightgrey;
 }
 .order-actions {
