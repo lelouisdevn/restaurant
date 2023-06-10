@@ -29,14 +29,21 @@ const Login = () => {
           password: password
         })
         .then((res) => {
-          //console.log(res?.data.login[0].role);
-          localStorage.setItem("UserID", res?.data.login[0]._id);
-          //console.log(localStorage.getItem("UserID"));
+          console.log(res?.data);
+          console.log(res?.data.rest.rest_name);
+          localStorage.setItem("UserID", res?.data.login[0].user._id);
+          
+          const tempInfoStaff = res?.data.login[0].user;
+          localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+          
+          localStorage.setItem("RestaurantID", res?.data.login[0].info._id);
+          console.log(localStorage.getItem("UserID"));
+          console.log(localStorage.getItem("RestaurantID"));
 
-          if (res?.data.login[0].role === "1") {
-            navigate("/rest");
-          } else if (res?.data.login[0].role === "2") {
-            navigate("/staff/orders/all");
+          if (res?.data.login[0].user.role === "1") {
+            navigate("/manage/home");
+          } else if (res?.data.login[0].user.role === "2") {
+            navigate("/staff/outline");
           }
 
         });

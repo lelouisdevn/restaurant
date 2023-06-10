@@ -18,24 +18,25 @@ const SiderbarStaff = ({parentCallback}) => {
   const [lobbies, setLobbies] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLoading, setisLoading] = useState(true);
-  
+  const [idRestaurant, setidRestaurant] = useState(localStorage.getItem("RestaurantID")
+  );
+
   const handleListItemClick = async (event, index, path, id, arrange, numRow) => {
     setSelectedIndex(index);
     // navigate(path);
     parentCallback(id, arrange, numRow);
   };
   useEffect(() => {
-    getLobbies();
-  }, []);
+    getLobbies(idRestaurant);
+  }, [idRestaurant]);
 
-  const getLobbies = async () => {
+  const getLobbies = async (idRes) => {
     await axios
-      .get("http://localhost:4000/api/all/lobbies")
+      .get(`http://localhost:4000/api/lobbies/restaurant=${idRes}`)
       .then((res) => {
         const temp = res?.data.lobbies;
         setLobbies(temp);
         parentCallback(temp[0]._id, temp[0].lob_arrange, temp[0].lob_num);
-
       })
       .catch((error) => {
         console.log("Error: ", error);
