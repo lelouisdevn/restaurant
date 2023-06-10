@@ -38,108 +38,66 @@ router.post('/order/detail/new', async(req, res) => {
     }
 });
 
-
-router.post('/order/getOrderByTableId', async(req, res) => {
-    const { tableId } = req.body;
+router.post('/order/update', async(req, res) => {
+    const { orderId, criteria } = req.body;
+    const tableMethods = [0, 0, 1];
+    const orderMethods = ["dahuy", "dathanhtoan", "capnhat"];
     try {
-        const tables = await TableDetail.find({table: tableId, status: 1});
-        // const tables = await TableDetail.aggregate([
-        //     {
-        //         $match: { "order": new ObjectId(tableId) },
-        //     },
-        //     {
-        //         $lookup: {
-        //             from: "orders",
-        //             localField: "order",
-        //             foreignField: "_id",
-        //             as: "pay",
-        //         }
-        //     }
-        // ])
-        res.send({tables});
+        await TableDetail.updateMany(
+            { order: orderId, status: 1 },
+            {
+                $set: {
+                    status: tableMethods[criteria],
+                }
+            }
+        )
+        if (criteria === 1) {
+            const current = new Date().toLocaleString("vi-VN", {hour12: false});
+            await Order.updateOne(
+                { _id: new ObjectId(orderId) },
+                {
+                    $set: {
+                        status: orderMethods[criteria],
+                        bill_at: current,
+                    }
+                }
+            )
+        }else {
+            await Order.updateOne(
+                { _id: new ObjectId(orderId) },
+                {
+                    $set: {
+                        status: orderMethods[criteria],
+                    }
+                }
+            )
+        }
+        res.send("ok");
     } catch (error) {
         console.log(error);
     }
 })
 
-
-router.post('/order/get/', async(req, res) => {
-    const {orderId} = req.body;
+router.get("/order/:orderId", async(req, res) => {
+    const orderId = req.params.orderId;
     try {
-        // const tables = await TableDetail.aggregate([
-        //     {
-        //         $match: { "order": new ObjectId(orderId) },
-        //     },
-        //     {
-        //         $lookup: {
-        //             from: "orders",
-        //             localField: "order",
-        //             foreignField: "_id",
-        //             as: "pay",
-        //         }
-        //     }
-        // ])
-        const tables = await TableDetail.find({
-            order: orderId,
-        })
-        // res.send({tables});
-        // tables.map((table) => {
-        const updated = await TableDetail.updateMany(
-            {order: orderId,},
+        const order = await Order.aggregate([
+            { 
+                $match: { "_id": new ObjectId(orderId) }
+            },
             {
-                $set: {
-                    status: 0,
+                $lookup: {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "detail"
                 }
             }
-        )
-        // })
-        res.send({updated});
-    } catch (error) {
-        console.log(error);
-    }
-})
-router.post('/order/payment', async(req, res) => {
-    const { orderId } = req.body;
-    try {
-        // const order = await Order.find({_id: orderId});
-        const order = await Order.updateOne(
-            {_id: orderId,},
-            {
-                $set: {
-                    status: "dathanhtoan",
-                }
-            }
-        )
-
-        // res.send({order});
-        // console.log(orderId);
+        ])
+        res.send({order});
     } catch (error) {
         console.log(error);
     }
 });
-
-
-
-
-/**Undone */
-router.put('/order/update/:orderId', async(req, res) => {
-    const id = req.params.orderId;
-    const {total} = req.body;
-    try {
-        let order = await Order.updateOne(
-            {_id: id},
-            {
-                $set: {
-                    total: total,
-                }
-            }
-        )
-        res.send({order});
-    }catch(error) {
-        console.log(error);
-    }
-})
-
-
 
 module.exports = router;

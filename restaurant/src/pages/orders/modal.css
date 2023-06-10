@@ -1,0 +1,38 @@
+.order-modal {
+    top: 50%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    translate: -50%;
+    height: 80%;
+    width: 50%;
+    filter: drop-shadow(1px 1px 10px gray);
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+.order-modal-title {
+    font-size: 22px;
+    padding: 5px 10px;
+    position: sticky;
+    top: 0;
+    background-color: aliceblue;
+    height: fit-content;
+}
+
+.order-modal-content {
+    padding: 14px;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.order-modal-footer {
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    font-size: 18px;
+    background: whitesmoke;
+    width: 100%;
+}

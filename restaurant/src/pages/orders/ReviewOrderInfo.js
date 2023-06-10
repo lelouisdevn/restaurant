@@ -18,7 +18,8 @@ const ReviewOrderInfo = (props) => {
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
-    getInfoRes(props.restaurant, props.user);
+    // getInfoRes(props.restaurant, props.user);
+    console.log(props.restaurant, props.user);
   }, [props.restaurant, props.user]);
 
   const getInfoRes = async (idRes, idInfo) => {
