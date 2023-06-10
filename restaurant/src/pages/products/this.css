@@ -273,7 +273,7 @@ button.updateButton:hover {
     margin-bottom: 10px;
 }
 .refresh {
-    animation: r 4s linear infinite;
+    animation: r 3s linear infinite;
     /* transform-origin: 48%; */
 }
 
