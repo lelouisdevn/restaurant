@@ -23,6 +23,12 @@
     width: 150px;
     border-radius: 10px;
 }
+/* .tile img:hover {
+    transform: scale(1.5);
+    transition: 400ms;
+    border: solid 1px black;
+    transition-delay: 1.5s;
+} */
 .productName {
     text-align: center;
 }
@@ -33,5 +39,10 @@
 
 .blurtile {
     opacity: 0.5!important;
-    /* color: crimson!important; */
+}
+
+.blurtile .productName {
+    color: rgb(153, 5, 35);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
 }
