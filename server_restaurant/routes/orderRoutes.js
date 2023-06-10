@@ -1,14 +1,16 @@
 const router = require('express').Router();
 const Order = require("../models/Order")
 const OrderDetail = require("../models/OrderDetail");
+const TableDetail = require("../models/TableDetail");
 /**Create a new order */
 router.post('/order/new', async(req, res) => {
-    const {order_at, total, user, table, restaurant } = req.body;
+    const {order_at, total, user, note, restaurant } = req.body;
     try {
         const order = Order({
             order_at: order_at,
             total: total,
             user: user,
+            note: note,
             restaurant: restaurant,
         });
         await order.save();
@@ -34,6 +36,49 @@ router.post('/order/detail/new', async(req, res) => {
         console.log(error);
     }
 });
+
+
+router.post('/order/getAll', async(req, res) => {
+    const {tableId} = req.body;
+    try {
+        const tables = await TableDetail.find({table: tableId});
+        res.send({tables});
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+router.post('/order/get/', async(req, res) => {
+    const {orderId} = req.body;
+    try {
+        const order = await Order.find({_id: orderId});
+        res.send({order});
+    } catch (error) {
+        console.log(error);
+    }
+})
+router.post('/order/payment', async(req, res) => {
+    const { orderId } = req.body;
+    try {
+        // const order = await Order.find({_id: orderId});
+        const order = await Order.updateOne(
+            {_id: orderId,},
+            {
+                $set: {
+                    status: "dathanhtoan",
+                }
+            }
+        )
+
+        // res.send({order});
+        // console.log(orderId);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 
 
 /**Undone */

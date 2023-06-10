@@ -6,12 +6,12 @@ import Loading from '../products/Loading';
 import OrderInfo from './OrderInfo';
 import OrderItem from './OrderItem';
 import Success from '../products/Success';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 import VND from '../../components/currency';
 function Orders() {
-    const { id , name} = useParams();
+    const { id, name } = useParams();
     if (id !== undefined) {
-      console.log("id truyen: ", id+ name);
+        console.log("id truyen: ", id + name);
     }
     const [products, setProducts] = useState("");
     const [criteria, setCriteria] = useState("true");
@@ -20,6 +20,7 @@ function Orders() {
     const [isOrdered, setTt] = useState(false);
     const [reloadOrderDetail, setReloadOrderDetail] = useState(false);
     const [total, setTotal] = useState(0);
+    const [note, setNote] = useState("");
 
     /**
      * Pop-up banner;
@@ -161,21 +162,22 @@ function Orders() {
                 order_at: recent,
                 total: total,
                 user: user._id,
+                note: note ? note : "",
                 restaurant: restaurant._id,
             })
-            .then( async (res) => {
+            .then(async (res) => {
                 const order_id = res?.data.order._id;
                 setOrderId(order_id);
                 setTt(!isOrdered);
                 await axios
-                   .post(`http://localhost:4000/api/tabledetail`, {
-                     table: id,
-                     order: order_id
-                   })
-                   .then((res) => {
-                     const temp = res?.data;
-                    //  console.log("them chi tiet ban: ", temp);
-                   });
+                    .post(`http://localhost:4000/api/tabledetail`, {
+                        table: id,
+                        order: order_id
+                    })
+                    .then((res) => {
+                        const temp = res?.data;
+                        //  console.log("them chi tiet ban: ", temp);
+                    });
             });
     }
     const orderDetail = async () => {
@@ -218,6 +220,9 @@ function Orders() {
         }, 3000);
     }
 
+    useEffect(() => {
+        console.log(note);
+    }, [note]);
     /**
      * HTML template for main order page;
     */
@@ -245,7 +250,7 @@ function Orders() {
                 </div>
                 <div className="order-right">
                     <div className="order-right-content">
-                            <OrderInfo user={user} restaurant={restaurant} nameTable={name}  />
+                        <OrderInfo user={user} restaurant={restaurant} nameTable={name} />
 
                         {/* Display when selected products are not empty; */}
                         {selectedProducts.length > 0 &&
@@ -278,14 +283,20 @@ function Orders() {
                                         <td>{VND.format(total)}</td>
                                     </tr>
                                 </table>
+                                <div className='order-txtarea'>
+                                    <div>Ghi chú:</div>
+                                    <textarea onChange={(e) => setNote(e.target.value)}></textarea>
+                                </div>
+
+                                <div className='order-actions'>
+                                    <div className='content'>
+                                        <button className='updateButton' onClick={handleOrder} >Đặt món</button>
+                                        <button className='' onClick={discardAll}>Bỏ chọn tất cả</button>
+                                    </div>
+                                </div>
                             </>
                         }
-                        <div className='order-actions'>
-                            <div className='content'>
-                                <button className='updateButton' onClick={handleOrder} >Đặt món</button>
-                                <button className='' onClick={discardAll}>Bỏ chọn tất cả</button>
-                            </div>
-                        </div>
+
                     </div>
 
                 </div>
