@@ -77,7 +77,48 @@ router.post('/order/update', async(req, res) => {
         console.log(error);
     }
 })
-
+router.get("/order/:orderId/details", async(req, res) => {
+    const orderId = req.params.orderId;
+    try {
+        const details = await OrderDetail.aggregate([
+            {
+                $match: { "Order": new ObjectId(orderId) },
+            },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "Product",
+                    foreignField: "_id",
+                    as: "product",
+                }
+            }
+        ])
+        res.send({details});
+    } catch (error) {
+        console.log(error);
+    }
+})
+router.get("/order/:orderId/tables", async(req, res) => {
+    const orderId = req.params.orderId;
+    try {
+        const tables = await TableDetail.aggregate([
+            {
+                $match: { "order": new ObjectId(orderId) },
+            },
+            {
+                $lookup: {
+                    from: "tables",
+                    localField: "table",
+                    foreignField: "_id",
+                    as: "tables",
+                }
+            }
+        ])
+        res.send({tables});
+    } catch (error) {
+        console.log(error);
+    }
+})
 router.get("/order/:orderId", async(req, res) => {
     const orderId = req.params.orderId;
     try {
@@ -90,9 +131,9 @@ router.get("/order/:orderId", async(req, res) => {
                     from: "users",
                     localField: "user",
                     foreignField: "_id",
-                    as: "detail"
+                    as: "user"
                 }
-            }
+            },
         ])
         res.send({order});
     } catch (error) {

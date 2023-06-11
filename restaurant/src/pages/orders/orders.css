@@ -34,7 +34,7 @@
     width: 100%;
 }
 .order-container table td {
-    border: solid 1px grey;
+    border: solid 1px lightgrey;
     padding: 7px 0;
     /* height: 30px; */
 }
