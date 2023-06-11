@@ -77,7 +77,7 @@ const OrderModal = (props) => {
             content: () => componentPDF.current,
             documentTitle: "Customer bill",
             // onAfterPrint: () => alert("success")
-            print: true,
+            // print: true,
         }
     );
     // HTML template;
