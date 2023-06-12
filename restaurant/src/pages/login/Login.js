@@ -3,7 +3,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,8 +15,8 @@ const Login = () => {
   const [restaurant, setRestaurant] = useState("sagarestaurant@rest.vn");
 
   const [PorT, setPorT] = useState(true);
-  // const [UserID, setUserID] = useState([]); 
-  // const [RestaurantID, setRestaurantID] = useState([]); 
+  // const [UserID, setUserID] = useState([]);
+  // const [RestaurantID, setRestaurantID] = useState([]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,31 +25,39 @@ const Login = () => {
       await axios
         .post("http://localhost:4000/api/login", {
           username: username,
-          password: password,
-          restaurant: restaurant,
+          password: password
         })
-        .then((res) => {
+        .then(async (res) => {
           console.log(res?.data);
-          console.log(res?.data.rest.rest_name);
-          localStorage.setItem("UserID", res?.data.login[0].user._id);
-          
-          const tempInfoStaff = res?.data.login[0].user;
-          localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
-          
-          localStorage.setItem("RestaurantID", res?.data.login[0].info._id);
-          console.log(localStorage.getItem("UserID"));
-          console.log(localStorage.getItem("RestaurantID"));
+          //console.log(res?.data.login[0].role);
+          localStorage.setItem("UserID", res?.data.login[0]._id);
+          //console.log(localStorage.getItem("UserID"));
+          console.log("người dung", res?.data.login[0]);
 
-          if (res?.data.login[0].user.role === "1") {
-            navigate("/manage/home");
-          } else if (res?.data.login[0].user.role === "2") {
+          const tempInfoStaff = res?.data.login[0];
+          localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+
+          await axios
+            .get(
+              `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
+            )
+            .then((res) => {
+              const tempInfoRestaurant = res?.data.infores;
+              localStorage.setItem(
+                "infoRestaurant",
+                JSON.stringify(tempInfoRestaurant)
+              );
+            });
+
+          if (res?.data.login[0].role === "1") {
+            navigate("/rest");
+          } else if (res?.data.login[0].role === "2") {
             navigate("/staff/outline");
           }
-
         });
     } catch (error) {
       console.log("Error: ", error);
-      toast.error('🦄 Nhập sai thông tin!', {
+      toast.error("🦄 Nhập sai thông tin!", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -57,11 +65,9 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: "colored"
       });
     }
-
-
   };
   return (
     <section className="h-screen">
@@ -87,7 +93,7 @@ const Login = () => {
                   </div>
                               ) : null} */}
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <label
                     htmlFor="restaurant"
                     className="block mb-2 text-sm font-medium text-white"
@@ -104,7 +110,7 @@ const Login = () => {
                     }}
                     required
                   />
-                </div>
+                </div> */}
                 <div className="mb-6">
                   <label
                     htmlFor="username"
@@ -155,7 +161,6 @@ const Login = () => {
                       />
                     )}
                   </div>
-
                 </div>
                 <div className="flex flex-row justify-between">
                   <div className="text-[#00FF00] text-sm md:text-md"></div>

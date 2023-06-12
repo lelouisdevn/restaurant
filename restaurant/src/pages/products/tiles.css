@@ -30,3 +30,8 @@
     margin: 0;
     padding: 0;
 }
+
+.blurtile {
+    opacity: 0.5!important;
+    /* color: crimson!important; */
+}

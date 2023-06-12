@@ -1,11 +1,8 @@
 import {
-  Container,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Stack,
-  Typography
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -18,16 +15,22 @@ const SiderbarStaff = ({parentCallback}) => {
   const [lobbies, setLobbies] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLoading, setisLoading] = useState(true);
-  const [idRestaurant, setidRestaurant] = useState(localStorage.getItem("RestaurantID")
-  );
+  
+  
+  //Lấy infoRestaurant trên localStorage dạng object 
+  const json = localStorage.getItem("infoRestaurant");
+  const valuejson = JSON.parse(json);
+  const [idRestaurant, setidRestaurant] = useState(valuejson); 
 
   const handleListItemClick = async (event, index, path, id, arrange, numRow) => {
     setSelectedIndex(index);
     // navigate(path);
     parentCallback(id, arrange, numRow);
   };
+
+  // Lấy khu vực sảnh theo nhà hàng idRes
   useEffect(() => {
-    getLobbies(idRestaurant);
+    getLobbies(idRestaurant._id);
   }, [idRestaurant]);
 
   const getLobbies = async (idRes) => {

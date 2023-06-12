@@ -123,19 +123,36 @@ router.get("/table=:id/orderdetail", async (req, res) => {
   let detailOrder = [];
   try {
     let tabledetail = await TableDetail.findOne({ status: 1, table: req.params.id }).populate("table order").exec();
-    // console.log("order in tabledetail: ", tabledetail[0]);
+    let tabledetail2 = await TableDetail.find({ status: 1, order: tabledetail.order._id }).populate("table order").exec();
+    console.log("order in tabledetail1: ", tabledetail);
+    console.log("order in tabledetail2: ", tabledetail2);
+
     let orderdetail = await OrderDetail.find({ Order: tabledetail.order }).populate("Product").exec();
     // console.log("orderdetail: ", orderdetail);
     for (let i = 0; i < orderdetail.length; i++){
       listOrderPro.push(orderdetail[i]);
     }
     console.log("danh sach san pham order: ", listOrderPro);
-    detailOrder.push({ tabledetail: tabledetail, listpro: listOrderPro });
+    detailOrder.push({ tabledetail: tabledetail2, listpro: listOrderPro });
     // console.log("mang: ", detailOrder[0]);
     res.send({ detailOrder });
    } catch (error) {
      console.log("Database err", error);
      return res.status(422).send({ Error: error.message });
-   }
+    }
+  })
+  
+  // Test table have sitted person
+  router.get('/test/table/id=:id/status=1', async (req, res) => {
+    try {
+      let testTbl2 = await TableDetail.findOne({ status: 1, table: req.params.id }).populate("order").exec();
+      // console.log("kieemr tra ban trong tableDetail: ",testTbl2);
+      res.send({ testTbl2 });
+      
+    } catch (error) {
+    console.log("Database err", error);
+    return res.status(422).send({ Error: error.message });
+    
+  }
 })
 module.exports = router;

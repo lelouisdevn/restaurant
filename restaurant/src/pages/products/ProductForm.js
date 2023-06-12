@@ -20,7 +20,6 @@ function ProductForm() {
 
     const [url, setUrl] = useState({
         "add": "/manage/product/new",
-        "hide": "product/hide"
       })
 
     const [success, setSuccess] = useState(false);

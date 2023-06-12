@@ -28,6 +28,10 @@ import LayoutOutline from './pages/outline/LayoutOutline';
 import OutLine from './pages/outline/OutLine'
 import SettingMap from "./pages/lobby/SettingMap";
 import OrderList from './pages/orders/manage/OrderList';
+import SetUpPage from './pages/settuppage/setUpPage';
+import SelectRest from './pages/settuppage/selectRest';
+import CreateRest from './pages/settuppage/CreateRest';
+import Rest from './pages/login/Rest';
 
 function App() {
   return (
@@ -37,9 +41,20 @@ function App() {
           <Route path="*" element={<Navigate to="/login" replace />}></Route>
 
           <Route path="/login" element={<Login />}></Route>
+
+          <Route path='/setting-up/*' element={<SetUpPage />} >
+            <Route path='select' element={<SelectRest />} />
+            <Route path='restaurant/new' element={<CreateRest />} />
+          </Route>
+
+          
+          <Route path="/login/*" element={<Login />}>
+          </Route>
+          <Route path="rest" element={<Rest/>}/>
           <Route path="/manage/*" element={<Layout />}>
+            
             <Route path="home">
-              <Route index element={<Home />} />
+              <Route element={<Home />} />
             </Route>
             <Route path="lobby">
               <Route index element={<Lobby />} />

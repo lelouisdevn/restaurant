@@ -1,38 +1,56 @@
-import { Box, Grid, Paper, Typography, styled } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  Typography,
+  styled,
+  TextField
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Outline.scss";
 import "../orders/orders.css";
 import { useNavigate, useParams } from "react-router-dom";
-import SelectedTable from "./SelectedTable";
-import PerSonSitting from "./PersonSitting";
 import { Item } from "./Item";
 import PersonSitting from "./PersonSitting";
 import LoadingT from "./Loading";
 import ReviewOrderInfo from "../orders/ReviewOrderInfo";
 import OrderDetail from "../orders/manage/OrderDetail";
 import VND from "../../components/currency";
-// const Item = styled(Paper)(({ theme }) => ({
-//   padding: theme.spacing(1),
-//   display: "flex",
-//   alignItems: "center",
-//   justifyContent: "center",
-//   textAlign: "center",
-//   borderWidth: 0,
-//   borderRadius: 0,
-//   boxShadow: "none"
-// }));
-
+import CancelIcon from "@mui/icons-material/Cancel";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+const style = {
+  top: "50%",
+  left: "50%",
+  width: 400,
+  bgcolor: "white",
+  borderRadius: 5,
+  boxShadow: 24,
+  borderWidth: 0,
+  p: 4
+};
+const StyledModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+});
 const OutLine = ({ id, arrange, numRow }) => {
   // const { id, arrange, numRow } = useParams();
   const navigate = useNavigate();
   const [tables, setTables] = useState([]);
   const [detailOrder, setDetailOrder] = useState();
-  const [tablesStatus1, setTablesStatus1] = useState([]);
   const [show, setShow] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isLDO, setisLDO] = useState(false);
+  const [isLNote, setisLNote] = useState(false);
+  const [openIF, setOpenIF] = useState(false);
   const [updateTotal, setupdateTotal] = useState(0);
+  const [updateNote, setUpdateNote] = useState(null);
+  
+  const json = localStorage.getItem("infoStaff");
+  const valuejson = JSON.parse(json);
+  const [infoStaff, setInfoStaff] = useState(valuejson);
 
   useEffect(() => {
     getTables(id);
@@ -72,42 +90,27 @@ const OutLine = ({ id, arrange, numRow }) => {
       });
   };
 
-  const getDetailTables = async () => {
-    await axios.get().then((res) => {
-      // const temp = res?.data;
-    });
-  };
   const ChooseATable = (table) => {
     navigate(`/staff/order/table/${table._id}/${table.tbl_id}`);
-    // if (listTable.find((tab) => tab._id === table._id)) {
-    //   setListTable(listTable.filter((lt) => lt._id !== table._id));
-    // } else {
-    //   setListTable([...listTable, table]);
-    //   }
   };
 
   const viewDetailTable = async (props) => {
-    console.log("ok: ", props);
+    // console.log("ok: ", props);
     setShow(props.status);
     if (props.status) {
       await axios
         .get(`http://localhost:4000/api/table=${props.table}/orderdetail`)
         .then((res) => {
           const temp = res?.data.detailOrder[0];
+          console.log("detailOrder: ", temp);
           setDetailOrder(temp);
           setProducts(temp.listpro);
-          console.log("lalala: ", temp);
         })
         .finally(() => {
           setisLDO(true);
         });
     }
   };
-  const [info, setInfo] = useState([]);
-  const [table, setTable] = useState();
-  const json = localStorage.getItem("infoStaff");
-  const valuejson = JSON.parse(json);
-  const [infoStaff, setInfoStaff] = useState(valuejson);
   const [products, setProducts] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState("");
   const [selectedStatus, setSelectedStatus] = useState();
@@ -123,7 +126,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const updateQty = (product) => {
     const index = products.indexOf(product);
     // console.log("index", index);
-    // console.log("product", product);
+    console.log("product", product);
     products[index] = product;
     setProducts(products);
     getTotal(products);
@@ -140,11 +143,10 @@ const OutLine = ({ id, arrange, numRow }) => {
     let tempt = 0;
     // console.log("trang htai: ", productsData);
     for (let index = 0; index < productsData.length; index++) {
-      if (productsData[index].status !== 'xoa') {
+      if (productsData[index].status !== "xoa") {
         let productPrice =
           productsData[index].Product.prod_price * productsData[index].qty;
         tempt = tempt + productPrice;
-        
       }
     }
     setupdateTotal(tempt);
@@ -201,24 +203,60 @@ const OutLine = ({ id, arrange, numRow }) => {
     }, 3000);
   };
 
-  /**
-   * Discard any changes made previously;
-   */
-  const discardQtyChanges = () => {
-    // getOrderById();
-    let message = {
-      noti: "Các thay đổi đã được loại bỏ",
-      icon: "faCheckCircle"
-    };
-    showModal(message);
-  };
+  const updateOrder = async () => {
+    setOpenE(false);
+    setOpenIF(false);
 
-  // Update order;
-  const updateOrder = () => {};
+    //Cập nhật ghi chú 
+    // console.log(" cap nhat " ,detailOrder);
+    if (updateNote !== null) {
+      detailOrder.tabledetail[0].order["note"] = updateNote;
+      setDetailOrder(detailOrder);
+      setisLNote(true);
+      await axios.put('http://localhost:4000/api/order/note/update', {
+        id:detailOrder.tabledetail[0].order._id ,
+        note: updateNote,
+      }).then((res) => {
+          console.log("ok update note success");
+      });
+    }
+
+    // Cập nhật số lượng sản phẩm
+    await axios.put('http://localhost:4000/api/order/product/update', {
+      lproducts: products
+    }).then((res) => {
+        console.log("ok update product");
+    });
+   
+  };
 
   // Pay order;
   const payOrder = () => {};
 
+  // Cancel the dish
+  const [itemDish, setItemDish] = useState();
+  const [open, setOpen] = useState(false);
+  const [openE, setOpenE] = useState(false);
+  const handleCancel = (props) => {
+    console.log("hủy : ", props);
+    setOpen(props.isShow);
+    setItemDish(props.item);
+  };
+
+  const cancelDish = async (item) => {
+    console.log("id order: ", item);
+    const index = products.indexOf(item); 
+    item["status"] = "xoa";
+    products[index] = item;
+    setProducts(products);
+    getTotal(products);
+    await axios
+      .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
+      .then((res) => {
+        const temp = res?.data;
+        setOpen(false);
+      });
+  };
   return (
     <>
       {isLoading ? (
@@ -535,17 +573,16 @@ const OutLine = ({ id, arrange, numRow }) => {
                 </Grid>
               )}
             </Box>
-            {show &&  isLDO? (
+            {show && isLDO ? (
               <Box gridColumn="span 6">
                 <Box className=" order-container order-right-content">
-                  {/* {isLDO ? ( */}
-                    <ReviewOrderInfo
-                      user={detailOrder.tabledetail.order.user}
-                      restaurant={detailOrder.tabledetail.order.restaurant}
-                      table={detailOrder.tabledetail.table}
-                    />
-                  {/* ) : null} */}
-                  <Typography
+                  <ReviewOrderInfo
+                    user={detailOrder.tabledetail[0].order.user}
+                    restaurant={detailOrder.tabledetail[0].order.restaurant}
+                    table={detailOrder.tabledetail}
+                    // table={detailOrder.tabledetail.table}
+                  />
+                 <Typography
                     variant="h4"
                     sx={{ fontSize: "25px", fontWeight: "bold" }}
                   >
@@ -566,12 +603,12 @@ const OutLine = ({ id, arrange, numRow }) => {
                     {isLDO &&
                       products.map((product, index) => (
                         <OrderDetail
-                          // stt={products.indexOf(product) + 1}
                           stt={index + 1}
                           key={index}
                           item={product}
                           updateQty={updateQty}
                           infoStaff={infoStaff}
+                          handleCancel={handleCancel}
                         />
                       ))}
                     <tr>
@@ -580,88 +617,123 @@ const OutLine = ({ id, arrange, numRow }) => {
                       {/* <td>{VND.format(selectedOrder.total.total)}</td>
                           {infoStaff.role === "2" ? null : <td> </td>} */}
                     </tr>
-                    </table>
-                    <div className="flex p-3">
-                      <h4 className="text-lg font-bold">*Ghi chú :</h4>
-                      <h4 className="text-lg pl-4"> {detailOrder.tabledetail.order.note}</h4>
-                    </div>
-                  <div className="order-actions">
+                  </table>
+                  <Box mt="8px" sx={{ flexGrow: 1, display: "flex" }}>
+                    <Grid container spacing={2} columns={12}>
+                      <Grid item xs={3}>
+                        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                          *Ghi chú:
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <Box sx={{ marginTop: "3px" }}>
+                          <Typography variant="p">
+                            {isLNote
+                              ? detailOrder.tabledetail[0].order.note
+                              : detailOrder.tabledetail[0].order.note}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <EditNoteIcon
+                          sx={{ fontSize: "28px" }}
+                          onClick={() => setOpenIF(true)}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Box>
+
+                  {/* Mở text để cập nhật note */}
+                  {openIF ? (
+                    <Box mt="8px" sx={{ flexGrow: 1, display: "flex" }}>
+                      <Grid container spacing={2} columns={12}>
+                        <Grid item xs={3}></Grid>
+                        <Grid item xs={7}>
+                          <Box sx={{ marginTop: "3px" }}>
+                            <TextField
+                              sx={{ display: "flex" }}
+                              id="outlined-multiline-static"
+                              multiline
+                              rows={3}
+                              defaultValue={detailOrder.tabledetail[0].order.note}
+                              onChange={(e) => setUpdateNote(e.target.value)}
+                            />
+                          </Box>
+                        </Grid>
+                        <Grid item xs={2}></Grid>
+                      </Grid>
+                    </Box>
+                  ) : null}
+
+                  <div className="order-actions mt-3">
                     <div className="content">
-                      <button className="updateButton" onClick={updateOrder}>
+                      <button className="updateButton" onClick={()=> setOpenE(true)}>
                         Cập nhật yêu cầu
                       </button>
-                      <button
-                        className="updateButton"
-                        onClick={discardQtyChanges}
-                      >
-                        Hoàn tác
-                      </button>
+                     
                       <button className="updateButton" onClick={payOrder}>
                         Thanh toán
                       </button>
                       <button onClick={confirmDeleteOrder}>Hủy đơn</button>
                     </div>
                   </div>
-                  </Box>
-                  
+                </Box>
 
-                {/* </h3>
-                      <table>
-                        <tr style={{ borderRadius: "10px 10px 0 0" }}>
-                          <td>STT</td>
-                          <td>Món</td>
-                          <td>Số lượng</td>
-                          <td>Đơn giá</td>
-                          <td style={{ width: "100px" }}>Tổng</td>
-                          {infoStaff.role === "2" ? null : <td> Trạng thái</td>}
-                        </tr> */}
-                {/* {products.map((product, index) => (
-                          <OrderDetail
-                            // stt={products.indexOf(product) + 1}
-                            stt={index + 1}
-                            key={index}
-                            item={product}
-                            updateQty={updateQty}
-                            infoStaff={infoStaff}
-                          />
-                        ))} */}
-                {/* <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>Tổng hóa đơn:</td> */}
-                {/* <td>{VND.format(selectedOrder.total.total)}</td>
-                          {infoStaff.role === "2" ? null : <td> </td>} */}
-                {/* </tr>
-                      </table>
-                      <div className="order-actions">
-                        <div className="content">
-                          <button
-                            className="updateButton"
-                            onClick={updateOrder}
-                          >
-                            Cập nhật yêu cầu
-                          </button>
-                          <button
-                            className="updateButton"
-                            onClick={discardQtyChanges}
-                          >
-                            Hoàn tác
-                          </button>
-                          <button className="updateButton" onClick={payOrder}>
-                            Thanh toán
-                          </button>
-                          <button onClick={confirmDeleteOrder}>Hủy đơn</button>
-                        </div>
-                      </div>
-                    </> */}
-                {/* </div> */}
-                {/* </div> */}
               </Box>
             ) : null}
           </Box>
         </Box>
       )}
+
+      {/* Modal xóa theo từng sản phẩm */}
+      <StyledModal
+        open={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box className="flex items-center justify-center mb-2">
+            <CancelIcon sx={{ fontSize: 80, color: "orange" }} />
+          </Box>
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+            Xác nhận xóa mục này?
+          </Typography>
+          <Box ml={20}>
+            <Button onClick={() => cancelDish(itemDish)}>
+              <Typography variant="h6">Đồng ý</Typography>
+            </Button>
+            <Button onClick={() => setOpen(false)}>
+              <Typography variant="h6">Hủy</Typography>
+            </Button>
+          </Box>
+        </Box>
+      </StyledModal>
+
+      {/* Modal thực hiện chỉnh sửa  */}
+      <StyledModal
+        open={openE}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box className="flex items-center justify-center mb-2">
+            <CancelIcon sx={{ fontSize: 80, color: "orange" }} />
+          </Box>
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+            Xác nhận chỉnh sửa mục này?
+          </Typography>
+          <Box ml={20}>
+            <Button
+              onClick={updateOrder}
+            >
+              <Typography variant="h6">Đồng ý</Typography>
+            </Button>
+            <Button onClick={() => setOpenE(false)}>
+              <Typography variant="h6">Hủy</Typography>
+            </Button>
+          </Box>
+        </Box>
+      </StyledModal>
     </>
   );
 };
