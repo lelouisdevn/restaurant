@@ -8,7 +8,9 @@ import OrderItem from './OrderItem';
 import Success from '../products/Success';
 import { useParams } from 'react-router-dom';
 import VND from '../../components/currency';
+import { useNavigate } from 'react-router-dom';
 function Orders() {
+    const navigate = useNavigate();
     const { id, name } = useParams();
     if (id !== undefined) {
         console.log("id truyen: ", id + name);
@@ -181,6 +183,7 @@ function Orders() {
                     });
             });
     }
+    const [redirect, setRedirect] = useState("");
     const orderDetail = async () => {
         const order_detail_url = "http://localhost:4000/api/order/detail/new";
         selectedProducts.forEach(async (product) => {
@@ -197,6 +200,8 @@ function Orders() {
                         "icon": "faCheckCircle",
                     };
                     showModal(message);
+                    setRedirect('/staff/outline');
+                    
                 })
         });
     }
@@ -211,6 +216,7 @@ function Orders() {
     /**
      * Show modal;
      */
+    
     const showModal = (message) => {
         setSuccess(true);
         setSuccessClass("opacity-success");
@@ -218,6 +224,7 @@ function Orders() {
         setTimeout(() => {
             setSuccess(false);
             setSuccessClass("");
+            navigate("/staff/outline");
         }, 3000);
     }
 
@@ -231,7 +238,7 @@ function Orders() {
         <>
             {
                 success &&
-                <Success setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
+                <Success redirect={redirect} setSuccess={setSuccess} setSuccessClass={setSuccessClass} message={message} />
             }
             <div className={`order-container ${successClass}`}>
                 <div className="order-left">

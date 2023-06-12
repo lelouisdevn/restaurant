@@ -191,7 +191,8 @@ const OutLine = ({ id, arrange, numRow }) => {
   // update order with id and criteria; See line 154!
   const updateOrder = async (message) => {
     const url = 'http://localhost:4000/api/order/update';
-    await axios
+    if (criteria !== 100) {
+      await axios
       .post(url, {
         orderId: selectedOrderId,
         criteria: criteria,
@@ -199,7 +200,9 @@ const OutLine = ({ id, arrange, numRow }) => {
       .then((res) => {
         showModal(message);
         getTables(id);
+        setCriteria(100); //set criteria === 100 for paying bills without reloading page;
       })
+    }
   }
 
   // Show a popup banner of confirmation for cancelling order;
