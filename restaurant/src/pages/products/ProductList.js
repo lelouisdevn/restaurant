@@ -170,6 +170,7 @@ const ProductList = (props) => {
   const refershPage = () => {
     setRefresh("refresh");
     setQuery("");
+    setProducts([]);
     setTimeout(() => {
       setCriteria(1); // 1 => 'sp đang bán'
       navigate('/manage/product');
