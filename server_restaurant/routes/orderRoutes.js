@@ -82,7 +82,7 @@ router.get("/order/:orderId/details", async(req, res) => {
     try {
         const details = await OrderDetail.aggregate([
             {
-                $match: { "Order": new ObjectId(orderId) },
+                $match: { "Order": new ObjectId(orderId), "status": { $ne: "xoa" } },
             },
             {
                 $lookup: {
