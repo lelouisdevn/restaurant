@@ -15,7 +15,8 @@ const OrderModal = (props) => {
     const [orderDetails, setOrderDetails] = useState([]);
     const [tables, setTables] = useState([]);
     const [money, setMoneyReceived] = useState(0); //for calculating the left money;
-    const [documentTitle, setDocumentTitle] = useState("")
+    const [documentTitle, setDocumentTitle] = useState("");
+    const [rest, setRest] = useState("");
 
     // Set criteria to 1 and set display status of modal to false;
     const handlePay = () => {
@@ -24,6 +25,16 @@ const OrderModal = (props) => {
         // generateBillPDF();
     }
     const [billExportStatus, setBillExportStatus] = useState(true);
+    const getRestInfo = async () => {
+        const id = localStorage.getItem("RestaurantID");
+        const url = `http://localhost:4000/api/info/id=${id}`;
+        await axios
+            .get(url)
+            .then((res) => {
+                console.log("user: ", res?.data.info);
+                setRest(res?.data.info[0]);
+            })
+    }
     const getDetails = async () => {
         const url = `http://localhost:4000/api/order/${orderId}/details`;
         try {
@@ -59,6 +70,7 @@ const OrderModal = (props) => {
     }
     // Get order info when orderId changes;
     useEffect(() => {
+        getRestInfo();
         getOrderInfo();
         getTables();
         getDetails();
@@ -88,7 +100,10 @@ const OrderModal = (props) => {
                     <div className="order-modal-title">
                         <div>HOÁ ĐƠN THANH TOÁN</div>
                         <span style={{ top: "1px", right: "1px" }}
-                            onClick={() => props.functioner()}
+                            onClick={() => {
+                                props.functioner()
+                                setBillExportStatus(true);
+                            }}
                         >
                             <FontAwesomeIcon icon={faClose} />
                         </span>
@@ -96,23 +111,23 @@ const OrderModal = (props) => {
                     <div className="order-modal-content">
                         <div ref={componentPDF} className="order-table-info order-container">
                             <table style={styleTable} className="styleTable">
-                            <tr>
-                                    <td colSpan={2} style={{fontSize: "20px", fontWeight: "bold"}}>Saga restaurant</td>
+                                <tr>
+                                    <td colSpan={2} style={{ fontSize: "20px", fontWeight: "bold" }}>{rest.rest_name}</td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2}>3/2, phường Xuân Khánh, quận Ninh Kiều, TP Cần Thơ</td>
+                                    <td colSpan={2}>{rest.rest_addr}</td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2}>0987123456</td>
+                                    <td colSpan={2}>{rest.rest_phone}</td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} style={{fontWeight: "bold", fontSize: "25px", color: "crimson"}}>
+                                    <td colSpan={2} style={{ fontWeight: "bold", fontSize: "25px", color: "crimson" }}>
                                         HOÁ ĐƠN
                                     </td>
                                 </tr>
                                 <tr><td>Mã hóa đơn:</td><td>{order._id}</td></tr>
                                 <tr><td>Đặt lúc:</td><td>{order.order_at}</td></tr>
-                                <tr><td>Thanh toán lúc:</td><td>{new Date().toLocaleString("vi-VN", {hour12: false})}</td></tr>
+                                <tr><td>Thanh toán lúc:</td><td>{new Date().toLocaleString("vi-VN", { hour12: false })}</td></tr>
                                 <tr>
                                     <td>Bàn:</td>
                                     <td>{
@@ -122,7 +137,7 @@ const OrderModal = (props) => {
                                 </tr>
                                 <tr><td>Nhân viên:</td><td>{user.staff_name}</td></tr>
                             </table>
-                            <table style={{fontSize: "16px"}}>
+                            <table style={{ fontSize: "16px" }}>
                                 <tr>
                                     <td style={{ borderRadius: "10px 0 0 0!important" }}>STT</td>
                                     <td>Tên sản phẩm</td>
@@ -145,11 +160,11 @@ const OrderModal = (props) => {
                                 </tr>
                             </table>
                         </div>
-                        <div style={{fontSize: "16px"}}>
+                        <div style={{ fontSize: "16px" }}>
                             <div>
                                 Tiền khách đưa:
-                                <input 
-                                    style={{border: "solid 1px lightgrey", borderRadius: "10px", padding: "5px 7px", margin: "0 7px"}} 
+                                <input
+                                    style={{ border: "solid 1px lightgrey", borderRadius: "10px", padding: "5px 7px", margin: "0 7px" }}
                                     onChange={(e) => setMoneyReceived(e.target.value)} />
                             </div>
                             <div>
@@ -158,11 +173,11 @@ const OrderModal = (props) => {
                         </div>
                     </div>
                     <div className="order-modal-footer">
-                        <button disabled={billExportStatus} onClick={() =>handlePay()}>Thanh toán hoá đơn</button>
-                        <button 
+                        <button disabled={billExportStatus} onClick={() => handlePay()}>Thanh toán hoá đơn</button>
+                        <button
                             onClick={() => {
                                 generateBillPDF()
-                                setBillExportStatus(!billExportStatus);
+                                setBillExportStatus(false);
                             }
                             }
                         >Xuất hóa đơn</button>
