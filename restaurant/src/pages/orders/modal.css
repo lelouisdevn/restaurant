@@ -36,6 +36,15 @@
     background: whitesmoke;
     width: 100%;
 }
+.order-modal-footer button {
+    margin: 0 7px;
+    padding: 5px 10px;
+}
+.order-modal-footer button:hover {
+    background-color: rgb(221, 221, 221);
+    border-radius: 10px;
+    transition: 400ms;
+}
 
 .order-table-info {
     border: solid 1px rgb(209, 206, 206);

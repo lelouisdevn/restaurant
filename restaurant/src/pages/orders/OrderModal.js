@@ -15,14 +15,15 @@ const OrderModal = (props) => {
     const [orderDetails, setOrderDetails] = useState([]);
     const [tables, setTables] = useState([]);
     const [money, setMoneyReceived] = useState(0); //for calculating the left money;
+    const [documentTitle, setDocumentTitle] = useState("")
 
     // Set criteria to 1 and set display status of modal to false;
     const handlePay = () => {
-        props.changeCriteria(1);
+        props.changeCriteria();
         props.functioner();
-        generateBillPDF();
-        
+        // generateBillPDF();
     }
+    const [billExportStatus, setBillExportStatus] = useState(true);
     const getDetails = async () => {
         const url = `http://localhost:4000/api/order/${orderId}/details`;
         try {
@@ -61,6 +62,7 @@ const OrderModal = (props) => {
         getOrderInfo();
         getTables();
         getDetails();
+        setDocumentTitle(orderId);
     }, [orderId]);
 
 
@@ -75,9 +77,7 @@ const OrderModal = (props) => {
     const generateBillPDF = useReactToPrint(
         {
             content: () => componentPDF.current,
-            documentTitle: "Customer bill",
-            // onAfterPrint: () => alert("success")
-            // print: true,
+            documentTitle: documentTitle,
         }
     );
     // HTML template;
@@ -158,7 +158,14 @@ const OrderModal = (props) => {
                         </div>
                     </div>
                     <div className="order-modal-footer">
-                        <button onClick={() =>handlePay()}>Thanh toán</button>
+                        <button disabled={billExportStatus} onClick={() =>handlePay()}>Thanh toán hoá đơn</button>
+                        <button 
+                            onClick={() => {
+                                generateBillPDF()
+                                setBillExportStatus(!billExportStatus);
+                            }
+                            }
+                        >Xuất hóa đơn</button>
                     </div>
                 </div>
             </div>
