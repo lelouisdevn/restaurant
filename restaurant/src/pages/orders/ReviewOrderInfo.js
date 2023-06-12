@@ -24,19 +24,6 @@ const ReviewOrderInfo = (props) => {
 
   const getInfoRes = async (idRes, idUser) => {
     await axios
-      // .get(`http://localhost:4000/api/info/id=${idRes}`)
-      // .then(async (res) => {
-      //   const temp = res?.data.info;
-      //   setInfoRes(temp);
-      //   // console.log("thong tin nha hang ", temp);
-      //   await axios
-      //     .get(`http://localhost:4000/api/user/id=${idInfo}`)
-      //     .then((res) => {
-      //       const temp = res?.data.user;
-      //       setInfoUser(temp);
-      //       // console.log("thong tin nhan vien ", temp);
-      //     });
-      // })
       .get(`http://localhost:4000/api/restaurant=${idRes}/user=${idUser}`)
       .then(async (res) => {
         const temp = res?.data.resUser;

@@ -28,11 +28,7 @@ const Login = () => {
           password: password
         })
         .then(async (res) => {
-          console.log(res?.data);
-          //console.log(res?.data.login[0].role);
           localStorage.setItem("UserID", res?.data.login[0]._id);
-          //console.log(localStorage.getItem("UserID"));
-          console.log("người dung", res?.data.login[0]);
 
           const tempInfoStaff = res?.data.login[0];
           localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
@@ -172,6 +168,8 @@ const Login = () => {
                 >
                   Login
                 </button>
+                
+                
               </div>
             </form>
             <ToastContainer />

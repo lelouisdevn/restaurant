@@ -8,11 +8,11 @@ import OrderItem from "./OrderItem";
 import Success from "../products/Success";
 import { useParams } from "react-router-dom";
 import VND from "../../components/currency";
+import { useNavigate } from "react-router-dom";
+
 function Orders() {
+  const navigate = useNavigate();
   const { id, name } = useParams();
-  // if (id !== undefined) {
-  //   console.log("id truyen: ", id + name);
-  // }
   const [products, setProducts] = useState("");
   const [criteria, setCriteria] = useState("true");
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -145,8 +145,8 @@ function Orders() {
   const handleOrder = () => {
     console.log("khong can ghep ban", pairing);
     if (selectedProducts.length > 0) {
-        let total = 0;
-        selectedProducts.forEach((product) => {
+      let total = 0;
+      selectedProducts.forEach((product) => {
         total += parseInt(product.qty) * parseInt(product.prod_price);
       });
       order(total);
@@ -159,26 +159,28 @@ function Orders() {
     }
   };
 
+  /*
+  * Table Pairing
+  */
   const [tablePairing, setTablePairing] = useState();
   const handleOrderPairing = async () => {
     console.log("pairing: ", pairing);
     await axios
-    .get(`http://localhost:4000/api/test/table/id=${pairing}/status=1`)
-    .then(async (res) => {
-      const temp = res?.data.testTbl2;
-      console.log("bàn 2 ton tai ne: ", temp);
+      .get(`http://localhost:4000/api/test/table/id=${pairing}/status=1`)
+      .then(async (res) => {
+        const temp = res?.data.testTbl2;
         setTablePairing(temp);
-      const ltableP = [id, pairing];
-      let total = 0;
+        const ltableP = [id, pairing];
+        let total = 0;
         if (temp === null) {
-          console.log("ban 2 khong ton tai");
+          // console.log("ban 2 khong ton tai");
           // Lấy tổng hóa đơn
-           let total = 0;
+          let total = 0;
           selectedProducts.forEach((product) => {
             total += parseInt(product.qty) * parseInt(product.prod_price);
-          })
+          });
           //Tạo order mới
-               const order_url = "http://localhost:4000/api/order/new";
+          const order_url = "http://localhost:4000/api/order/new";
           const recent = new Date().toLocaleString("vi-VN", { hour12: false });
           await axios
             .post(order_url, {
@@ -202,33 +204,35 @@ function Orders() {
                     const temp = res?.data;
                     //  console.log("them chi tiet ban: ", temp);
                   });
-                // console.log("ban :", t);
               });
             });
         } else {
-          console.log("ban 2 ton tai", ltableP);
+          // console.log("ban 2 ton tai", ltableP);
           // Lấy tổng hóa đơn
-           
           selectedProducts.forEach((product) => {
             total += parseInt(product.qty) * parseInt(product.prod_price);
-          })
+          });
           total += temp.order.total;
           console.log("sum p: ", total);
 
           //lấy order theo bàn số 2 để cập nhật total
-          await axios.put(`http://localhost:4000/api/order=${temp.order._id}/total/update`).then(res => {
-            console.log("cạp nhat ok ")
-          })
           await axios
-          .post(`http://localhost:4000/api/tabledetail`, {
-            table: id,
-            order: temp.order._id
-          })
-          .then((res) => {
-            const temp = res?.data;
-            //  console.log("them chi tiet ban: ", temp);
-          });
-          // });
+            .put(
+              `http://localhost:4000/api/order=${temp.order._id}/total/update`
+            )
+            .then((res) => {
+              console.log("cạp nhat ok ");
+            });
+          await axios
+            .post(`http://localhost:4000/api/tabledetail`, {
+              table: id,
+              order: temp.order._id
+            })
+            .then((res) => {
+              const temp = res?.data;
+              //  console.log("them chi tiet ban: ", temp);
+            });
+          
           const order_detail_url = "http://localhost:4000/api/order/detail/new";
           selectedProducts.forEach(async (product) => {
             await axios
@@ -246,7 +250,6 @@ function Orders() {
                 showModal(message);
               });
           });
-
         }
       });
   };
@@ -277,6 +280,8 @@ function Orders() {
           });
       });
   };
+
+  const [redirect, setRedirect] = useState("");
   const orderDetail = async () => {
     const order_detail_url = "http://localhost:4000/api/order/detail/new";
     selectedProducts.forEach(async (product) => {
@@ -293,8 +298,10 @@ function Orders() {
             icon: "faCheckCircle"
           };
           showModal(message);
+          setRedirect("/staff/outline");
         });
     });
+    // });
   };
   /**
    * Add order details when OrderId is created;
@@ -314,11 +321,12 @@ function Orders() {
     setTimeout(() => {
       setSuccess(false);
       setSuccessClass("");
+      navigate("/staff/outline");
     }, 3000);
   };
 
   useEffect(() => {
-    // console.log(note);
+    console.log(note);
   }, [note]);
 
   //show element to choice table
@@ -337,18 +345,7 @@ function Orders() {
         setShowE(true);
       });
   };
-  /*
- khi có ghép bàn chọn đặt món
-lấy danh sách bàn 
-lấy danh sách đồ ăn
-duyệt danh sách bàn 
- - nếu bàn chưa có status = 1 
-thì thêm bàn có status = 1 tạo ra thêm document tabledetail
-lấy order đó thêm vào tabledetail sau đó  cửa bàn sau
 
- - nếu bàn có status=1
-
- */
   /**
    * HTML template for main order page;
    */
@@ -356,6 +353,7 @@ lấy order đó thêm vào tabledetail sau đó  cửa bàn sau
     <>
       {success && (
         <Success
+          redirect={redirect}
           setSuccess={setSuccess}
           setSuccessClass={setSuccessClass}
           message={message}
@@ -424,7 +422,11 @@ lấy order đó thêm vào tabledetail sau đó  cửa bàn sau
                     >
                       <option>---Chọn bàn---</option>
                       {tableBL.map((table, index) => (
-                        <option key={index} value={table._id} className="text-center">
+                        <option
+                          key={index}
+                          value={table._id}
+                          className="text-center"
+                        >
                           {table.tbl_id}
                         </option>
                       ))}

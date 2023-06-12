@@ -5,42 +5,33 @@ const Info = require("../models/Info");
 
 // Them moi 1 nguoi dung
 router.post("/user", async (req, res) => {
-  //console.log(req.body);
-  const {
-    staff_name,
-    staff_dob,
-    staff_phone,
-    staff_addr,
-    staff_gender,
-    username,
-    password,
-    role
-  } = req.body;
-  try {
-    const user = new User({
-      staff_name,
-      staff_dob,
-      staff_phone,
-      staff_addr,
-      staff_gender,
-      username,
-      password,
-      role
-    });
-    await user.save();
-    if (user) {
-      const userrestdetail = new UserRestDetail({
-        user: user._id,
-        info: req.body.restaurant
-      });
-      await userrestdetail.save();
+    //console.log(req.body);
+    const { staff_name, staff_dob, staff_phone, staff_addr, staff_gender, username, password, role } = req.body;
+    try {
+        const user = new User({
+            staff_name,
+            staff_dob,
+            staff_phone,
+            staff_addr,
+            staff_gender,
+            username,
+            password,
+            role,
+        });
+        await user.save();
+        if(user){
+          const userrestdetail = new UserRestDetail({
+            user: user._id,
+            info: req.body.restaurant,
+          });
+          await userrestdetail.save();
+        }
+        res.send({user})
+    } catch (error) {
+         console.log("Database err", error);
+         return res.status(422).send({ Error: error.message });
     }
-    res.send({ user });
-  } catch (error) {
-    console.log("Database err", error);
-    return res.status(422).send({ Error: error.message });
-  }
-});
+})
 
 // Lấy ra tất cả nguoi dung
 router.get("/users/id=:id", async (req, res) => {
