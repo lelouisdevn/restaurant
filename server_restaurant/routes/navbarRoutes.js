@@ -15,26 +15,30 @@ router.get("/getallrestfromone/id=:id", async (req,res) =>{
     }
 })
 
-// router.post("/create/rest/id:=id", async (req,res)=>{
-//     const {rest_name, rest_phone, rest_addr, rest_desc} = req.body;
-//     try{
-//         const rest = new Info({
-//             rest_name,
-//             rest_phone,
-//             rest_addr,
-//             rest_desc,
-//         })
-//         await rest.save();
-//         if(rest){
-//             const userrestdetail = new UserRestDetail({
-//                 info: rest._id,
-//                 user: req.body.
-//             })
-//         }
+router.post("/createrest", async (req,res)=>{
+    const {rest_name, rest_phone, rest_addr, rest_desc} = req.body;
+    try{
+        const rest = new Info({
+            rest_name,
+            rest_phone,
+            rest_addr,
+            rest_desc,
+        })
+        
+        await rest.save();
+        if(rest){
+            const userrestdetail = new UserRestDetail({
+                info: rest._id,
+                user: req.body.id,
+            });
+            await userrestdetail.save();
+        }
+        res.send({rest})
+        //console.log(rest);
+    }catch(error){
+        console.log("Data err: ", error);
+        return res.status(422).send({Error: error.message});
+    }
+})
 
-//     }catch(error){
-//         console.log("Data err: ", error);
-//         return res.status(422).send({Error: error.message});
-//     }
-// })
 module.exports = router;
