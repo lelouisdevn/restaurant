@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const User = require("../models/User");
 const UserRestDetail = require("../models/UserRestDetail");
 const Info = require("../models/Info");
@@ -35,13 +35,14 @@ router.post("/user", async (req, res) => {
 
 // Lấy ra tất cả nguoi dung
 router.get("/users/id=:id", async (req, res) => {
-  
   try {
-    let users = await UserRestDetail.find({info: req.params.id}).populate("user").exec();
+    let users = await UserRestDetail.find({ info: req.params.id })
+      .populate("user")
+      .exec();
     let i = 0;
-    while(i < users.length){
-      if(users[i].user.staff_status == "0"){
-        users.splice(i, 1)
+    while (i < users.length) {
+      if (users[i].user.staff_status == "0") {
+        users.splice(i, 1);
       }
       i++;
     }
@@ -50,24 +51,21 @@ router.get("/users/id=:id", async (req, res) => {
   } catch (error) {
     console.log("Data err: ", error);
     return res.status(422).send({ Error: error.message });
-    
   }
-})
+});
 //lay 1 nguoi dung
 router.get("/users/id=:id/idUser=:idUser", async (req, res) => {
-  
-    try {
-      let user = await User.find({_id: req.params.idUser});
-      res.send({ user });
-    } catch (error) {
-      console.log("Data err: ", error);
-      return res.status(422).send({ Error: error.message });
-      
-    }
-})
+  try {
+    let user = await User.find({ _id: req.params.idUser });
+    res.send({ user });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
 
 //Sửa thông tin của 1 nguoi dung
-router.put('/users/edit/idUser=:idUser', async (req, res) => {
+router.put("/users/edit/idUser=:idUser", async (req, res) => {
   console.log(req.params);
   try {
     let user = await User.updateOne(
@@ -81,27 +79,26 @@ router.put('/users/edit/idUser=:idUser', async (req, res) => {
           staff_gender: req.body.staff_gender,
           username: req.body.username,
           password: req.body.password,
-          role: req.body.role,
+          role: req.body.role
         }
       }
     );
     res.send({ user });
-    
   } catch (error) {
     console.log("Data err: ", error);
     return res.status(422).send({ Error: error.message });
   }
-})
+});
 
 // Xoa nguoi dung
-router.put('/users/delete/idUser=:idUser', async (req, res) => {
+router.put("/users/delete/idUser=:idUser", async (req, res) => {
   console.log(req.params);
   try {
     let user = await User.updateOne(
       { _id: req.params.idUser },
       {
         $set: {
-          staff_status: 0 ,
+          staff_status: 0
         }
       }
     );
@@ -110,6 +107,34 @@ router.put('/users/delete/idUser=:idUser', async (req, res) => {
     console.log("Data err: ", error);
     return res.status(422).send({ Error: error.message });
   }
-})
+});
+
+// Lấy thông tin của nhân viên và nhà hàng
+router.get("/restaurant=:idRes/user=:idUser", async (req, res) => {
+  const { idRes, idUser } = req.params;
+  try {
+    let resUser = await UserRestDetail.findOne({ info: idRes, user: idUser })
+      .populate("info user")
+      .exec();
+    res.send({ resUser });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
+
+// Get restaurant by id user
+router.get("/restaurant/byuser=:iduser", async (req, res) => {
+  try {
+    let restaurant = await UserRestDetail.findOne({ user: req.params.iduser })
+      .populate("info")
+      .exec();
+    let infores = restaurant.info;
+    res.send({ infores });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
 
 module.exports = router;

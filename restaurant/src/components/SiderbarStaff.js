@@ -1,11 +1,8 @@
 import {
-  Container,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Stack,
-  Typography
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -19,23 +16,30 @@ const SiderbarStaff = ({parentCallback}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLoading, setisLoading] = useState(true);
   
+  
+  //Lấy infoRestaurant trên localStorage dạng object 
+  const json = localStorage.getItem("infoRestaurant");
+  const valuejson = JSON.parse(json);
+  const [idRestaurant, setidRestaurant] = useState(valuejson); 
+
   const handleListItemClick = async (event, index, path, id, arrange, numRow) => {
     setSelectedIndex(index);
     // navigate(path);
     parentCallback(id, arrange, numRow);
   };
-  useEffect(() => {
-    getLobbies();
-  }, []);
 
-  const getLobbies = async () => {
+  // Lấy khu vực sảnh theo nhà hàng idRes
+  useEffect(() => {
+    getLobbies(idRestaurant._id);
+  }, [idRestaurant]);
+
+  const getLobbies = async (idRes) => {
     await axios
-      .get("http://localhost:4000/api/all/lobbies")
+      .get(`http://localhost:4000/api/lobbies/restaurant=${idRes}`)
       .then((res) => {
         const temp = res?.data.lobbies;
         setLobbies(temp);
         parentCallback(temp[0]._id, temp[0].lob_arrange, temp[0].lob_num);
-
       })
       .catch((error) => {
         console.log("Error: ", error);

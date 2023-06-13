@@ -23,23 +23,30 @@
     width: 150px;
     border-radius: 10px;
 }
+/* .tile img:hover {
+    transform: scale(1.5);
+    transition: 400ms;
+    border: solid 1px black;
+    transition-delay: 1.5s;
+} */
 .productName {
     text-align: center;
 }
 .productName h4 {
     margin: 0;
     padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 170px;
 }
-.features{
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: none!important;
-    background: none!important;
-    padding: 0!important;
-    margin: 0!important;
-    opacity: 0.5;
+
+.blurtile {
+    opacity: 0.5!important;
 }
-.container:hover .features{
-    opacity: 1;
+
+.blurtile .productName {
+    color: rgb(153, 5, 35);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
 }

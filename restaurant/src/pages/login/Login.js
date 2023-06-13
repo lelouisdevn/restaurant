@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,8 +15,8 @@ const Login = () => {
   const [restaurant, setRestaurant] = useState("sagarestaurant@rest.vn");
 
   const [PorT, setPorT] = useState(true);
-  // const [UserID, setUserID] = useState([]); 
-  // const [RestaurantID, setRestaurantID] = useState([]); 
+  // const [UserID, setUserID] = useState([]);
+  // const [RestaurantID, setRestaurantID] = useState([]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,21 +27,33 @@ const Login = () => {
           username: username,
           password: password
         })
-        .then((res) => {
-          //console.log(res?.data.login[0].role);
+        .then(async (res) => {
           localStorage.setItem("UserID", res?.data.login[0]._id);
-          //console.log(localStorage.getItem("UserID"));
+
+          const tempInfoStaff = res?.data.login[0];
+          localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+
+          await axios
+            .get(
+              `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
+            )
+            .then((res) => {
+              const tempInfoRestaurant = res?.data.infores;
+              localStorage.setItem(
+                "infoRestaurant",
+                JSON.stringify(tempInfoRestaurant)
+              );
+            });
 
           if (res?.data.login[0].role === "1") {
             navigate("/setting-up/select");
           } else if (res?.data.login[0].role === "2") {
-            navigate("/staff/orders/all");
+            navigate("/staff/outline");
           }
-
         });
     } catch (error) {
       console.log("Error: ", error);
-      toast.error('🦄 Nhập sai thông tin!', {
+      toast.error("🦄 Nhập sai thông tin!", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -50,11 +61,9 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: "colored"
       });
     }
-
-
   };
   return (
     <section className="h-screen">
@@ -148,7 +157,6 @@ const Login = () => {
                       />
                     )}
                   </div>
-
                 </div>
                 <div className="flex flex-row justify-between">
                   <div className="text-[#00FF00] text-sm md:text-md"></div>

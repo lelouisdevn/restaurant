@@ -21,7 +21,7 @@ const OrderProductTitle = (props) => {
     setStatus(!status);
   }
   return (
-    <div className="container" style={{ position: "relative" }}>
+    <div className="container" style={{ position: "relative" }} onClick={handleClick}>
 
       {product ?
         <div>
@@ -33,7 +33,7 @@ const OrderProductTitle = (props) => {
             <h4>{VND.format(product.prod_price)}</h4>
           </div>
           <button
-            onClick={handleClick}
+            
             style={{ position: "absolute", right: 0, top: 0 }}
           >
             {status

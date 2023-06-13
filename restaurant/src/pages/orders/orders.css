@@ -21,19 +21,20 @@
 }
 
 .order-right-content {
-    position: fixed;
+    position: absolute;
     width: calc(40% - 7px);
     padding: 7px 10px;
     text-align: center;
     border: 1px solid grey;
     border-radius: 10px;
     height: calc(100vh - 64px - 35px);
+    overflow-y: scroll;
 }
 .order-container table {
     width: 100%;
 }
 .order-container table td {
-    border: solid 1px grey;
+    border: solid 1px lightgrey;
     padding: 7px 0;
     /* height: 30px; */
 }
@@ -67,20 +68,18 @@
 .restInfo .orderInfo {
     /* margin:  */
     font-weight: normal;
-    font-size: 16px;
+    font-size: 17px;
 }
 .restInfo .orderInfo table {
-    text-align: left;
+    text-align: left; 
 }
 .restInfo .orderInfo table td {
-    padding: 3px 10px;
+    padding: 5px 10px;
     border: solid 1px lightgrey;
 }
 .order-actions {
-    position: fixed;
-    bottom: 20px;
-    /* border: solid 1px lightgray; */
-    width: calc(40% - 27px);
+    position: absolute;
+    width: calc(100% - 20px);
     padding: 7px 0;
     border-radius: 10px;
 }
@@ -150,4 +149,19 @@
     border-radius: 10px;
     border: solid 1px lightgray;
     margin: 0 7px;
+}
+
+.order-txtarea {
+    width: 100%;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.order-txtarea textarea {
+    border: solid 1px lightgrey;
+    border-radius: 10px;
+    width: 100%;
+    height: 75px;
+    padding: 5px 7px;
+    resize: none;
 }

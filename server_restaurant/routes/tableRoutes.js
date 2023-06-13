@@ -18,6 +18,7 @@ router.post('/table', async(req,res) => {
     }
 })
 
+// Lấy tất cả bàn có khu vực id 
 router.get('/lobby/:id/table', async (req, res) => {
   try {
     let table = await Table.find({ lobby: req.params.id, tbl_status: 0 });
@@ -28,6 +29,21 @@ router.get('/lobby/:id/table', async (req, res) => {
     return res.status(422).send({ Error: error.message });
   }
 });
+
+// Lấy  khu vực theo id bàn và lấy all bàn của khu vực đó
+router.get('/table/:id/lobby&table', async (req, res) => {
+  try {
+    let lobby = await Table.findById(req.params.id)
+    // console.log("ban: ", lobby);
+    let table = await Table.find({ lobby: lobby.lobby });
+    // console.log("ban: ", table);
+    res.send({ table });
+  } catch (error) {
+    console.log("Database err", error);
+    return res.status(422).send({ Error: error.message });
+
+  }
+})
 
 // Điếm số bàn có chung một khu vực khu vực 
 router.get('/lobby/:id/counttable', async (req, res) => {

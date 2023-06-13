@@ -14,7 +14,6 @@ import Success from './Success';
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
-    "features": "features"
   })
   const [products, setProducts] = useState([]);
   const [criteria, setCriteria] = useState(1);
@@ -34,12 +33,6 @@ const ProductList = (props) => {
       getProducts();
     }
   }, [id]);
-  // useEffect(() => {
-  //   if (category != "") {
-  //     getCategoryName();
-  //     getProductsCategory();
-  //   }
-  // }, [category]);
 
   const getCategoryName = async () => {
     const getCateName = `http://localhost:4000/api/category/${id}`;
@@ -98,6 +91,9 @@ const ProductList = (props) => {
       })
       .then((res) => {
         setProducts(res?.data.document)
+        if (res?.data.document.length == 0) {
+          setMessage("Nhà hàng của bạn chưa có sản phẩm nào!");
+        }
       })
     // setCategoryName("");
   }
@@ -174,9 +170,11 @@ const ProductList = (props) => {
   const refershPage = () => {
     setRefresh("refresh");
     setQuery("");
+    setProducts([]);
     setTimeout(() => {
       setCriteria(1); // 1 => 'sp đang bán'
       navigate('/manage/product');
+      getProducts();
       setRefresh("");
     }, 1500);
   }
@@ -202,35 +200,11 @@ const ProductList = (props) => {
     left: "50%",
     transform: "translateX(-50%)",
   };
-  const showModal = (message) => {
-    setSuccess(true);
-    setSuccessClass("opacity-success");
-    setMessage(message);
-    // getProductById();
-    setTimeout(() => {
-      setSuccess(false);
-      setSuccessClass("");
-    }, 3000);
-  }
-  const cancelActions = () => {
-    setSelectedProducts([]);
-    setCancelStatus(!isCancelled);
-  }
-  const hideSelectedProducts = () => {
-    setSelectedProducts([]);
-    setCancelStatus(!isCancelled);
-    console.log(selectedProducts);
-    const message = {
-      "noti": "Ẩn thành công",
-      "icon": "faCdwhu"
-    }
-    showModal(message);
-  }
   return (
     <>
-      { 
+      {
         success &&
-        <Success 
+        <Success
           setSuccess={setSuccess}
           setSuccessClass={setSuccessClass}
           message={message}
@@ -261,24 +235,14 @@ const ProductList = (props) => {
                 <span> Sản phẩm</span>
                 <span>{id !== undefined && `/${categoryName}`}</span>
                 <span>/{type[criteria].name}</span>
+                <span>
+                  {
+                    products.length === 0 ? <></> : <> ({products.length})</>
+                  }
+                </span>
               </Link>
             </div>
             <div className='right-menu'>
-
-              
-              {
-              selectedProducts.length > 0 &&
-                <span>
-                  <span onClick={cancelActions}>
-                    <FontAwesomeIcon icon={faClose} />
-                  </span>
-                  <span onClick={hideSelectedProducts}>
-                    <FontAwesomeIcon icon={faEyeSlash} />
-                  </span>
-                </span>
-              }
-              
-
               <span onClick={refershPage}>
                 <FontAwesomeIcon icon={faRefresh} className={refresh} />
               </span>
@@ -298,7 +262,6 @@ const ProductList = (props) => {
               }
 
               <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
-                <option disabled selected>Bộ lọc</option>
                 <option value="2">
                   Sản phẩm đã ẩn
                 </option>
@@ -310,7 +273,6 @@ const ProductList = (props) => {
             </div>
           </div>
           <div className="products">
-            {/* Display products as tiles or a grid  */}
             {displayType == "tiles" ?
               <>
                 {products.length > 0 ? products.map((product) => (
@@ -318,6 +280,7 @@ const ProductList = (props) => {
                     isCancelled={isCancelled}
                     key={product._id} product={product}
                     updateSelectedProductList={updateSelectedProductList}
+                    criteria={criteria}
                   />
                 )) : <Loading message={message} />}
               </> :
@@ -341,6 +304,11 @@ const ProductList = (props) => {
               </>
             }
           </div>
+          {/* <div className='product-number'>
+            {
+              products.length != 0 && <div>Có <span style={{fontWeight: "bold"}}>{products.length}</span> sản phẩm</div>
+            }
+          </div> */}
         </div>
       </div>
 

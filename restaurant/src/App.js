@@ -28,7 +28,6 @@ import LayoutOutline from './pages/outline/LayoutOutline';
 import OutLine from './pages/outline/OutLine'
 import SettingMap from "./pages/lobby/SettingMap";
 import OrderList from './pages/orders/manage/OrderList';
-import Multioption from './pages/products/Multioption';
 import SetUpPage from './pages/settuppage/setUpPage';
 import SelectRest from './pages/settuppage/selectRest';
 import CreateRest from './pages/settuppage/CreateRest';
@@ -69,7 +68,6 @@ function App() {
               <Route path=":id" element={<ProductDetail />} />
               <Route path="new" element={<ProductForm />} />
               <Route path="all/category/:id" element={<ProductList />} />
-              <Route path="features" element={<Multioption />} />
             </Route>
             <Route path="category">
               <Route index element={<Category />} />

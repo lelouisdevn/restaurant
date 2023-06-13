@@ -40,6 +40,7 @@ function OrderItem(props) {
             <td>{props.stt}</td>
             <td>{orderProduct.prod_name}</td>
             <td>
+                <div >
                 <button 
                     onClick={decrease}
                 >-</button>
@@ -47,6 +48,7 @@ function OrderItem(props) {
                 <button className="right-btn"
                     onClick={increase}
                 >+</button>
+                </div>
             </td>
             <td>{VND.format(orderProduct.prod_price)}</td>
             <td>{VND.format(qty * orderProduct.prod_price)}</td>

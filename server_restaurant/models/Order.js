@@ -9,26 +9,23 @@ const OrderSchema = new Schema({
     },
     total: {
         type: Number,
-        default: 0,
         required: true,
     },
     order_at: {
         type: String,
         required: true,
-        // default: Date(),
     },
     bill_at: {
-        type: Date,
+        type: String,
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
-    // table: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Table',
-    // },
+    note: {
+        type: String,
+    },
     restaurant: {
         type: Schema.Types.ObjectId,
         ref: "Restaurant",

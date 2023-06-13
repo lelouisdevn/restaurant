@@ -6,7 +6,13 @@ import OrderDetail from "./OrderDetail";
 import ReviewOrderInfo from "../ReviewOrderInfo";
 import axios from "axios";
 import VND from "../../../components/currency";
+import { Typography } from "@mui/material";
 function OrderList() {
+  const json = localStorage.getItem("infoStaff");
+  const valuejson = JSON.parse(json);
+  const [infoStaff, setInfoStaff] = useState(valuejson);
+  // setInfoStaff(valuejson);
+  // console.log("localho Storage: ", valuejson._id);
   /**
    * Static data, this can be replaced with data fetched from servers;
    */
@@ -125,6 +131,7 @@ function OrderList() {
   const handleSelectOrder = (order) => {
     setSelectedOrder(order);
     const products = order.products;
+    console.log("danh sach san pham: ", order.products)
     setProducts(products);
     setTable(order.table.tbl_id);
     setInfo(order.total);
@@ -265,7 +272,10 @@ function OrderList() {
                   table={table}
                 />
                 <h3 style={{ fontSize: "25px", fontWeight: "bold" }}>
-                  ĐƠN HÀNG
+                  CHI TIẾT GỌI MÓN
+                  {/* {products.map((product, index) => (
+                    <Typography> {product.prod_name}</Typography>
+                  ))} */}
                 </h3>
                 <table>
                   <tr style={{ borderRadius: "10px 10px 0 0" }}>
@@ -274,14 +284,16 @@ function OrderList() {
                     <td>Số lượng</td>
                     <td>Đơn giá</td>
                     <td style={{ width: "100px" }}>Tổng</td>
-                    <td>Trạng thái</td>
+                    {infoStaff.role === "2" ? null : <td> Trạng thái</td>}
                   </tr>
                   {products.map((product, index) => (
                     <OrderDetail
-                      stt={products.indexOf(product) + 1}
+                      // stt={products.indexOf(product) + 1}
+                      stt={index+ 1}
                       key={index}
                       item={product}
                       updateQty={updateQty}
+                      infoStaff={infoStaff}
                     />
                   ))}
                   <tr>
@@ -290,21 +302,11 @@ function OrderList() {
                     <td></td>
                     <td>Tổng hóa đơn:</td>
                     <td>{VND.format(selectedOrder.total.total)}</td>
-                    <td></td>
+                    {infoStaff.role === "2" ? null : <td> </td>}
                   </tr>
                 </table>
                 <div className="order-actions">
                   <div className="content">
-                    <select
-                      className="slbtn"
-                      onChange={(e) => setSelectedStatus(e.target.value)}
-                    >
-                      <option selected disabled>
-                        Cập nhật trạng thái
-                      </option>
-                      <option value={1}>Đang chế biến</option>
-                      <option value={2}>Đã phục vụ</option>
-                    </select>
                     <button className="updateButton" onClick={updateOrder}>
                       Cập nhật yêu cầu
                     </button>
