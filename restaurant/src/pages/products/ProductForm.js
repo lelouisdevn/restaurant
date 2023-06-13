@@ -32,6 +32,7 @@ function ProductForm() {
      */
     const createProduct = async () => {
         const createProduct = 'http://localhost:4000/api/product/new';
+        const restaurantId = localStorage.getItem("RestaurantID");
         await axios
             .post(createProduct, {
                 prod_name: name,
@@ -40,7 +41,7 @@ function ProductForm() {
                 prod_price: price,
                 prod_desc: desc,
                 category: Category,
-                restaurant: "64730496807c841ff6a953a3",
+                restaurant: restaurantId,
             })
             .then((res) => {
                 const id = res?.data.product._id;
