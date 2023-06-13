@@ -52,6 +52,9 @@ const ProductList = (props) => {
       .then((res) => {
         console.log(res?.data.products);
         setProducts(res?.data.products)
+        if (res?.data.products.length === 0) {
+          setMessage("Chưa có sản phẩm nào thuộc danh mục này!");
+        }
       })
   }
 
