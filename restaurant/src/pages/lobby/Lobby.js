@@ -43,6 +43,11 @@ const Lobby = () => {
   const [isLoading, setisLoading] = useState(true);
   const [err, setErr] = useState();
   const idRes = localStorage.getItem("RestaurantID");
+  console.log("nha hang: ", idRes);
+  const json = localStorage.getItem("infoRestaurant");
+  const valuejson = JSON.parse(json);
+  const [infoRes, setInfoRes] = useState(valuejson);
+  console.log("nha hang: ", infoRes);
   const callbackFunction = async (id, name) => {
     setNameL(name);
     await axios
@@ -60,12 +65,12 @@ const Lobby = () => {
   };
 
   useEffect(() => {
-    getLobbies(idRes);
-  }, [idRes]);
+    getLobbies(infoRes._id);
+  }, [infoRes]);
 
   const getLobbies = async (id) => {
     await axios
-      .get(`http://localhost:4000/api/lobbies/restaurant=${id}`)
+      .get(`http://localhost:4000/api/all/lobbies/restaurant=${id}`)
       .then((res) => {
         const temp = res?.data.lobbies;
         console.log("temp: ", temp); 
@@ -84,7 +89,8 @@ const Lobby = () => {
       await axios
         .post("http://localhost:4000/api/lobby", {
           lob_name: name,
-          lob_tbl_num: count
+          lob_tbl_num: count,
+          restaurant: infoRes._id,
         })
         .then((res) => {
           setOpen(false);

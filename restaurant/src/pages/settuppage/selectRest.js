@@ -42,8 +42,12 @@ const SelectRest = () => {
 
     }
     const [isSelected, setSelected] = useState(false);
-    const handleRestClick = async (id) => {
-        localStorage.setItem("RestaurantID", id);
+    const handleRestClick = async (res) => {
+        localStorage.setItem(
+          "infoRestaurant",
+          JSON.stringify(res)
+        );
+        localStorage.setItem("RestaurantID", res._id);
 
         //Wait 3s before going to 'home';
         setSelected(!isSelected);
@@ -69,7 +73,8 @@ const SelectRest = () => {
                     <div className='main-content'>
                         {
                     isLoading? null : rest.map((row)=>(
-                        <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
+                        <div><button onClick={(e)=>handleRestClick(row.info)} type="button">{row.info.rest_name}</button></div>
+                        // <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
                             ))
                         }
                     </div>

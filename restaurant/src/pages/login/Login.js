@@ -28,6 +28,8 @@ const Login = () => {
           password: password
         })
         .then(async (res) => {
+
+          let tempInfoRestaurant;
           localStorage.setItem("UserID", res?.data.login[0]._id);
 
           const tempInfoStaff = res?.data.login[0];
@@ -38,16 +40,17 @@ const Login = () => {
               `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
             )
             .then((res) => {
-              const tempInfoRestaurant = res?.data.infores;
-              localStorage.setItem(
-                "infoRestaurant",
-                JSON.stringify(tempInfoRestaurant)
-              );
+              tempInfoRestaurant = res?.data.infores;
+              // const tempInfoRestaurant = res?.data.infores;
             });
-
-          if (res?.data.login[0].role === "1") {
-            navigate("/setting-up/select");
-          } else if (res?.data.login[0].role === "2") {
+            
+            if (res?.data.login[0].role === "1") {
+              navigate("/setting-up/select");
+            } else if (res?.data.login[0].role === "2") {
+            localStorage.setItem(
+              "infoRestaurant",
+              JSON.stringify(tempInfoRestaurant)
+            );
             navigate("/staff/outline");
           }
         });

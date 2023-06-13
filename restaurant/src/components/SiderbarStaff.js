@@ -21,6 +21,7 @@ const SiderbarStaff = ({parentCallback}) => {
   const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
   const [idRestaurant, setidRestaurant] = useState(valuejson); 
+  // console.log("idres: ", idRestaurant);
 
   const handleListItemClick = async (event, index, path, id, arrange, numRow) => {
     setSelectedIndex(index);
@@ -35,7 +36,7 @@ const SiderbarStaff = ({parentCallback}) => {
 
   const getLobbies = async (idRes) => {
     await axios
-      .get(`http://localhost:4000/api/lobbies/restaurant=${idRes}`)
+      .get(`http://localhost:4000/api/all/lobbies/restaurant=${idRes}`)
       .then((res) => {
         const temp = res?.data.lobbies;
         setLobbies(temp);
