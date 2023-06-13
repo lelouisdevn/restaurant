@@ -808,7 +808,7 @@ const OutLine = ({ id, arrange, numRow }) => {
               </Typography>
               <Box ml={20}>
                 <Button
-                  onClick={updateOrder}
+                  onClick={updateOrderRes}
                 >
                   <Typography variant="h6">Đồng ý</Typography>
                 </Button>
