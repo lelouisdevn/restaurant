@@ -170,6 +170,7 @@ const ProductList = (props) => {
   const refershPage = () => {
     setRefresh("refresh");
     setQuery("");
+    setMessage("Đang tải dữ liệu từ server....")
     setProducts([]);
     setTimeout(() => {
       setCriteria(1); // 1 => 'sp đang bán'
