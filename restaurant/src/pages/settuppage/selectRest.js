@@ -54,7 +54,7 @@ const SelectRest = () => {
     return (
         <>
             <div>
-                Chọn 1 nhà hàng
+                Vui lòng chọn 1 nhà hàng để bắt đầu!
             </div>
             <div className='main-content'>
                 {
