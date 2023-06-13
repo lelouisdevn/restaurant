@@ -40,7 +40,7 @@ function OrderItem(props) {
             <td>{props.stt}</td>
             <td>{orderProduct.prod_name}</td>
             <td>
-                <div className="flex">
+                <div >
                 <button 
                     onClick={decrease}
                 >-</button>
