@@ -1,8 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const SelectRest = () => {
     const navigator = useNavigate();
+    const navigate = useNavigate();
     const createRest = () => {
         navigator("/setting-up/restaurant/new");
     }
@@ -12,7 +15,35 @@ const SelectRest = () => {
      * INTERNAL LOGIC starts below:
      */
 
+    const id = localStorage.getItem("UserID");
+    const [rest, setRest] = useState(null);
+    const [isLoading, setisLoading] = useState(true);
 
+    useEffect(() => {
+        getRest(id);
+    }, [id]);
+
+    const getRest = async (id) =>{
+        await axios
+        .get(`http://localhost:4000/api/getallrestfromone/id=${id}`)
+        .then((res) =>{
+            const temp = res?.data.rest;
+            setRest(temp);
+            //console.log(temp);
+        })
+        .catch((error) =>{
+            console.log("Error: ",error);
+        }) 
+        .finally(() => {
+            setisLoading(false);
+        }); 
+        
+    }
+    const handleRestClick = async(id) =>{
+        localStorage.setItem("RestaurantID",id);
+        navigate("/manage/home");
+        
+    }
 
 
 
@@ -26,12 +57,11 @@ const SelectRest = () => {
                 Chọn 1 nhà hàng
             </div>
             <div className='main-content'>
-                <div>Saga Restaurant</div>
-                <div>Tuyen Dang Restaurant</div>
-                <div>Louis The Dev Restaurant</div>
-                <div>Dnomaid cafeteria</div>
-                <div>Cydiu9 4c9u0r9u04</div>
-                <div>Licb 74c89bxrcryh98yry</div>
+                {
+                    isLoading? null : rest.map((row)=>(
+                        <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
+                    ))
+                }
             </div>
             <div className='footer' onClick={createRest}>
                 <FontAwesomeIcon icon={faGear} />

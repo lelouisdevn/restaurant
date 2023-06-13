@@ -34,7 +34,7 @@ const Login = () => {
           //console.log(localStorage.getItem("UserID"));
 
           if (res?.data.login[0].role === "1") {
-            navigate("/rest");
+            navigate("/setting-up/select");
           } else if (res?.data.login[0].role === "2") {
             navigate("/staff/orders/all");
           }

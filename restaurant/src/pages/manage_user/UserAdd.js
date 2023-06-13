@@ -34,7 +34,6 @@ function UserAdd(){
                 restaurant: localStorage.getItem("RestaurantID"),
             })
             .then((res) =>{
-
                 toast.success("🦄 Thêm người dùng mới thành công!", {
                     position: "top-right",
                     autoClose: 900,
