@@ -9,6 +9,7 @@
     filter: drop-shadow(1px 1px 10px gray);
     border-radius: 10px;
     overflow-y: scroll;
+    /* font-family: 'Josefin Sans', sans-serif; */
 }
 
 .order-modal-title {

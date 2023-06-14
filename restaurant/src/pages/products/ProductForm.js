@@ -119,7 +119,7 @@ function ProductForm() {
         <div className={`detail-container ${successClass}`}>
             <div className='fixed-header'>
             <div className='title'>
-                <h2>QUẢN LÝ SẢN PHẨM</h2>
+                <h2>Quản lý sản phẩm</h2>
             </div>
             <Toolbar url={url} />
             </div>

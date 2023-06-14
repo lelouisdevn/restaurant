@@ -11,6 +11,11 @@ import Loading from './Loading';
 import { useNavigate } from 'react-router-dom';
 import ProductGrid from './ProductGrid';
 import Success from './Success';
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
+</style>
+
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
@@ -219,7 +224,7 @@ const ProductList = (props) => {
         <div className='fixed-header'>
           <div className="title">
             <Link to="/manage/product" className="fLink">
-              <h2>QUẢN LÝ SẢN PHẨM</h2>
+              <h2>Quản lý sản phẩm</h2>
             </Link>
           </div>
           <Toolbar
@@ -289,12 +294,12 @@ const ProductList = (props) => {
                 )) : <Loading message={message} />}
               </> :
               <>
-                <div className="grid" style={{ textAlign: "center", borderRadius: "10px 10px 0 0" }}>
+                <div className="product-grid" style={{ textAlign: "center", borderRadius: "10px 10px 0 0" }}>
                   <div style={{ width: "6%" }}>STT</div>
                   <div>Tên sản phẩm</div>
                   <div>Đơn giá</div>
                   <div>Đơn vị tính</div>
-                  <div className='grid-desc'>Mô tả sản phẩm</div>
+                  <div className='product-grid-desc'>Mô tả sản phẩm</div>
                   <div>Hình ảnh sản phẩm</div>
                 </div>
 

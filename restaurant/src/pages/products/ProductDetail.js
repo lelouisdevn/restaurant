@@ -180,7 +180,7 @@ const ProductDetail = () => {
             <div className='fixed-header'>
               <div className="title">
                 <Link to="/manage/product" className="fLink">
-                  <h2>QUẢN LÝ SẢN PHẨM</h2>
+                  <h2>Quản lý sản phẩm</h2>
                 </Link>
               </div>
               <Toolbar url={url} />
