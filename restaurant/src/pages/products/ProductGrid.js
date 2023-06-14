@@ -4,7 +4,7 @@ import VND from '../../components/currency';
 function ProductGrid (props) {
 return(
     <>
-        <div className="grid">
+        <div className="product-grid">
             <div style={{width: "6%"}}>
                 {props.stt}
             </div>
@@ -15,7 +15,7 @@ return(
             </div>
             <div>{VND.format(props.product.prod_price)}</div>
             <div>{props.product.prod_unit}</div>
-            <div className='grid-desc'>{props.product.prod_desc}</div>
+            <div className='product-grid-desc'>{props.product.prod_desc}</div>
             <div>
                 {props.product.prod_img}
             </div>
