@@ -44,10 +44,10 @@ const ProductList = (props) => {
   }
   const getProductsCategory = async () => {
     const url = `http://localhost:4000/api/products/category/${id}/${criteria}`;
-    const restaurantId = localStorage.getItem("RestaurantID");
+    const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
     await axios
       .post(url, {
-        restaurant: restaurantId,
+        restaurant: restaurant._id,
       })
       .then((res) => {
         console.log(res?.data.products);
@@ -85,11 +85,11 @@ const ProductList = (props) => {
    * Get all products of a restaurant from server;
    */
   const getProducts = async () => {
-    const restaurantId = localStorage.getItem("RestaurantID");
+    const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
     const url = `http://localhost:4000/api/products`;
     await axios
       .post(url, {
-        restaurantId: restaurantId,
+        restaurantId: restaurant._id,
         status: type[criteria].status,
       })
       .then((res) => {
