@@ -32,6 +32,7 @@ import SetUpPage from './pages/settuppage/setUpPage';
 import SelectRest from './pages/settuppage/selectRest';
 import CreateRest from './pages/settuppage/CreateRest';
 import Rest from './pages/login/Rest';
+import ManageOrderList from './pages/orders/manage/ManageOrderList';
 
 function App() {
   return (
@@ -68,6 +69,9 @@ function App() {
               <Route path=":id" element={<ProductDetail />} />
               <Route path="new" element={<ProductForm />} />
               <Route path="all/category/:id" element={<ProductList />} />
+            </Route>
+            <Route path='orders'>
+              <Route index element={<ManageOrderList />} />
             </Route>
             <Route path="category">
               <Route index element={<Category />} />
