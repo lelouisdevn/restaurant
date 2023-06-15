@@ -49,7 +49,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [isLDO, setisLDO] = useState(false);
   const [isLNote, setisLNote] = useState(false);
   const [openIF, setOpenIF] = useState(false);
-  const [updateTotal, setupdateTotal] = useState(0);
+  let [updateTotal, setupdateTotal] = useState(0);
   const [updateNote, setUpdateNote] = useState(null);
   
   const json = localStorage.getItem("infoStaff");
@@ -133,6 +133,7 @@ const OutLine = ({ id, arrange, numRow }) => {
         tempt = tempt + productPrice;
       }
     }
+    console.log("total: ", tempt);
     setupdateTotal(tempt);
   };
 
@@ -285,14 +286,27 @@ const OutLine = ({ id, arrange, numRow }) => {
     item["status"] = "xoa";
     products[index] = item;
     setProducts(products);
-    getTotal(products);
+    getTotal(products); 
     await axios
-      .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
-      .then((res) => {
-        const temp = res?.data;
-        setOpen(false);
-      });
+    .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
+    .then((res) => {
+      const temp = res?.data;
+      setOpen(false);
+    });
   }
+
+  useEffect(() => {
+    console.log("total useEffect : ", updateTotal);
+    
+      // (async () => {
+      //   await axios
+      //     .put(`http://localhost:4000/api/order/update/${detailOrder.listpro[0].Order}`)
+      //     .then((res) => {
+      //       const temp = res?.data;
+      //     });
+      // })(); 
+  }, [updateTotal])
+  
     /** TEMPORARILY DISCONTINUED;
      * Discard any changes made previously;
      */
@@ -303,7 +317,7 @@ const OutLine = ({ id, arrange, numRow }) => {
     //     icon: "faCheckCircle"
     //   };
     //   showModal(message);
-    // };
+  // };
 
     const style = {
       width: "100%",
