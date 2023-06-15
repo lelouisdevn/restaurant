@@ -7,7 +7,7 @@ function OrderDetail(props) {
   const [qty, setQty] = useState(props.item.qty);
   const [statusO, setStatusO] = useState(props.item.status);
   const [isShow, setisShow] = useState(false);
-  // console.log("item: ", props.item);
+  // console.log("item: ", statusO);
   // console.log("staff: ", props.infoStaff);
   /**
    * Increase product quantity by 1 unit;
@@ -34,6 +34,11 @@ function OrderDetail(props) {
       props.handleCancel({ isShow: !isShow, item: props.item });
    }
   };
+  const handleSelect = (e) => {
+    setStatusO(e.target.value)
+    props.handleSeclect({ statusO: e.target.value, item: props.item });
+  }
+    
 
   /**
    * HTML template;
@@ -117,9 +122,9 @@ function OrderDetail(props) {
             <select
               className="slbtn"
               value={statusO}
-              onChange={(e) => setStatusO(e.target.value)}
+              onChange={(e) => handleSelect(e)}
             >
-              <option value="dadat" disable selected>
+              <option value="dadat"  >
                 Đã gửi bếp
               </option>
               <option value="chebien">Đang chế biến</option>

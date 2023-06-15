@@ -123,6 +123,25 @@ const OutLine = ({ id, arrange, numRow }) => {
     getTotal(products);
   }, [products]);
 
+  useEffect(() => {
+    if (updateTotal !== 0) {
+      detailOrder.tabledetail[0].order["total"] = updateTotal; 
+      (async () => {
+        await axios
+          .put(
+            `http://localhost:4000/api/order/update/${detailOrder.listpro[0].Order}`,
+            {
+              total: updateTotal,
+            }
+          )
+          .then((res) => {
+            const temp = res?.data;
+          });
+      })(); 
+    }
+
+  }, [updateTotal])
+  
   const getTotal = (productsData) => {
     let tempt = 0;
     // console.log("trang htai: ", productsData);
@@ -133,6 +152,7 @@ const OutLine = ({ id, arrange, numRow }) => {
         tempt = tempt + productPrice;
       }
     }
+    console.log("getTotal: ", tempt);
     setupdateTotal(tempt);
   };
 
@@ -304,6 +324,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const payOrder = () => { };
 
   // Cancel the dish
+
   const [itemDish, setItemDish] = useState();
   const [open, setOpen] = useState(false);
   const [openE, setOpenE] = useState(false);
@@ -319,14 +340,21 @@ const OutLine = ({ id, arrange, numRow }) => {
     item["status"] = "xoa";
     products[index] = item;
     setProducts(products);
-    getTotal(products);
+    getTotal(products); 
     await axios
-      .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
-      .then((res) => {
-        const temp = res?.data;
-        setOpen(false);
-      });
+    .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
+    .then((res) => {
+      const temp = res?.data;
+      setOpen(false);
+    });
   }
+  const handleSeclect = async( props) => {
+    const index = products.indexOf(props.item);
+    props.item["status"] = props.statusO;
+    products[index] = props.item;
+    setProducts(products);
+}
+
     /** TEMPORARILY DISCONTINUED;
      * Discard any changes made previously;
      */
@@ -337,8 +365,7 @@ const OutLine = ({ id, arrange, numRow }) => {
     //     icon: "faCheckCircle"
     //   };
     //   showModal(message);
-    // };
-
+  // };
     const style = {
       width: "100%",
       height: "100%",
@@ -721,6 +748,7 @@ const OutLine = ({ id, arrange, numRow }) => {
                             updateQty={updateQty}
                             infoStaff={infoStaff}
                             handleCancel={handleCancel}
+                            handleSeclect={handleSeclect}
                           />
                         ))}
                       <tr>

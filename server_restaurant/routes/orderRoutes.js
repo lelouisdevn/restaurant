@@ -220,12 +220,14 @@ router.put("/order/product/update", async (req, res) => {
           { _id: product._id },
           {
             $set: {
-              qty: product.qty
+              qty: product.qty,
+              status: product.status,
             }
           }
         );
       }
     });
+    
     updatetotal = await Order.updateOne(
       {
         _id: idOrder
