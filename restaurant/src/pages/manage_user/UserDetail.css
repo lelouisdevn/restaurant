@@ -6,3 +6,16 @@
     border: solid 1px grey;
     padding: 0 7px;
 }
+.staff-content select {
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: solid 1px grey;
+    padding: 0 7px;
+}
+.shortedword {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

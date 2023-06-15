@@ -13,6 +13,7 @@ const CreateRest = () => {
     const [rest_addr, setRestAddr] = useState("");
     const [rest_desc, setRestDesc] = useState("");
     const id = localStorage.getItem("UserID");
+    console.log(id);
     const handleRestAdd = async ()=>{
         try{
             await axios
@@ -48,13 +49,15 @@ const CreateRest = () => {
                 Tạo một nhà hàng mới
             </div>
             <div className="main-content" style={{overflowY: "hidden",height: "45%"}}>
+                
                 <input placeholder="Tên nhà hàng...." value={rest_name} onChange={(text) => setRestName(text.target.value)}/>
                 <input placeholder="Địa chỉ..." value={rest_addr} onChange={(text) => setRestAddr(text.target.value)}/>
                 <input placeholder="Số điện thoại..." value={rest_phone} onChange={(text) => setRestPhone(text.target.value)}/>
                 <input placeholder="Mô tả....." value={rest_desc} onChange={(text) => setRestDesc(text.target.value)}/>
-                <input hidden value={id} />
+                
             </div>
             <div className="footer">
+                <input  value={id} hidden ></input>
                 <FontAwesomeIcon icon={faAdd} />
                 <button onClick={() => handleRestAdd(id)}  type="submit" > Thêm</button>
             </div>

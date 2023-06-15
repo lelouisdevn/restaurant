@@ -41,22 +41,16 @@ const SelectRest = () => {
             });
 
     }
-    const [isSelected, setSelected] = useState(false);
-    const handleRestClick = async (res) => {
+    const handleRestClick = async(row) =>{
+        localStorage.setItem("RestaurantID",row.info._id);
         localStorage.setItem(
-          "infoRestaurant",
-          JSON.stringify(res)
-        );
-        localStorage.setItem("RestaurantID", res._id);
-
-        //Wait 3s before going to 'home';
-        setSelected(!isSelected);
-        setTimeout(() => {
-            navigate("/manage/home");
-        }, 3000);
-
+            "infoRestaurant",
+            JSON.stringify(row.info)
+          );    
+        navigate("/manage/home");
+        
     }
-
+    const [isSelected,setisSelected] = useState(false);
 
 
 
@@ -73,7 +67,7 @@ const SelectRest = () => {
                     <div className='main-content'>
                         {
                     isLoading? null : rest.map((row)=>(
-                        <div><button onClick={(e)=>handleRestClick(row.info)} type="button">{row.info.rest_name}</button></div>
+                        <div><button onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</button></div>
                         // <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
                             ))
                         }

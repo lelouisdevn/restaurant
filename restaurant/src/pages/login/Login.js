@@ -32,25 +32,28 @@ const Login = () => {
           let tempInfoRestaurant;
           localStorage.setItem("UserID", res?.data.login[0]._id);
 
-          const tempInfoStaff = res?.data.login[0];
-          localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+          
 
-          await axios
-            .get(
-              `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
-            )
-            .then((res) => {
-              tempInfoRestaurant = res?.data.infores;
-              // const tempInfoRestaurant = res?.data.infores;
-            });
-            
-            if (res?.data.login[0].role === "1") {
-              navigate("/setting-up/select");
-            } else if (res?.data.login[0].role === "2") {
-            localStorage.setItem(
-              "infoRestaurant",
-              JSON.stringify(tempInfoRestaurant)
-            );
+          if (res?.data.login[0].role === "1") {
+            const tempInfoStaff = res?.data.login[0];
+            localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+            navigate("/setting-up/select");
+          } else if (res?.data.login[0].role === "2") {
+            const tempInfoStaff = res?.data.login[0];
+            localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+
+            await axios
+              .get(
+                `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
+              )
+              .then((res) => {
+                const tempInfoRestaurant = res?.data.infores;
+                console.log(tempInfoRestaurant);
+                localStorage.setItem(
+                  "infoRestaurant",
+                  JSON.stringify(tempInfoRestaurant)
+                );
+              });
             navigate("/staff/outline");
           }
         });

@@ -40,13 +40,14 @@ router.get("/users/id=:id", async (req, res) => {
       .populate("user")
       .exec();
     let i = 0;
+    console.log(users.length);
     while (i < users.length) {
       if (users[i].user.staff_status == "0") {
         users.splice(i, 1);
       }
       i++;
     }
-    // console.log(users);
+    console.log(users);
     res.send({ users });
   } catch (error) {
     console.log("Data err: ", error);
@@ -102,6 +103,7 @@ router.put("/users/delete/idUser=:idUser", async (req, res) => {
         }
       }
     );
+    console.log(user);
     res.send({ user });
   } catch (error) {
     console.log("Data err: ", error);

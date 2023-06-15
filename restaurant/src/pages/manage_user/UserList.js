@@ -4,6 +4,7 @@ import {
     ListItemIcon,
     ListItemText
   } from "@mui/material";
+import "./UserDetail.css"
 import React,  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 //import UserBase from './UserBase';
@@ -28,8 +29,9 @@ function UserList() {
           .get(`http://localhost:4000/api/users/id=${id}`)
           .then((res) => {
             const temp = res?.data.users;
+            
             setUsers(temp);
-            //console.log(temp[0].user);
+            console.log(temp);
           })
           .catch((error) => {
             console.log("Error: ", error);
@@ -54,7 +56,7 @@ function UserList() {
                     {(users).map((row,index) => (
                         <td key={index}>
                             <Link to={`${row.user._id}`}>
-                            <ul className="list-inside bg-slate-50 rounded-lg p-2 m-3 max-w-100" >
+                            <ul className="list-inside bg-slate-50 rounded-lg p-2 m-3 w-52 h-48 shortedword" >
                                     <li className="bg-indigo-200 rounded p-2">Nhân Viên:  {rolechar(row.user.role)}</li>
                                     <li>Tên: {row.user.staff_name}</li>
                                     <li>Giới Tính: {row.user.staff_gender}</li>
