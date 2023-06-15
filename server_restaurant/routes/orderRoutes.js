@@ -77,23 +77,23 @@ router.post('/order/update', async(req, res) => {
         console.log(error);
     }
 })
-router.get('/order/:orderId/details/cancel', async(req, res) => {
-  const orderId = req.params.orderId;
-  try {
-    const details = await OrderDetail.find(
-      {Order: orderId, status: "xoa"}
-    );
-    res.send({details});
-  } catch (error) {
-    console.log(error);
-  }
-})
+// router.get('/order/:orderId/details/cancel', async(req, res) => {
+//   const orderId = req.params.orderId;
+//   try {
+//     const details = await OrderDetail.find(
+//       {Order: orderId, status: "xoa"}
+//     );
+//     res.send({details});
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
 router.get("/order/:orderId/details", async(req, res) => {
     const orderId = req.params.orderId;
     try {
         const details = await OrderDetail.aggregate([
             {
-                $match: { "Order": new ObjectId(orderId), "status": { $ne: "xoa" } },
+                $match: { "Order": new ObjectId(orderId)},
             },
             {
                 $lookup: {
@@ -134,7 +134,7 @@ router.get("/order/:orderId", async(req, res) => {
     const orderId = req.params.orderId;
     try {
         const order = await Order.aggregate([
-            { 
+            {
                 $match: { "_id": new ObjectId(orderId) }
             },
             {
@@ -251,11 +251,11 @@ router.put('/order=:id/total/update', async (req, res) => {
       }
     })
     res.send({ uptotal });
-    
+
   } catch (error) {
     console.log("Data err: ", error);
     return res.status(422).send({ Error: error.message });
-    
+
   }
 })
 
