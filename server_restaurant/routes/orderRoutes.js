@@ -77,6 +77,17 @@ router.post('/order/update', async(req, res) => {
         console.log(error);
     }
 })
+router.get('/order/:orderId/details/cancel', async(req, res) => {
+  const orderId = req.params.orderId;
+  try {
+    const details = await OrderDetail.find(
+      {Order: orderId, status: "xoa"}
+    );
+    res.send({details});
+  } catch (error) {
+    console.log(error);
+  }
+})
 router.get("/order/:orderId/details", async(req, res) => {
     const orderId = req.params.orderId;
     try {

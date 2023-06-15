@@ -1,6 +1,6 @@
 .layout {
     height: 100%;
-    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .left {
@@ -21,6 +21,7 @@
     border-radius: 10px;
     border: solid 1px lightgray;
     height: 100%;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .title {
@@ -28,10 +29,8 @@
     margin: 10px;
     padding: 5px 0;
     font-size: 30px;
-    /* font-family: 'Courier New', Courier, monospace; */
-    font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
-    font-weight: 100;
+    font-weight: 500;
 }
 
 .fixed-header {
@@ -67,7 +66,7 @@
     border-radius: 10px;
     color: black;
     border: solid 1px rgb(199, 199, 199);
-    padding: 7px 20px;
+    padding: 5px 10px;
     cursor: pointer;
 }
 
@@ -208,6 +207,9 @@ button.updateButton:hover {
     border-radius: 10px;
     margin-left: 5px;
 }
+.n_right_content select option {
+    font-family: 'Josefin Sans', sans-serif!important
+}
 
 .n_right_content label {
     display: block;
@@ -264,6 +266,7 @@ button.updateButton:hover {
     text-align: center;
     margin: 30px 10px;
     font-size: 25px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .loading .loadicon {
@@ -342,6 +345,7 @@ button.updateButton:hover {
     height: 400px;
     transition: 0.4s ease-in-out;
     font-size: 20px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 .update-modal span {
     position: absolute;

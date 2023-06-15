@@ -8,8 +8,8 @@ const SetUpPage = () => {
             <div className='setup-box'>
                 <div className='setup-content'>
                     <div className='logo'>
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Firefox_brand_logo%2C_2019.svg/2048px-Firefox_brand_logo%2C_2019.svg.png' />
-                        <div>Tuyen Thu Thai</div>
+                        <img src='/images/logoo.png' />
+                        <div>Trinity</div>
                     </div>
 
                     {/* CONTENT */}

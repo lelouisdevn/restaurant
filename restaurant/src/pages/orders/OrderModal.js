@@ -159,7 +159,7 @@ const OrderModal = (props) => {
                                     </tr>
                                 ))}
                                 <tr>
-                                    <td>Tổng:</td>
+                                    <td colSpan={4}>Tổng:</td>
                                     <td>{VND.format(order.total)}</td>
                                 </tr>
                             </table>

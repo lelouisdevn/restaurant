@@ -39,6 +39,7 @@ const StyledModal = styled(Modal)({
 });
 
 const OutLine = ({ id, arrange, numRow }) => {
+  const HOST = 'http://localhost:4000/api';
   // const { id, arrange, numRow } = useParams();
   const navigate = useNavigate();
   const [tables, setTables] = useState([]);
@@ -188,8 +189,20 @@ const OutLine = ({ id, arrange, numRow }) => {
     }
   }
 
-  // Show a popup banner of confirmation for cancelling order;
+  const [cancel, setCancel] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState("");
+  const handleCancelOrder = async () => {
+    const url = `${HOST}/order/${detailOrder.listpro[0].Order}/details/cancel`;
+    const response = await axios.get(url)
+    if (response.status === 200) {
+      // setCancel(response.data.details);
+      if (response?.data.details.length === 0) {
+        confirmDeleteOrder();
+      }
+    }
+  }
+  // Show a popup banner of confirmation for cancelling order;
+  
   const confirmDeleteOrder = () => {
     setSuccess(true);
     setSuccessClass("opacity-success");
@@ -744,7 +757,7 @@ const OutLine = ({ id, arrange, numRow }) => {
                         }>
                           Thanh toán
                         </button>
-                        <button onClick={confirmDeleteOrder}>Hủy đơn</button>
+                        <button onClick={handleCancelOrder}>Hủy đơn</button>
                       </div>
                     </div>
                   </Box>

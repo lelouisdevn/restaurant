@@ -3,11 +3,12 @@ const Lobby = require("../models/Lobby");
 
 // Them moi 1 khu vuc
 router.post("/lobby", async (req, res) => {
-    const { lob_name, lob_tbl_num } = req.body;
+    const { lob_name, lob_tbl_num,restaurant } = req.body;
     try {
         const lobby = new Lobby({
           lob_name,
           lob_tbl_num,
+          restaurant,
         });
         await lobby.save();
         res.send({lobby})
@@ -33,7 +34,7 @@ router.get("/all/lobbies", async (req, res) => {
     }
 })
 
-router.get("/lobbies/restaurant=:idRes", async (req, res) => {
+router.get("/all/lobbies/restaurant=:idRes", async (req, res) => {
   console.log("reqq: ", req.params.idRes);
 
   try {

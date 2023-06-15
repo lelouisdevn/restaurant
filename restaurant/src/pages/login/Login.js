@@ -28,6 +28,8 @@ const Login = () => {
           password: password
         })
         .then(async (res) => {
+
+          let tempInfoRestaurant;
           localStorage.setItem("UserID", res?.data.login[0]._id);
 
           

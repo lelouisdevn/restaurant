@@ -11,6 +11,11 @@ import Loading from './Loading';
 import { useNavigate } from 'react-router-dom';
 import ProductGrid from './ProductGrid';
 import Success from './Success';
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');
+</style>
+
 const ProductList = (props) => {
   const [url, setUrl] = useState({
     "add": "/manage/product/new",
@@ -44,14 +49,17 @@ const ProductList = (props) => {
   }
   const getProductsCategory = async () => {
     const url = `http://localhost:4000/api/products/category/${id}/${criteria}`;
-    const restaurantId = localStorage.getItem("RestaurantID");
+    const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
     await axios
       .post(url, {
-        restaurant: restaurantId,
+        restaurant: restaurant._id,
       })
       .then((res) => {
         console.log(res?.data.products);
         setProducts(res?.data.products)
+        if (res?.data.products.length === 0) {
+          setMessage("Chưa có sản phẩm nào thuộc danh mục này!");
+        }
       })
   }
 
@@ -82,11 +90,11 @@ const ProductList = (props) => {
    * Get all products of a restaurant from server;
    */
   const getProducts = async () => {
-    const restaurantId = localStorage.getItem("RestaurantID");
+    const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
     const url = `http://localhost:4000/api/products`;
     await axios
       .post(url, {
-        restaurantId: restaurantId,
+        restaurantId: restaurant._id,
         status: type[criteria].status,
       })
       .then((res) => {
@@ -170,6 +178,7 @@ const ProductList = (props) => {
   const refershPage = () => {
     setRefresh("refresh");
     setQuery("");
+    setMessage("Đang tải dữ liệu từ server....")
     setProducts([]);
     setTimeout(() => {
       setCriteria(1); // 1 => 'sp đang bán'
@@ -215,7 +224,7 @@ const ProductList = (props) => {
         <div className='fixed-header'>
           <div className="title">
             <Link to="/manage/product" className="fLink">
-              <h2>QUẢN LÝ SẢN PHẨM</h2>
+              <h2>Quản lý sản phẩm</h2>
             </Link>
           </div>
           <Toolbar
@@ -285,12 +294,12 @@ const ProductList = (props) => {
                 )) : <Loading message={message} />}
               </> :
               <>
-                <div className="grid" style={{ textAlign: "center", borderRadius: "10px 10px 0 0" }}>
+                <div className="product-grid" style={{ textAlign: "center", borderRadius: "10px 10px 0 0" }}>
                   <div style={{ width: "6%" }}>STT</div>
                   <div>Tên sản phẩm</div>
                   <div>Đơn giá</div>
                   <div>Đơn vị tính</div>
-                  <div className='grid-desc'>Mô tả sản phẩm</div>
+                  <div className='product-grid-desc'>Mô tả sản phẩm</div>
                   <div>Hình ảnh sản phẩm</div>
                 </div>
 
