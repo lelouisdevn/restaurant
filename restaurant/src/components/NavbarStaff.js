@@ -82,14 +82,17 @@ const NavbarStaff = () => {
             ></Tab>
 
           </Tabs>
-          <Typography variant="h6">{infoRestaurant.rest_name} </Typography>
-          <Icons>
+          <Typography
+            style={{position: "absolute", left: "50%", transform: "translateX(-50%)"}}
+            variant="h6">{infoRestaurant.rest_name} </Typography>
+          <Icons style={{position: "absolute", right: "10px"}}>
             <Avatar
               sx={{ width: 30, height: 30 }}
               src="/images/avatar.jpg"
               onClick={(e) => setOpen(true)}
             />
-            <Typography variant="span"> {infoStaff.staff_name}</Typography>
+            <Typography
+             variant="span"> {infoStaff.staff_name}</Typography>
           </Icons>
           <Menu
         id="demo-positioned-menu"

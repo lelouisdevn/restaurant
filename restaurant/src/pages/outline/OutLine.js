@@ -51,7 +51,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [openIF, setOpenIF] = useState(false);
   let [updateTotal, setupdateTotal] = useState(0);
   const [updateNote, setUpdateNote] = useState(null);
-  
+
   const json = localStorage.getItem("infoStaff");
   const valuejson = JSON.parse(json);
   const [infoStaff, setInfoStaff] = useState(valuejson);
@@ -193,17 +193,51 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [cancel, setCancel] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState("");
   const handleCancelOrder = async () => {
-    const url = `${HOST}/order/${detailOrder.listpro[0].Order}/details/cancel`;
+    const url = `${HOST}/order/${detailOrder.listpro[0].Order}/details`;
     const response = await axios.get(url)
+    var data = [];
     if (response.status === 200) {
       // setCancel(response.data.details);
-      if (response?.data.details.length === 0) {
+      if (response?.data.details.length != 0) {
+        // setCancel(response?.data.details);
+        // console.log(response?.data.details);
+        // confirmDeleteOrder();
+        data = response?.data.details;
+        console.log(data);
+      }
+    }
+    if (data.length !== 0) {
+      //status: chebien
+      let removeCancelItems = data.filter((item) => item.status !== 'xoa');
+      let status = false;
+      let orderStatus = ['chebien', 'xuatmon', 'hetmon', 'phucvu'];
+      removeCancelItems.forEach((item, i) => {
+        if (orderStatus.includes(item.status.trim())){
+          return status = true;
+        }
+      });
+      if (status === true) {
+          let message = {
+            noti: "Bạn không thể hủy đơn hàng này do đơn hàng đã được xử lý",
+            icon: "faClose",
+          }
+          showModal(message);
+      }else {
         confirmDeleteOrder();
       }
+      // if (removeCancelItems.length === orderedItems.length) {
+      //   confirmDeleteOrder();
+      // }else {
+      //   let message = {
+      //     noti: "Bạn không thể hủy đơn hàng này do đơn hàng đã được xử lý",
+      //     icon: "faClose",
+      //   }
+      //   showModal(message);
+      // }
     }
   }
   // Show a popup banner of confirmation for cancelling order;
-  
+
   const confirmDeleteOrder = () => {
     setSuccess(true);
     setSuccessClass("opacity-success");
@@ -245,7 +279,7 @@ const OutLine = ({ id, arrange, numRow }) => {
     setOpenE(false);
     setOpenIF(false);
 
-    //Cập nhật ghi chú 
+    //Cập nhật ghi chú
     if (updateNote !== null) {
       detailOrder.tabledetail[0].order["note"] = updateNote;
       setDetailOrder(detailOrder);
@@ -264,7 +298,7 @@ const OutLine = ({ id, arrange, numRow }) => {
     }).then((res) => {
       console.log("ok update product");
     });
-   
+
   };
 
   // Pay order;
@@ -327,7 +361,7 @@ const OutLine = ({ id, arrange, numRow }) => {
       left: 0,
       top: 0,
   };
-  
+
     return (
       <>
         {
@@ -762,7 +796,7 @@ const OutLine = ({ id, arrange, numRow }) => {
                         <button className="updateButton" onClick={() => setOpenE(true)}>
                           Cập nhật yêu cầu
                         </button>
-                     
+
                         <button className="updateButton" onClick={() => {
                           setSelectedOrderId(detailOrder.listpro[0].Order)
                           // setCriteria(1)
@@ -780,7 +814,7 @@ const OutLine = ({ id, arrange, numRow }) => {
               ) : null}
                 </Box>
                 </Box>
-      
+
        )}
 
           {/* Modal xóa theo từng sản phẩm */}
@@ -832,7 +866,7 @@ const OutLine = ({ id, arrange, numRow }) => {
               </Box>
             </Box>
           </StyledModal>
-        
+
         </>
       </>
     );

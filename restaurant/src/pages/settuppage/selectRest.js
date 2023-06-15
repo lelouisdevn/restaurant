@@ -41,16 +41,19 @@ const SelectRest = () => {
             });
 
     }
+    const [isSelected,setisSelected] = useState(false);
     const handleRestClick = async(row) =>{
         localStorage.setItem("RestaurantID",row.info._id);
         localStorage.setItem(
             "infoRestaurant",
             JSON.stringify(row.info)
-          );    
-        navigate("/manage/home");
-        
+          );
+        setisSelected(true);
+        setTimeout(() => {
+            navigate("/manage/home");
+        }, 1500);
     }
-    const [isSelected,setisSelected] = useState(false);
+    
 
 
 

@@ -9,6 +9,7 @@ import VND from "../../components/currency";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 const OrderModal = (props) => {
+    const HOST = "http://localhost:4000/api";
     const [orderId, setOrderId] = useState(props.order.Order);
     const [order, setOrder] = useState("");
     const [user, setUser] = useState("");
@@ -31,7 +32,7 @@ const OrderModal = (props) => {
     const [billExportStatus, setBillExportStatus] = useState(true);
     const getRestInfo = async () => {
         const id = localStorage.getItem("RestaurantID");
-        const url = `http://localhost:4000/api/info/id=${infoStaff._id}`;
+        const url = `${HOST}/info/id=${infoStaff._id}`;
         await axios
             .get(url)
             .then((res) => {
@@ -40,20 +41,25 @@ const OrderModal = (props) => {
             })
     }
     const getDetails = async () => {
-        const url = `http://localhost:4000/api/order/${orderId}/details`;
-        try {
-            await axios
-                .get(url)
-                .then((res) => {
-                    console.log(res?.data.details);
-                    setOrderDetails(res?.data.details);
-                })
-        } catch (error) {
-            console.log(error);
+        const url = `${HOST}/order/${orderId}/details`;
+        const res = await axios.get(url)
+                // .then((res) => {
+                //     console.log(res?.data.details);
+                //     setOrderDetails(res?.data.details);
+                // })
+        var data = [];
+        if (res.status === 200) {
+          data = res.data.details;
+          console.log(data);
         }
+        if (data.length != 0) {
+            data = data.filter((item) => item.status != "xoa");
+        }
+        console.log(data);
+        setOrderDetails(data);
     }
     const getTables = async () => {
-        const url = `http://localhost:4000/api/order/${orderId}/tables`;
+        const url = `${HOST}/order/${orderId}/tables`;
         await axios
             .get(url)
             .then((res) => {
@@ -61,7 +67,7 @@ const OrderModal = (props) => {
             })
     }
     const getOrderInfo = async () => {
-        const url = `http://localhost:4000/api/order/${orderId}`;
+        const url = `${HOST}/order/${orderId}`;
         await axios
             .get(url)
             .then((res) => {
