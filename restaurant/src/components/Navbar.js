@@ -39,7 +39,7 @@ const Navbar = () => {
   const [rest, setRest] = useState([]);
   const [isLoading, setisLoading] = useState(true);
 
- 
+
   const setOut = () => {
     localStorage.clear();
   }
@@ -62,33 +62,37 @@ const Navbar = () => {
         console.log("Error: ",error);
       }) .finally(() => {
         setisLoading(false);
-      }); 
-      
+      });
+
   }
-  
+
   const handleRestClick = async(id) =>{
     localStorage.setItem("RestaurantID",id);
     navigate("/manage/home");
-    
+
   }
   const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
   const [infoRestaurant, setInfoRestaurant] = useState(valuejson);
- 
+
 
   const json1 = localStorage.getItem("infoStaff");
   const valuejson1 = JSON.parse(json1);
   const [infoStaff, setInfoStaff] = useState(valuejson1);
   console.log(infoStaff)
+  const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
+  const brandLogo = "/images/logoo.png";
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Typography variant="h6">Logo here</Typography>
+        <Typography variant="h6">
+          <img style={{width: "40px", borderRadius: "50%"}} src={restaurant.logo ? restaurant.logo : brandLogo} />
+        </Typography>
 
         {/* <Search>
           <InputBase placeholder="search...." />
         </Search> */}
-        <Typography variant="h6">{infoRestaurant.rest_name}</Typography>
+        <Typography style={{position: "absolute",left: "50%", transform: "translateX(-50%)"}} variant="h6">{infoRestaurant.rest_name}</Typography>
         <Icons>
           <Avatar
             sx={{ width: 30, height: 30 }}
@@ -121,7 +125,7 @@ const Navbar = () => {
           <Link to={"/login"} onClick={() => setOut()}>
             <Typography variant="span"> Thoát</Typography>
           </Link>
-         
+
         </MenuItem>
       </Menu>
     </AppBar>
