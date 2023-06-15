@@ -328,6 +328,12 @@ const OutLine = ({ id, arrange, numRow }) => {
       setOpen(false);
     });
   }
+  const handleSeclect = async( props) => {
+    const index = products.indexOf(props.item);
+    props.item["status"] = props.statusO;
+    products[index] = props.item;
+    setProducts(products);
+}
 
   useEffect(() => {
     console.log("total useEffect : ", updateTotal);
@@ -352,7 +358,6 @@ const OutLine = ({ id, arrange, numRow }) => {
     //   };
     //   showModal(message);
   // };
-
     const style = {
       width: "100%",
       height: "100%",
@@ -735,6 +740,7 @@ const OutLine = ({ id, arrange, numRow }) => {
                             updateQty={updateQty}
                             infoStaff={infoStaff}
                             handleCancel={handleCancel}
+                            handleSeclect={handleSeclect}
                           />
                         ))}
                       <tr>
