@@ -49,7 +49,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [isLDO, setisLDO] = useState(false);
   const [isLNote, setisLNote] = useState(false);
   const [openIF, setOpenIF] = useState(false);
-  let [updateTotal, setupdateTotal] = useState(0);
+  const [updateTotal, setupdateTotal] = useState(0);
   const [updateNote, setUpdateNote] = useState(null);
 
   const json = localStorage.getItem("infoStaff");
@@ -123,6 +123,25 @@ const OutLine = ({ id, arrange, numRow }) => {
     getTotal(products);
   }, [products]);
 
+  useEffect(() => {
+    if (updateTotal !== 0) {
+      detailOrder.tabledetail[0].order["total"] = updateTotal; 
+      (async () => {
+        await axios
+          .put(
+            `http://localhost:4000/api/order/update/${detailOrder.listpro[0].Order}`,
+            {
+              total: updateTotal,
+            }
+          )
+          .then((res) => {
+            const temp = res?.data;
+          });
+      })(); 
+    }
+
+  }, [updateTotal])
+  
   const getTotal = (productsData) => {
     let tempt = 0;
     // console.log("trang htai: ", productsData);
@@ -133,7 +152,7 @@ const OutLine = ({ id, arrange, numRow }) => {
         tempt = tempt + productPrice;
       }
     }
-    console.log("total: ", tempt);
+    console.log("getTotal: ", tempt);
     setupdateTotal(tempt);
   };
 
@@ -305,6 +324,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const payOrder = () => { };
 
   // Cancel the dish
+
   const [itemDish, setItemDish] = useState();
   const [open, setOpen] = useState(false);
   const [openE, setOpenE] = useState(false);
@@ -335,18 +355,6 @@ const OutLine = ({ id, arrange, numRow }) => {
     setProducts(products);
 }
 
-  useEffect(() => {
-    console.log("total useEffect : ", updateTotal);
-    
-      // (async () => {
-      //   await axios
-      //     .put(`http://localhost:4000/api/order/update/${detailOrder.listpro[0].Order}`)
-      //     .then((res) => {
-      //       const temp = res?.data;
-      //     });
-      // })(); 
-  }, [updateTotal])
-  
     /** TEMPORARILY DISCONTINUED;
      * Discard any changes made previously;
      */
