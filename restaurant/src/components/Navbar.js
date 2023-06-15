@@ -71,24 +71,31 @@ const Navbar = () => {
     navigate("/manage/home");
     
   }
+  const json = localStorage.getItem("infoRestaurant");
+  const valuejson = JSON.parse(json);
+  const [infoRestaurant, setInfoRestaurant] = useState(valuejson);
+ 
+
+  const json1 = localStorage.getItem("infoStaff");
+  const valuejson1 = JSON.parse(json1);
+  const [infoStaff, setInfoStaff] = useState(valuejson1);
+  console.log(infoStaff)
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Typography variant="h6">Restaurant TTT</Typography>
+        <Typography variant="h6">Logo here</Typography>
 
-        <Search>
+        {/* <Search>
           <InputBase placeholder="search...." />
-        </Search>
+        </Search> */}
+        <Typography variant="h6">{infoRestaurant.rest_name}</Typography>
         <Icons>
-          <Badge badgeContent={4} color="error">
-            <NotificationsIcon />
-          </Badge>
           <Avatar
             sx={{ width: 30, height: 30 }}
             src="/images/avatar.jpg"
             onClick={(e) => setOpen(true)}
           />
-          <Typography variant="span"> Tonny</Typography>
+          <Typography variant="span"> {infoStaff.staff_name}</Typography>
         </Icons>
       </StyledToolbar>
       <Menu

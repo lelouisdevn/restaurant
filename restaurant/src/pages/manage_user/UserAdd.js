@@ -50,6 +50,9 @@ function UserAdd(){
         }
 
     }
+    const handleSelect = (event) => {
+        setRole (event.target.value);
+    }
 
     return (
         <div className='m-5 '>
@@ -109,7 +112,11 @@ function UserAdd(){
                     <tr>
                         <td>Vai Trò:</td>
                         <td>
-                            <input value={role} onChange={(text) => setRole(text.target.value)}></input>
+                            {/* <input value={role} onChange={(text) => setRole(text.target.value)}></input> */}
+                            <select  onClick={handleSelect}>
+                                <option value="2">Nhân viên phục vụ</option>
+                                <option value="3">Bếp</option>
+                            </select>
                         </td>
                     </tr>
                     <br/>

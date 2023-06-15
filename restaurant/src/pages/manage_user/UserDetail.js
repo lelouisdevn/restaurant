@@ -106,6 +106,8 @@ function UserDetail() {
             return qly;
         } else if(i == "2") {
             return order;
+        }else if(i == "3") {
+            return tng;
         }
 
     }
@@ -181,9 +183,16 @@ function UserDetail() {
                     <tr>
                         <td>Vai Trò:</td>
                         <td>
-                            <input defaultValue={rolechar(user.role)}
+                            {/* <input defaultValue={rolechar(user.role)}
                                 onChange={(text) => setRole(text.target.value)}
-                                ></input>
+                                ></input> */}
+                            <select defaultValue={user.role} onChange={(text) => setRole(text.target.value)}>
+                            <option value={user.role}>{rolechar(user.role)}</option>
+                                {user.role == "2" 
+                                    ? <option value="3">Bếp</option>
+                                    :  <option value="2">Nhân viên phục vụ</option>
+                                }
+                            </select>
                         </td>
                     </tr>
                     <br/>
