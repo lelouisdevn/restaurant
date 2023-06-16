@@ -8,6 +8,9 @@ import VND from "../../components/currency";
 
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
+import QRCode from "react-qr-code";
+import { ReactDOM } from "react";
+import React from "react";
 const OrderModal = (props) => {
     const HOST = "http://localhost:4000/api";
     const [orderId, setOrderId] = useState(props.order.Order);
@@ -19,6 +22,17 @@ const OrderModal = (props) => {
     const [documentTitle, setDocumentTitle] = useState("");
     const [rest, setRest] = useState("");
 
+    const bankAccount = {
+        "first": "00020101021238580010A000000727012800069704070114190392627080170208QRIBFTTA5204601153037045405",
+        "money": order.total,
+        "second": "5802VN5903TCB6005Hanoi62090805",
+        "content": "biled",
+        "third": "6304c7c3"
+    };
+    var qrcode = bankAccount.first + bankAccount.money + bankAccount.second + bankAccount.content + bankAccount.third;
+    var qrcode = qrcode.toString();
+    console.log(qrcode);
+    
      const json = localStorage.getItem("infoRestaurant");
      const valuejson = JSON.parse(json);
     console.log(valuejson);
@@ -169,7 +183,13 @@ const OrderModal = (props) => {
                                     <td>{VND.format(order.total)}</td>
                                 </tr>
                             </table>
+                            {/* <center> */}
+                            <div>
+                                <QRCode style={{width: "150px", margin: "0 auto"}} value={qrcode} />
+                            </div>
+                            {/* </center> */}
                         </div>
+
                         <div style={{ fontSize: "16px" }}>
                             <div>
                                 Tiền khách đưa:
