@@ -209,6 +209,13 @@ const ProductList = (props) => {
     left: "50%",
     transform: "translateX(-50%)",
   };
+
+  const toolbar = {
+    "add": "/manage/product/new",
+    "sort": true,
+    "search": true,
+    "cate": true,
+  }
   return (
     <>
       {
@@ -228,12 +235,10 @@ const ProductList = (props) => {
             </Link>
           </div>
           <Toolbar
-            url={url}
+            toolbar = {toolbar}
             functioner={getSearchQuery}
-            search={true}
             sort={sort}
             sortType={isSorted}
-            isSort={true}
           />
         </div>
         <div className="content">
