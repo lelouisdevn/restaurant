@@ -150,7 +150,7 @@ const OrderModal = (props) => {
                                     </td>
                                 </tr>
                                 <tr><td>Mã hóa đơn:</td><td>{order._id}</td></tr>
-                                <tr><td>Đặt lúc:</td><td>{order.order_at}</td></tr>
+                                <tr><td>Đặt lúc:</td><td>{new Date(order.order_at).toLocaleString("vi-VN", {hour12: false})}</td></tr>
                                 <tr><td>Thanh toán lúc:</td><td>{new Date().toLocaleString("vi-VN", { hour12: false })}</td></tr>
                                 <tr>
                                     <td>Bàn:</td>
