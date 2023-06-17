@@ -256,7 +256,9 @@ function Orders() {
 
   const order = async (total) => {
     const order_url = "http://localhost:4000/api/order/new";
-    const recent = new Date().toLocaleString("vi-VN", { hour12: false });
+    // const recent = new Date().toLocaleString("vi-VN", { hour12: false });
+    const recent = new Date().toISOString();
+    console.log(recent)
     await axios
       .post(order_url, {
         order_at: recent,
