@@ -9,6 +9,7 @@ import { faList } from "@fortawesome/free-solid-svg-icons";
 import OrderFilter from "./OrderFilter";
 import '../modal.css';
 import '../../products/this.css';
+import './order-grid.css';
 const ManageOrderList = () => {
     const HOST = 'http://localhost:4000/api';
     const [orders, setOrders] = useState([]);
@@ -52,17 +53,24 @@ const ManageOrderList = () => {
         setShowClass("hd-menu");
       }
     }
-
-    const [filter, setFilter] = useState(true);
+    const [successClass, setSuccessClass] = useState('');
+    const [filter, setFilter] = useState();
     const toggleFilter = () => {
         setFilter(!filter);
+        setSuccessClass('opacity-success');
     }
-    const [successClass, setSuccessClass] = useState('opacity-success');
+    const closeModal = () => {
+        setFilter(!filter);
+        setSuccessClass("");
+    }
+    const updateOrderList = (list) => {
+        setFilteredOrder(list);
+    }
     return(
     <>
     {
         filter &&
-        <OrderFilter />
+        <OrderFilter closeModal={closeModal} updateOrderList = {updateOrderList} />
     }
         <div className={`detail-container ${successClass}`}>
             <div className="fixed-header">
@@ -101,7 +109,7 @@ const ManageOrderList = () => {
                 <div className="products">
                     <table style={{width: "100%"}}>
                     {
-                        orders.length > 0 ? orders.map((order, index) => (
+                        filteredOrder.length > 0 ? filteredOrder.map((order, index) => (
                             <OrderGrid order={order} key={index} stt={index+1} />
                         )) : <Loading message="Đang tải dữ liệu từ server...." />
                     }
