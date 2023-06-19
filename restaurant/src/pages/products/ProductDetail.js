@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faHome } from "@fortawesome/free-solid-svg-icons";
 import ProductImage from './ProductImage';
 import Toolbar from './Toolbar';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
@@ -201,16 +201,17 @@ const ProductDetail = () => {
               </div>
               <div className="product-content">
                 <div className="n_left">
-                  <div>
+                  <div style={{position: "relative", width: 'fit-content'}}>
                     <ProductImage img={product.prod_img} />
-                  </div>
-                  <div>
+                    {/* <div> */}
                     <button
+                      style={{position: "absolute", top: "0", right: "0", fontSize: "16px"}}
                       className='updateButton'
                       onClick={() => setStatus(!isDisplay)}
                     >
-                      Toàn màn hình
+                      <FontAwesomeIcon icon={faExpand} />
                     </button>
+                  {/* </div> */}
                   </div>
                 </div>
                 <div className="n_right">
