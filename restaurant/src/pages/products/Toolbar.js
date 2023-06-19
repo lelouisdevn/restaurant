@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
-import { faArrowAltCircleUp, faArrowUp, faListDots, faPlus, faSortAlphaDesc } from "@fortawesome/free-solid-svg-icons";
+import { faArrowAltCircleUp, faArrowUp, faFilter, faListDots, faPlus, faSortAlphaDesc } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import { faSortAlphaAsc } from "@fortawesome/free-solid-svg-icons";
@@ -105,7 +105,8 @@ const Toolbar = (props) => {
       {
         props.toolbar.filter &&
         <div onClick={showFilterModal}>
-          Bộ lọc
+          <FontAwesomeIcon icon={faFilter}  />
+          <> Bộ lọc</>
         </div>
       }
 
