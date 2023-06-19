@@ -180,7 +180,9 @@ const OrderModal = (props) => {
                                 ))}
                                 <tr>
                                     <td colSpan={4}>Tổng:</td>
-                                    <td>{VND.format(order.total)}</td>
+                                    <td
+                                        style={{fontWeight: "bold"}}
+                                    >{VND.format(order.total)}</td>
                                 </tr>
                             </table>
                             {/* <center> */}
@@ -203,7 +205,7 @@ const OrderModal = (props) => {
                         </div>
                     </div>
                     <div className="order-modal-footer">
-                        <button disabled={billExportStatus} onClick={() => handlePay()}>Thanh toán hoá đơn</button>
+                        {/* <button disabled={billExportStatus} onClick={() => handlePay()}>Thanh toán hoá đơn</button> */}
                         <button
                             onClick={() => {
                                 generateBillPDF()
