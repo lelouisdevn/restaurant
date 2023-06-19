@@ -43,29 +43,16 @@ const reformatDate = (date) => {
   return fDate;
 }
 /**Get orders with filter */
-router.get('/order/filter/dates', async(req, res) => {
+router.post('/order/filter', async(req, res) => {
+  const { restaurant, from, to, status } = req.body;
   const orders = await Order.find({
+    restaurant: new ObjectId(restaurant),
     order_at: {
-      $gte: ISODate("2023/06/17"),
-      $lte: ISODate("2023/06/14"),
+      $gte: new Date(from),
+      $lte: new Date(to),
+      // status: status,
     }
   })
-  // const orders = await Order.aggregate([
-  //   {
-  //     $match: {},
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: 'orderdetails',
-  //       localField: '_id',
-  //       foreignField: 'Order',
-  //       as: "details",
-  //     }
-  //   }
-  // ])
-  // orders.forEach((order) => {
-  //   console.log(order);
-  // })
   res.send({orders});
 })
 
@@ -112,7 +99,8 @@ router.post('/order/update', async (req, res) => {
       }
     )
     if (criteria === 1) {
-      const current = new Date().toLocaleString("vi-VN", { hour12: false });
+      // const current = new Date().toLocaleString("vi-VN", { hour12: false });
+      const current = new Date();
       await Order.updateOne(
         { _id: new ObjectId(orderId) },
         {

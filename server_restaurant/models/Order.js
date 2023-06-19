@@ -14,10 +14,9 @@ const OrderSchema = new Schema({
     order_at: {
         type: Date,
         required: true,
-        // default: Date()
     },
     bill_at: {
-        type: String,
+        type: Date,
     },
     user: {
         type: Schema.Types.ObjectId,
