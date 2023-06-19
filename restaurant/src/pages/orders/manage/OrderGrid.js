@@ -10,8 +10,21 @@ import axios from 'axios';
 function OrderGrid (props) {
     const HOST = "http://localhost:4000/api";
     const [order, setOrder] = useState("");
+    const [tables, setTables] = useState([]);
+
+    const getTables = async () => {
+        const url = `${HOST}/order/${props.order._id}/tables`;
+        await axios
+            .get(url)
+            .then((res) => {
+                console.log("ban: ", res?.data.tables);
+                setTables(res?.data.tables);
+            })
+    }
     useEffect(() => {
         setOrder(props.order);
+        getTables();
+        console.log(order)
     }, []);
     const formatStatus = {
         "dadat": "Đã đặt món",
@@ -21,7 +34,7 @@ function OrderGrid (props) {
     const [status, setStatus] = useState(props.order.status);
     const [updating, setUpdating] = useState(true);
     const payOrder = async () => {
-        setUpdating(!updating);
+        setUpdating(false);
         const url = `${HOST}/order/update`;
         const res = await axios
             .post(url, {
@@ -30,18 +43,39 @@ function OrderGrid (props) {
             })
         if (res.status === 200) {
             setStatus('dathanhtoan');
-            setUpdating(!updating);
+            setUpdating(true);
         }else {
             setStatus(order.status);
-            setUpdating(!updating);
+            setUpdating(true);
         }
     }
+    const seeDetails = () => {
+        props.seeDetails(order);
+    }
+    const evenRows = {
+        background: "aliceblue",
+    }
+    const [even, setEven] = useState({});
+    useEffect(() => {
+        if (props.stt % 2 === 0) {
+            setEven(evenRows);
+        }else {
+            setEven({});
+        }
+    }, []);
+
+
 return(
     <>
         { order &&
-        <tr>
+        <tr style={even}>
             <td>{props.stt}</td>
             <td>{order._id}</td>
+            <td>{
+                tables.map((tbl) => 
+                    <>{tbl.tables[0].tbl_id},</>
+                )
+            }</td>
             <td>{new Date(order.order_at).toLocaleString("vi-VN", {hour12: false})}</td>
             <td>{VND.format(order.total)}</td>
             <td>
@@ -69,15 +103,15 @@ return(
                             > Đã thanh toán</button>
                     : <button className='updateButton'>
                         <FontAwesomeIcon icon={faCircleDot} />
-                        <> Updating</>
+                        <> Cập nhật...</>
                     </button>
                     
                 }
             </td>
             <td>
-                <FontAwesomeIcon icon={faEye} />
-                <FontAwesomeIcon icon={faTrash} />
-                <FontAwesomeIcon icon={faEdit} />
+                <span>
+                    <FontAwesomeIcon icon={faEye} onClick={seeDetails} />
+                </span>
             </td>
         </tr>
         }
