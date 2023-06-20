@@ -49,6 +49,13 @@ function OrderGrid (props) {
             setUpdating(true);
         }
     }
+    const cancelOrder = async () => {
+        setUpdating(false);
+        setStatus("dahuy");
+        setTimeout(() => {
+            setUpdating(true);
+        }, 1500);
+    }
     const seeDetails = () => {
         props.seeDetails(order);
     }
@@ -73,7 +80,7 @@ return(
             <td>{order._id}</td>
             <td>{
                 tables.map((tbl) => 
-                    <>{tbl.tables[0].tbl_id},</>
+                    <>{tbl.tables[0].tbl_id}, </>
                 )
             }</td>
             <td>{new Date(order.order_at).toLocaleString("vi-VN", {hour12: false})}</td>
@@ -109,9 +116,12 @@ return(
                 }
             </td>
             <td>
-                <span>
+                <button className='updateButton'>
                     <FontAwesomeIcon icon={faEye} onClick={seeDetails} />
-                </span>
+                </button>
+                <button onClick={cancelOrder}>
+                    <FontAwesomeIcon icon={faTrash} />
+                </button>
             </td>
         </tr>
         }
