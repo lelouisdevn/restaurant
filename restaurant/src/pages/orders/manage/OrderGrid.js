@@ -50,11 +50,18 @@ function OrderGrid (props) {
         }
     }
     const cancelOrder = async () => {
-        setUpdating(false);
-        setStatus("dahuy");
-        setTimeout(() => {
-            setUpdating(true);
-        }, 1500);
+        if (status === 'dadat') {
+            // setUpdating(false);
+            // setTimeout(() => {
+            //     setUpdating(true);
+            // }, 1500);
+            props.cancelOrder(order)
+            // if (props.cancelAccepted) {
+            //     setStatus("dahuy");
+            // }
+        }else {
+
+        }
     }
     const seeDetails = () => {
         props.seeDetails(order);

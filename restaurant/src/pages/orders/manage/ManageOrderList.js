@@ -11,6 +11,7 @@ import '../modal.css';
 import '../../products/this.css';
 import './order-grid.css';
 import OrderModal from '../OrderModal';
+import Success from "../../products/Success";
 const ManageOrderList = () => {
     const HOST = 'http://localhost:4000/api';
     const [orders, setOrders] = useState([]);
@@ -22,6 +23,10 @@ const ManageOrderList = () => {
         "search": true,
         'filter': true,
     };
+    const successNoti = {
+        noti: "Đơn hàng đã được hủy thành công",
+        icon: "faCheckCircle"
+    }
     const getOrderList = async () => {
         const URL = `${HOST}/order/all/`;
         const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
@@ -98,8 +103,55 @@ const ManageOrderList = () => {
         position: "absolute",
         left: "0",
     };
+    // Order cancellation;
+    const [success, setSuccess] = useState(false);
+    const [message, setMessage] = useState({});
+    const confirmCancelOrder = () => {
+        setSuccess(true);
+        setSuccessClass("opacity-success");
+        const message = {
+            noti: "Bạn có chắc muốn xóa đơn hàng này không?",
+            icon: "faTrash"
+        };
+        setMessage(message);
+    }
+    const cancelOrder = (order) => {
+        setSelectedOrder(order);
+        if (order) {
+            confirmCancelOrder();
+        }
+    }
+    const proceedCancelling = async (status) => {
+        if (status === 'huydon') {
+            const url = `${HOST}/order/update`;
+            const res = await axios
+                .post(url, {
+                    orderId: selectedOrder._id,
+                    criteria: 0, // 0-> huy don
+                })
+            if (res.status === 200) {
+                setMessage(successNoti);
+                setFilteredOrder([]);
+                getOrderList();
+            }
+            setTimeout(() => {
+                setSuccess(false);
+                setSuccessClass("");
+            }, 3000);
+        }
+    }
     return(
     <>
+    {
+        success &&
+        <Success 
+            message={message} 
+            style={style} 
+            functioner={proceedCancelling}
+            setSuccess={setSuccess}
+            setSuccessClass={setSuccessClass}
+        />
+    }
     {
         detailModal &&
         <OrderModal 
@@ -167,6 +219,7 @@ const ManageOrderList = () => {
                                 key={index} 
                                 stt={index+1} 
                                 seeDetails={seeDetails}
+                                cancelOrder={cancelOrder}
                             />
                         )) 
                         // : <Loading message="Đang tải dữ liệu từ server...." />
