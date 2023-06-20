@@ -1,8 +1,6 @@
 import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import './order-grid.css';
 import axios from 'axios';
 const OrderFilter = (props) => {

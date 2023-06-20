@@ -55,7 +55,7 @@ function App() {
           <Route path="/manage/*" element={<Layout />}>
             
             <Route path="home">
-              <Route element={<Home />} />
+              <Route index element={<Home />} />
             </Route>
             <Route path="lobby">
               <Route index element={<Lobby />} />

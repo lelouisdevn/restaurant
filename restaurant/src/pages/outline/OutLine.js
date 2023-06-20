@@ -353,6 +353,14 @@ const OutLine = ({ id, arrange, numRow }) => {
     props.item["status"] = props.statusO;
     products[index] = props.item;
     setProducts(products);
+     getTotal(products);
+     await axios
+       .put(
+         `http://localhost:4000/api/orderdetail/update=${props.item._id}/undo`
+       )
+       .then((res) => {
+         const temp = res?.data;
+       });
 }
 
     /** TEMPORARILY DISCONTINUED;

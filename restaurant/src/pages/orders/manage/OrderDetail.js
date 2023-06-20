@@ -35,8 +35,13 @@ function OrderDetail(props) {
    }
   };
   const handleSelect = (e) => {
-    setStatusO(e.target.value)
-    props.handleSeclect({ statusO: e.target.value, item: props.item });
+    if (e.target.value === "hoantac") {
+      setStatusO(e.target.value);
+      props.handleSeclect({ statusO: "dadat", item: props.item });
+    } else {
+      setStatusO(e.target.value);
+      props.handleSeclect({ statusO: e.target.value, item: props.item });
+    } 
   }
     
 
@@ -59,12 +64,23 @@ function OrderDetail(props) {
             </div>
           </td>
           <td>
-            <div className="flex justify-center items-center">
-              <button onClick={decreaseOne}>-</button>
-             
+            <div
+              disable
+              className="flex justify-center items-center"
+              style={{ color: "#a3a3a3" }}
+            >
+              <button
+              // onClick={decreaseOne}
+              >
+                -
+              </button>
+
               <input value={props.item.qty} />
-              
-              <button className="right-btn" onClick={increaseOne}>
+
+              <button
+                className="right-btn"
+                // onClick={increaseOne}
+              >
                 +
               </button>
             </div>
@@ -77,19 +93,12 @@ function OrderDetail(props) {
           </td>
           <td>
             <select
-              disabled
               className="slbtn"
               value={props.item.status}
-              onChange={(e) => setStatusO(e.target.value)}
+              onChange={(e) => handleSelect(e)}
             >
-              <option value="dadat" disable>
-                Đã gửi bếp
-              </option>
-              <option value="chebien">Đang chế biến</option>
-              <option value="xuatmon">Xuất món</option>
-              <option value="hetmon">Hết món</option>
               <option value="xoa">Hủy món</option>
-              <option value="phucvu">Đã phục vụ</option>
+              <option value="hoantac">Hoàn tác</option>
             </select>
           </td>
           <td>
@@ -108,9 +117,9 @@ function OrderDetail(props) {
           <td>
             <div className="flex justify-center items-center">
               <button onClick={decreaseOne}>-</button>
-              
-                <input value={props.item.qty} />
-              
+
+              <input value={props.item.qty} />
+
               <button className="right-btn" onClick={increaseOne}>
                 +
               </button>
@@ -124,9 +133,7 @@ function OrderDetail(props) {
               value={statusO}
               onChange={(e) => handleSelect(e)}
             >
-              <option value="dadat"  >
-                Đã gửi bếp
-              </option>
+              <option value="dadat">Đã gửi bếp</option>
               <option value="chebien">Đang chế biến</option>
               <option value="xuatmon">Xuất món</option>
               <option value="hetmon">Hết món</option>
