@@ -72,10 +72,8 @@ const Navbar = () => {
 
   const handleRestClick = async(id) =>{
     localStorage.setItem("RestaurantID",id);
-    const restaurant = rest.filter((r) => r._id === id);
     localStorage.setItem("infoRestaurant", JSON.stringify(id));
-    navigate("/manage/home");
-
+    window.location.reload();
   }
   const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
