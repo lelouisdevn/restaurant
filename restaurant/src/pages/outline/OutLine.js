@@ -216,17 +216,12 @@ const OutLine = ({ id, arrange, numRow }) => {
     const response = await axios.get(url)
     var data = [];
     if (response.status === 200) {
-      // setCancel(response.data.details);
       if (response?.data.details.length != 0) {
-        // setCancel(response?.data.details);
-        // console.log(response?.data.details);
-        // confirmDeleteOrder();
         data = response?.data.details;
         console.log(data);
       }
     }
     if (data.length !== 0) {
-      //status: chebien
       let removeCancelItems = data.filter((item) => item.status !== 'xoa');
       let status = false;
       let orderStatus = ['chebien', 'xuatmon', 'hetmon', 'phucvu'];

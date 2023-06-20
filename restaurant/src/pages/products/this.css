@@ -256,6 +256,7 @@ button.updateButton:hover {
     transition: 500ms;
     position: absolute;
     z-index: 9;
+    left: 0;
 }
 
 .productimg {
@@ -366,6 +367,8 @@ button.updateButton:hover {
 }
 .opacity-success {
     opacity: 0.1;
+    position: fixed;
+    width: calc(100% - 370px);
 }
 .btn-dlt {
     margin: 15px 0;

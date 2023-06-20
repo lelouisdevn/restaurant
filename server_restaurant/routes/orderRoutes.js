@@ -51,11 +51,6 @@ router.post("/order/detail/new", async (req, res) => {
     console.log(error);
   }
 });
-const reformatDate = (date) => {
-  const [d, m, y] = date.split("/");
-  const fDate = new Date(+y, m - 1, +d);
-  return fDate;
-};
 /**Get orders with filter */
 router.post("/order/filter", async (req, res) => {
   const { restaurant, from, to, status } = req.body;
@@ -71,12 +66,14 @@ router.post("/order/filter", async (req, res) => {
 });
 
 /**Get all orders */
-router.get("/order/all/", async (req, res) => {
-  const criteria = req.params.criteria;
+router.post('/order/all', async (req, res) => {
+  const {restaurant} = req.body;
   try {
     const orders = await Order.aggregate([
       {
-        $match: {}
+        $match: {
+          restaurant: new ObjectId(restaurant),
+        }
       },
       {
         $lookup: {

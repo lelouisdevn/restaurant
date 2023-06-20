@@ -299,7 +299,8 @@ const ProductList = (props) => {
                 )) : <Loading message={message} />}
               </> :
               <>
-                <div className="product-grid" style={{ textAlign: "center", borderRadius: "10px 10px 0 0" }}>
+                <div className="product-grid" 
+                  style={{ textAlign: "center", borderRadius: "10px 10px 0 0", background: "aliceblue", fontWeight: "bold"}}>
                   <div style={{ width: "6%" }}>STT</div>
                   <div>Tên sản phẩm</div>
                   <div>Đơn giá</div>

@@ -2,7 +2,7 @@
     display: block;
     text-align: left;
     width: 100%;
-    margin: -7px 0;
+    /* margin: -7px 0; */
 }
 .product-grid div{
     display: inline-block;
@@ -12,6 +12,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-bottom: -10px;
 }
 .product-grid-desc {
     width: 30%!important;
