@@ -57,9 +57,11 @@ const CreateRest = () => {
                 
             </div>
             <div className="footer">
-                <input  value={id} hidden ></input>
-                <FontAwesomeIcon icon={faAdd} />
-                <button onClick={() => handleRestAdd(id)}  type="submit" > Thêm</button>
+                <div>
+                    <input  value={id} hidden ></input>
+                    <FontAwesomeIcon icon={faAdd} />
+                    <> <button onClick={() => handleRestAdd(id)}  type="submit" > Thêm</button></>
+                </div>
             </div>
             <ToastContainer />
         </>

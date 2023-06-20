@@ -15,6 +15,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SetUpPage from "../pages/settuppage/setUpPage";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -68,6 +72,8 @@ const Navbar = () => {
 
   const handleRestClick = async(id) =>{
     localStorage.setItem("RestaurantID",id);
+    const restaurant = rest.filter((r) => r._id === id);
+    localStorage.setItem("infoRestaurant", JSON.stringify(id));
     navigate("/manage/home");
 
   }
@@ -115,18 +121,46 @@ const Navbar = () => {
           vertical: "top",
           horizontal: "right"
         }}
+        // style={{width: "", borderRadius: "10px!important", padding: "0"}}
       >
-        <MenuItem>Thông tin cá nhân</MenuItem>
+        <div style={{width: "350px", }}>
+          <div style={{width: "350px"}}>
+            <div className="logo" style={{textAlign: "center", marginTop: "0"}}>
+              <img src="/images/logoo.png" />
+              <div>Trinity</div>
+            </div>
+            <div className="main-content">
+              {
+                isLoading ? null : rest.map((row) => (
+                  <div onClick={(e) => handleRestClick(row.info)}>
+                    { row.info.rest_name }
+                  </div>
+                ))
+              }
+            </div>
+            <div className="footer" onClick={() => setOut() } style={{textAlign: "center"}}>
+              <div>
+              <Link to={"/login"}>
+                <FontAwesomeIcon icon={faSignOut} />
+                <> Đăng xuất</>
+              </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* <MenuItem>Thông tin cá nhân</MenuItem>
         {isLoading? null: rest.map((row)=>(
           <MenuItem onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</MenuItem>
         ))}
         <MenuItem //   onClick={handleClose}
         >
+          
           <Link to={"/login"} onClick={() => setOut()}>
             <Typography variant="span"> Thoát</Typography>
           </Link>
 
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </AppBar>
   );

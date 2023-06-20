@@ -70,14 +70,16 @@ const SelectRest = () => {
                     <div className='main-content'>
                         {
                     isLoading? null : rest.map((row)=>(
-                        <div><button onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</button></div>
+                        <div onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</div>
                         // <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
                             ))
                         }
                     </div>
                     <div className='footer' onClick={createRest}>
+                        <div>
                         <FontAwesomeIcon icon={faGear} />
                         <> Thêm nhà hàng khác</>
+                        </div>
                     </div>
                 </>
             }
