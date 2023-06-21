@@ -71,7 +71,7 @@ const Navbar = () => {
   }
 
   const handleRestClick = async(id) =>{
-    localStorage.setItem("RestaurantID",id);
+    localStorage.setItem("RestaurantID",id._id);
     localStorage.setItem("infoRestaurant", JSON.stringify(id));
     window.location.reload();
   }

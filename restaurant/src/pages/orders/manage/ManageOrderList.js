@@ -123,11 +123,20 @@ const ManageOrderList = () => {
         };
         setMessage(message);
     }
-    const cancelOrder = (order) => {
+    const cancelOrder = async (order) => {
         setSelectedOrder(order);
+        const orderId = order._id;
         const orderStatus = ['chebien', 'xuatmon', 'hetmon', 'phucvu'];
         let cancel = false;
-        order.details.forEach(element => {
+
+        const URL = `${HOST}/order/${orderId}/details`;
+        const response = await axios.get(URL);
+        let fetchedInfo = [];
+        if (response.status === 200) {
+            fetchedInfo = response?.data.details;
+        }
+        
+        fetchedInfo.forEach(element => {
             if (orderStatus.includes(element.status.trim())) {
                 return cancel = true;
             }

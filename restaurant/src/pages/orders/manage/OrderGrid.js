@@ -123,8 +123,8 @@ return(
                 }
             </td>
             <td>
-                <button className='updateButton'>
-                    <FontAwesomeIcon icon={faEye} onClick={seeDetails} />
+                <button className='updateButton' onClick={seeDetails}>
+                    <FontAwesomeIcon icon={faEye} />
                 </button>
                 <button onClick={cancelOrder}>
                     <FontAwesomeIcon icon={faTrash} />
