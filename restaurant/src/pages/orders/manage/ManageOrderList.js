@@ -132,7 +132,7 @@ const ManageOrderList = () => {
                 return cancel = true;
             }
         });
-        if (order && cancel) {
+        if (order && !cancel) {
             confirmCancelOrder();
         }else {
             setMessage(errorOnCancel);
