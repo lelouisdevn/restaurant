@@ -27,6 +27,14 @@ const ManageOrderList = () => {
         noti: "Đơn hàng đã được hủy thành công",
         icon: "faCheckCircle"
     }
+    const errorOnCancel = {
+        noti: "Đơn hàng không thể hủy do đã được chế biến",
+        icon: "faClose",
+    }
+    const errorOccurred = {
+        noti: "Đã có lỗi xãy ra, hãy thử lại sau",
+        icon: "faClose",
+    }
     const getOrderList = async () => {
         const URL = `${HOST}/order/all/`;
         const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
@@ -117,8 +125,19 @@ const ManageOrderList = () => {
     }
     const cancelOrder = (order) => {
         setSelectedOrder(order);
-        if (order) {
+        const orderStatus = ['chebien', 'xuatmon', 'hetmon', 'phucvu'];
+        let cancel = false;
+        order.details.forEach(element => {
+            if (orderStatus.includes(element.status.trim())) {
+                return cancel = true;
+            }
+        });
+        if (order && cancel) {
             confirmCancelOrder();
+        }else {
+            setMessage(errorOnCancel);
+            setSuccess(true);
+            setSuccessClass("opacity-success");
         }
     }
     const proceedCancelling = async (status) => {
@@ -133,6 +152,8 @@ const ManageOrderList = () => {
                 setMessage(successNoti);
                 setFilteredOrder([]);
                 getOrderList();
+            }else {
+                setMessage(errorOccurred);
             }
             setTimeout(() => {
                 setSuccess(false);
