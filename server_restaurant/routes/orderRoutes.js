@@ -54,6 +54,7 @@ router.post("/order/detail/new", async (req, res) => {
 /**Get orders with filter */
 router.post("/order/filter", async (req, res) => {
   const { restaurant, from, to, status } = req.body;
+  console.log(from, to);
   const orders = await Order.find({
     restaurant: new ObjectId(restaurant),
     order_at: {
@@ -68,11 +69,18 @@ router.post("/order/filter", async (req, res) => {
 /**Get all orders */
 router.post('/order/all', async (req, res) => {
   const {restaurant} = req.body;
+  const day = new Date().getDate();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
+  console.log(day, month, year);
   try {
     const orders = await Order.aggregate([
       {
         $match: {
           restaurant: new ObjectId(restaurant),
+          order_at: {
+            $gte: new Date(+year, +month, +day),
+          }
         }
       },
       {
