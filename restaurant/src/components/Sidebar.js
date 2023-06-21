@@ -74,7 +74,7 @@ const Sidebar = () => {
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Đơn hàng" />
+            <ListItemText primary="Hoá đơn" />
           </ListItemButton>
 
           <ListItemButton
