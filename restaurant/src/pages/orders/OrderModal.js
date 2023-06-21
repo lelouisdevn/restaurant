@@ -23,13 +23,15 @@ const OrderModal = (props) => {
     const [rest, setRest] = useState("");
 
     const bankAccount = {
-        "first": "00020101021238580010A000000727012800069704070114190392627080170208QRIBFTTA5204601153037045405",
+        "first": "00020101021238580010A000000727012800069704070114190392627080170208QRIBFTTA520460115303704540",
+        "n_char": String(order.total).length,
         "money": order.total,
         "second": "5802VN5903TCB6005Hanoi62090805",
-        "content": "biled",
+        "content": "ttoan",
         "third": "6304c7c3"
     };
-    var qrcode = bankAccount.first + bankAccount.money + bankAccount.second + bankAccount.content + bankAccount.third;
+    var qrcode =  bankAccount.first + bankAccount.n_char + bankAccount.money 
+                + bankAccount.second + bankAccount.content + bankAccount.third;
     var qrcode = qrcode.toString();
     console.log(qrcode);
     
