@@ -68,7 +68,8 @@ router.post("/order/filter", async (req, res) => {
 
 /**Get all orders */
 router.post('/order/all', async (req, res) => {
-  const {restaurant} = req.body;
+  const {restaurant, criteria} = req.body;
+  const methods = ["dathanhtoan", "dadat", "dahuy", "tatca"];
   const day = new Date().getDate();
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
@@ -80,7 +81,8 @@ router.post('/order/all', async (req, res) => {
           restaurant: new ObjectId(restaurant),
           order_at: {
             $gte: new Date(+year, +month, +day),
-          }
+          },
+          status: methods[criteria],
         }
       },
       {

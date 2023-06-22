@@ -6,7 +6,7 @@ import axios from 'axios';
 const OrderFilter = (props) => {
     const HOST = 'http://localhost:4000/api';
     const style = {
-        height: "50%",
+        height: "fit-content",
         width: "30%",
         position: "absolute"
     }
@@ -68,12 +68,12 @@ const OrderFilter = (props) => {
                             </select>
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         item 3
                     </div>
                     <div>
                         item 4
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="order-modal-footer">
