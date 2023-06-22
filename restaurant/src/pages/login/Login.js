@@ -93,7 +93,7 @@ const Login = () => {
                   JSON.stringify(tempInfoRestaurant)
                 );
               });
-            navigate("/manage/user");
+            navigate("/manage/orders");
           }
         });
     } catch (error) {
