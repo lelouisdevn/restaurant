@@ -79,7 +79,7 @@ const Navbar = () => {
   const json1 = localStorage.getItem("infoStaff");
   const valuejson1 = JSON.parse(json1);
   const [infoStaff, setInfoStaff] = useState(valuejson1);
-  console.log(infoStaff)
+  //console.log(infoStaff)
   return (
     <AppBar position="sticky">
       <StyledToolbar>

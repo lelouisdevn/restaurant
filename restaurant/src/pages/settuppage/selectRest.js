@@ -41,12 +41,12 @@ const SelectRest = () => {
             });
 
     }
-    const handleRestClick = async(row) =>{
-        localStorage.setItem("RestaurantID",row.info._id);
+    const handleRestClick = async(info) =>{
+        localStorage.setItem("RestaurantID",info._id);
         localStorage.setItem(
             "infoRestaurant",
-            JSON.stringify(row.info)
-          );    
+            JSON.stringify(info)
+          );   
         navigate("/manage/home");
         
     }
@@ -67,7 +67,7 @@ const SelectRest = () => {
                     <div className='main-content'>
                         {
                     isLoading? null : rest.map((row)=>(
-                        <div><button onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</button></div>
+                        <div><button onClick={(e)=>handleRestClick(row.info)} type="button">{row.info.rest_name}</button></div>
                         // <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
                             ))
                         }
