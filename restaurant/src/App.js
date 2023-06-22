@@ -1,5 +1,6 @@
 
 import './App.css';
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
@@ -26,15 +27,27 @@ import LayoutStaff from './components/LayoutStaff';
 import LoadingT from './pages/outline/Loading'
 import LayoutOutline from './pages/outline/LayoutOutline';
 import OutLine from './pages/outline/OutLine'
+import LayoutChef from './pages/chef/LayoutChef';
 import SettingMap from "./pages/lobby/SettingMap";
 import OrderList from './pages/orders/manage/OrderList';
 import SetUpPage from './pages/settuppage/setUpPage';
 import SelectRest from './pages/settuppage/selectRest';
 import CreateRest from './pages/settuppage/CreateRest';
+import ProtectedManage from './components/protectedManage'
+import ProtectedRestSelect from './components/protectedRestSelect';
 import Rest from './pages/login/Rest';
+import { useNavigate } from "react-router-dom";
 import ManageOrderList from './pages/orders/manage/ManageOrderList';
 
 function App() {
+
+  const json = localStorage.getItem("infoRestaurant");
+  const valuejson = JSON.parse(json);
+  const [infoRestaurant, setInfoRestaurant] = useState(valuejson);
+  
+  const json1 = localStorage.getItem("infoStaff");
+  const valuejson1 = JSON.parse(json1);
+  const [infoStaff, setInfoStaff] = useState(valuejson1);
   return (
     <div>
       <BrowserRouter>
@@ -43,17 +56,26 @@ function App() {
 
           <Route path="/login" element={<Login />}></Route>
 
-          <Route path='/setting-up/*' element={<SetUpPage />} >
-            <Route path='select' element={<SelectRest />} />
+          <Route path='/setting-up/*' element={
+            <ProtectedManage
+              redirectPath="/login"
+              isAllowed={
+                infoStaff
+              } > <SetUpPage />
+            </ProtectedManage>
+          }>
+            <Route index path='select' element={<SelectRest />} />
             <Route path='restaurant/new' element={<CreateRest />} />
           </Route>
-
           
-          <Route path="/login/*" element={<Login />}>
-          </Route>
-          <Route path="rest" element={<Rest/>}/>
-          <Route path="/manage/*" element={<Layout />}>
-            
+          <Route path="/manage/*" element={
+            <ProtectedManage
+              redirectPath="/login"
+              isAllowed={
+                infoStaff
+              } > <Layout />
+            </ProtectedManage>
+          } >
             <Route path="home">
               <Route index element={<Home />} />
             </Route>
@@ -79,11 +101,21 @@ function App() {
               <Route path="new" element={<CategoryForm />} />
             </Route>
             <Route path="user" element={<User />}>
-              <Route index element={<UserList />}/>
+              <Route index element={<UserList />} />
               <Route path=":idUser" element={<UserDetail />} />
               <Route path="add" element={<UserAdd />}></Route>
             </Route>
-            <Route path="info">
+            <Route path="chef" element={<LayoutChef />}>
+
+            </Route>
+            <Route path="info" element={
+            <ProtectedManage
+              redirectPath="/login"
+              isAllowed={
+                infoStaff
+              } > <Info />
+            </ProtectedManage>
+          }>
               <Route index element={<Info />} />
               <Route path="edit/:id" element={<InfoEdit />}></Route>
             </Route>
@@ -92,8 +124,8 @@ function App() {
           <Route path="/staff/*" element={<NavbarStaff />}>
             {/* <Route path="orders" element={<LoadingT />} /> */}
             {/* <Route path="orders" element={<Orders />} />  */}
-            <Route path="order/table/:id/:name" element={<Orders />} /> 
-            <Route path='orders/all' element={<OrderList />} /> 
+            <Route path="order/table/:id/:name" element={<Orders />} />
+            <Route path='orders/all' element={<OrderList />} />
             <Route path="outline" element={<LayoutOutline />}>
               <Route path="" element={<LoadingT />}></Route>
               {/* <Route
@@ -102,6 +134,7 @@ function App() {
               /> */}
             </Route>
           </Route>
+          
         </Routes>
       </BrowserRouter>
     </div>

@@ -12,6 +12,7 @@ import FlatwareIcon from "@mui/icons-material/Flatware";
 import InboxIcon from "@mui/icons-material/Inbox";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import OutdoorGrillIcon from '@mui/icons-material/OutdoorGrill';
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 
@@ -97,8 +98,17 @@ const Sidebar = () => {
             <ListItemText primary="Nhân viên" />
           </ListItemButton>
           <ListItemButton
-            selected={selectedIndex === 6}
-            onClick={(event) => handleListItemClick(event, 6, "/manage/info")}
+            selected={selectedIndex === 7}
+            onClick={(event) => handleListItemClick(event, 7, "/manage/chef")}
+          >
+            <ListItemIcon>
+              <OutdoorGrillIcon />
+            </ListItemIcon>
+            <ListItemText primary="Bếp" />
+          </ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 8}
+            onClick={(event) => handleListItemClick(event, 8, "/manage/info")}
           >
             <ListItemIcon>
               <FoodBankIcon />

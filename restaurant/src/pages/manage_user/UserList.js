@@ -40,12 +40,15 @@ function UserList() {
     function rolechar(i){
         const qly = "Quản Lý";
         const order = "Order";
-        const tng = "Bếp";
+        const b = "Bếp"
+        const tng = "Thu Ngân";
         if (i == "1") {
             return qly;
         } else if(i == "2") {
             return order;
-        }else{
+        }else if(i == "3"){
+            return b;
+        }else {
             return tng;
         }
     }

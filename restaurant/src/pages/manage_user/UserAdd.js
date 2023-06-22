@@ -116,6 +116,7 @@ function UserAdd(){
                             <select  onClick={handleSelect}>
                                 <option value="2">Nhân viên phục vụ</option>
                                 <option value="3">Bếp</option>
+                                <option value="4">Thu Ngân</option>
                             </select>
                         </td>
                     </tr>

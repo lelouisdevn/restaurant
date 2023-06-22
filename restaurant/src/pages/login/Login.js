@@ -17,22 +17,23 @@ const Login = () => {
   const [PorT, setPorT] = useState(true);
   // const [UserID, setUserID] = useState([]);
   // const [RestaurantID, setRestaurantID] = useState([]);
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
+      
       await axios
         .post("http://localhost:4000/api/login", {
           username: username,
           password: password
         })
         .then(async (res) => {
-
+          
           let tempInfoRestaurant;
           localStorage.setItem("UserID", res?.data.login[0]._id);
-
-          
+          console.log(res?.data.login[0]);
 
           if (res?.data.login[0].role === "1") {
             const tempInfoStaff = res?.data.login[0];
@@ -55,6 +56,44 @@ const Login = () => {
                 );
               });
             navigate("/staff/outline");
+          } else if(res?.data.login[0].role === "3"){
+            const tempInfoStaff = res?.data.login[0];
+            //console.log(tempInfoStaff);
+            localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+
+            await axios
+              .get(
+                `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
+              )
+              .then((res) => {
+                const tempInfoRestaurant = res?.data.infores;
+                localStorage.setItem("RestaurantID",tempInfoRestaurant._id)
+                console.log(tempInfoRestaurant);
+                localStorage.setItem(
+                  "infoRestaurant",
+                  JSON.stringify(tempInfoRestaurant)
+                );
+              });
+            navigate("/manage/chef");
+          }else if(res?.data.login[0].role === "4"){
+            const tempInfoStaff = res?.data.login[0];
+            //console.log(tempInfoStaff);
+            localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
+
+            await axios
+              .get(
+                `http://localhost:4000/api/restaurant/byuser=${tempInfoStaff._id}`
+              )
+              .then((res) => {
+                const tempInfoRestaurant = res?.data.infores;
+                localStorage.setItem("RestaurantID",tempInfoRestaurant._id)
+                console.log(tempInfoRestaurant);
+                localStorage.setItem(
+                  "infoRestaurant",
+                  JSON.stringify(tempInfoRestaurant)
+                );
+              });
+            navigate("/manage/orders");
           }
         });
     } catch (error) {
