@@ -54,8 +54,8 @@ function UserList() {
     }
     return (
         <table className='table-auto bg-indigo-900 rounded p-5 m-5'>
-            <tbody>
-                <tr className="flex flex-wrap ">
+            <tbody className="">
+                <tr className="flex flex-wrap">
                     {(users).map((row,index) => (
                         <td key={index}>
                             <Link to={`${row.user._id}`}>
