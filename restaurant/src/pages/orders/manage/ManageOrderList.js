@@ -18,6 +18,7 @@ const ManageOrderList = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredOrder, setFilteredOrder] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState("");
+    const [empty, setEmptySearch] = useState("");
     const toolbar = {
         "sort": true,
         "search": true,
@@ -35,11 +36,13 @@ const ManageOrderList = () => {
         noti: "Đã có lỗi xãy ra, hãy thử lại sau",
         icon: "faClose",
     }
+    const [criteria, setCriteria] = useState(1);
     const getOrderList = async () => {
         const URL = `${HOST}/order/all/`;
         const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
         const res = await axios.post(URL, {
             restaurant: restaurant._id,
+            criteria: criteria,
         });
         if (res.status === 200) {
             const fetchedData = res?.data.orders;
@@ -48,15 +51,37 @@ const ManageOrderList = () => {
             setFilteredOrder(fetchedData);
         }
     }
+    useEffect(() => {
+        getOrderList();
+    }, [criteria]);
     //when page is loaded -> get all orders;
     useEffect(() => {
         getOrderList();
+        setEmptySearch("Đang tải dữ liệu từ server....")
     }, []);
 
-    
 
-    const getSearchQuery = () => {};
-    const [criteria, setCriteria] = useState(3);
+
+    const getSearchQuery = (query) => {
+        setSearchQuery(query.toString());
+        console.log(query);
+    };
+    useEffect(() => {
+        if (searchQuery === "") {
+            getOrderList();
+        }
+        const filterBySearch = filteredOrder.filter((order) => {
+            let name = String(order._id);
+            let mquery = String(searchQuery);
+            if (name.includes(mquery)) {
+                return order;
+            }
+        })
+        setFilteredOrder(filterBySearch);
+        if (filterBySearch.length === 0) {
+            setEmptySearch(`Không tìm thấy hóa đơn với mã số "${searchQuery}"`);
+        }
+    }, [searchQuery]);
     const status = {
         "0": 'Hóa đơn đã thanh toán',
         '1': "Hóa đơn chưa thanh toán",
@@ -83,6 +108,9 @@ const ManageOrderList = () => {
         setSuccessClass("");
     }
     const updateOrderList = (list) => {
+        // if (filteredOrder.length != 0) {
+        //     setFilteredOrder([]);
+        // }
         setFilteredOrder(list);
     }
 
@@ -90,6 +118,7 @@ const ManageOrderList = () => {
     const refreshPage = () => {
         setRefresh("refresh");
         setFilteredOrder([]);
+        setEmptySearch("Đang tải dữ liệu từ server....")
         setTimeout(() => {
             getOrderList();
             setRefresh("");
@@ -97,7 +126,7 @@ const ManageOrderList = () => {
     }
     const [detailModal, setDetailModal] = useState(false);
     const seeDetails = (order) => {
-        let new_order = {Order: order._id};
+        let new_order = { Order: order._id };
         console.log(new_order)
         setSelectedOrder(new_order);
         console.log(order);
@@ -135,7 +164,7 @@ const ManageOrderList = () => {
         if (response.status === 200) {
             fetchedInfo = response?.data.details;
         }
-        
+
         fetchedInfo.forEach(element => {
             if (orderStatus.includes(element.status.trim())) {
                 return cancel = true;
@@ -143,7 +172,7 @@ const ManageOrderList = () => {
         });
         if (order && !cancel) {
             confirmCancelOrder();
-        }else {
+        } else {
             setMessage(errorOnCancel);
             setSuccess(true);
             setSuccessClass("opacity-success");
@@ -161,7 +190,7 @@ const ManageOrderList = () => {
                 setMessage(successNoti);
                 setFilteredOrder([]);
                 getOrderList();
-            }else {
+            } else {
                 setMessage(errorOccurred);
             }
             setTimeout(() => {
@@ -170,96 +199,105 @@ const ManageOrderList = () => {
             }, 3000);
         }
     }
-    return(
-    <>
-    {
-        success &&
-        <Success 
-            message={message} 
-            style={style} 
-            functioner={proceedCancelling}
-            setSuccess={setSuccess}
-            setSuccessClass={setSuccessClass}
-        />
-    }
-    {
-        detailModal &&
-        <OrderModal 
-            order={selectedOrder} 
-            style={style}
-            functioner={closeModal}
-        />
-    }
-    {
-        filter &&
-        <OrderFilter closeModal={closeModal} updateOrderList = {updateOrderList} />
-    }
-        <div className={`detail-container ${successClass}`}>
-            <div className="fixed-header">
-                <div className="title">
-                    <Link to={'/manage/orders'}>
-                        <h2>Quản lý hóa đơn</h2>
-                    </Link>
-                </div>
-                <Toolbar 
-                    toolbar = {toolbar}
-                    functioner = {getSearchQuery}
-                    toggleFilter = {toggleFilter}
+    return (
+        <>
+            {
+                success &&
+                <Success
+                    message={message}
+                    style={style}
+                    functioner={proceedCancelling}
+                    setSuccess={setSuccess}
+                    setSuccessClass={setSuccessClass}
                 />
-            </div>
-            <div className="content">
-                <div className="header-product n_right_content" style={{width: "100%"}}>
-                    <div className="left-menu">
-                        <FontAwesomeIcon icon={faList} />
-                        <span> Hóa đơn</span>
-                        <span>/{status[criteria]}</span>
+            }
+            {
+                detailModal &&
+                <OrderModal
+                    order={selectedOrder}
+                    style={style}
+                    functioner={closeModal}
+                />
+            }
+            {
+                filter &&
+                <OrderFilter closeModal={closeModal} updateOrderList={updateOrderList} />
+            }
+            <div className={`detail-container ${successClass}`}>
+                <div className="fixed-header">
+                    <div className="title">
+                        <Link to={'/manage/orders'}>
+                            <h2>Quản lý hóa đơn</h2>
+                        </Link>
                     </div>
-                    <div className="right-menu">
-                    <span onClick={refreshPage}>
-                        <FontAwesomeIcon icon={faRefresh} className={refresh} />
-                    </span>
-                    <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
-                        <option value="0">
-                        Hóa đơn đã thanh toán
-                        </option>
-                        <option value="1">
-                            Hóa đơn chưa thanh toán
-                        </option>
-                        <option value="2">
-                        Hóa đơn đã hủy</option>
-                        <option value="3">Tất cả hóa đơn</option>
-                    </select>
+                    <Toolbar
+                        toolbar={toolbar}
+                        functioner={getSearchQuery}
+                        toggleFilter={toggleFilter}
+                    />
+                </div>
+                <div className="content">
+                    <div className="header-product n_right_content" style={{ width: "100%" }}>
+                        <div className="left-menu">
+                            <FontAwesomeIcon icon={faList} />
+                            <span> Hóa đơn</span>
+                            <span>/{status[criteria]}</span>
+                            {
+                                filteredOrder.length !== 0 &&
+                                <span> ({filteredOrder.length})</span>
+                            }
+                        </div>
+                        <div className="right-menu">
+                            <span onClick={refreshPage}>
+                                <FontAwesomeIcon icon={faRefresh} className={refresh} />
+                            </span>
+                            <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
+                                <option value="0">
+                                    Hóa đơn đã thanh toán
+                                </option>
+                                <option value="1">
+                                    Hóa đơn chưa thanh toán
+                                </option>
+                                <option value="2">
+                                    Hóa đơn đã hủy</option>
+                                <option value="3">Tất cả hóa đơn</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="products">
+                        {/* <div className='product-number'>
+            {
+              filteredOrder.length != 0 && <div>Tìm thấy <span style={{fontWeight: "bold"}}>{filteredOrder.length}</span> hoá đơn</div>
+            }
+          </div> */}
+                        <table style={{ width: "100%" }}>
+                            <tr style={{ background: "aliceblue", fontWeight: "bold" }}>
+                                <td>STT</td>
+                                <td>Mã hóa đơn</td>
+                                <td>Bàn</td>
+                                <td>Giờ đặt</td>
+                                <td>Số tiền</td>
+                                <td>Trạng thái</td>
+                                <td>Thao tác</td>
+                            </tr>
+                            {
+                                filteredOrder.length > 0 && filteredOrder.map((order, index) => (
+                                    <OrderGrid
+                                        order={order}
+                                        key={order._id}
+                                        stt={index + 1}
+                                        seeDetails={seeDetails}
+                                        cancelOrder={cancelOrder}
+                                    />
+                                ))
+                                // : <Loading message="Đang tải dữ liệu từ server...." />
+                            }
+                        </table>
+                        {filteredOrder.length === 0 && <Loading message={empty} />}
                     </div>
                 </div>
-                <div className="products">
-                    <table style={{width: "100%"}}>
-                        <tr style={{background: "aliceblue", fontWeight: "bold"}}>
-                            <td>STT</td>
-                            <td>Mã hóa đơn</td>
-                            <td>Mã bàn</td>
-                            <td>Giờ đặt</td>
-                            <td>Số tiền</td>
-                            <td>Trạng thái</td>
-                            <td>Xem thêm</td>
-                        </tr>
-                    {
-                        filteredOrder.length > 0 && filteredOrder.map((order, index) => (
-                            <OrderGrid 
-                                order={order} 
-                                key={index} 
-                                stt={index+1} 
-                                seeDetails={seeDetails}
-                                cancelOrder={cancelOrder}
-                            />
-                        )) 
-                        // : <Loading message="Đang tải dữ liệu từ server...." />
-                    }
-                    </table>
-                    {filteredOrder.length === 0 && <Loading message="Đang tải dữ liệu từ server...." /> }
-                </div>
             </div>
-        </div>
-    </>
+        </>
     )
 }
 export default ManageOrderList;
