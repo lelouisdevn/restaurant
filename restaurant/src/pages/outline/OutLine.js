@@ -51,7 +51,7 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [openIF, setOpenIF] = useState(false);
   const [updateTotal, setupdateTotal] = useState(0);
   const [updateNote, setUpdateNote] = useState(null);
-  
+
   const json = localStorage.getItem("infoStaff");
   const valuejson = JSON.parse(json);
   const [infoStaff, setInfoStaff] = useState(valuejson);
@@ -123,6 +123,25 @@ const OutLine = ({ id, arrange, numRow }) => {
     getTotal(products);
   }, [products]);
 
+  useEffect(() => {
+    if (updateTotal !== 0) {
+      detailOrder.tabledetail[0].order["total"] = updateTotal; 
+      (async () => {
+        await axios
+          .put(
+            `http://localhost:4000/api/order/update/${detailOrder.listpro[0].Order}`,
+            {
+              total: updateTotal,
+            }
+          )
+          .then((res) => {
+            const temp = res?.data;
+          });
+      })(); 
+    }
+
+  }, [updateTotal])
+  
   const getTotal = (productsData) => {
     let tempt = 0;
     // console.log("trang htai: ", productsData);
@@ -133,6 +152,7 @@ const OutLine = ({ id, arrange, numRow }) => {
         tempt = tempt + productPrice;
       }
     }
+    console.log("getTotal: ", tempt);
     setupdateTotal(tempt);
   };
 
@@ -192,17 +212,46 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [cancel, setCancel] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState("");
   const handleCancelOrder = async () => {
-    const url = `${HOST}/order/${detailOrder.listpro[0].Order}/details/cancel`;
+    const url = `${HOST}/order/${detailOrder.listpro[0].Order}/details`;
     const response = await axios.get(url)
+    var data = [];
     if (response.status === 200) {
-      // setCancel(response.data.details);
-      if (response?.data.details.length === 0) {
+      if (response?.data.details.length != 0) {
+        data = response?.data.details;
+        console.log(data);
+      }
+    }
+    if (data.length !== 0) {
+      let removeCancelItems = data.filter((item) => item.status !== 'xoa');
+      let status = false;
+      let orderStatus = ['chebien', 'xuatmon', 'hetmon', 'phucvu'];
+      removeCancelItems.forEach((item, i) => {
+        if (orderStatus.includes(item.status.trim())){
+          return status = true;
+        }
+      });
+      if (status === true) {
+          let message = {
+            noti: "Bạn không thể hủy đơn hàng này do đơn hàng đã được xử lý",
+            icon: "faClose",
+          }
+          showModal(message);
+      }else {
         confirmDeleteOrder();
       }
+      // if (removeCancelItems.length === orderedItems.length) {
+      //   confirmDeleteOrder();
+      // }else {
+      //   let message = {
+      //     noti: "Bạn không thể hủy đơn hàng này do đơn hàng đã được xử lý",
+      //     icon: "faClose",
+      //   }
+      //   showModal(message);
+      // }
     }
   }
   // Show a popup banner of confirmation for cancelling order;
-  
+
   const confirmDeleteOrder = () => {
     setSuccess(true);
     setSuccessClass("opacity-success");
@@ -244,7 +293,7 @@ const OutLine = ({ id, arrange, numRow }) => {
     setOpenE(false);
     setOpenIF(false);
 
-    //Cập nhật ghi chú 
+    //Cập nhật ghi chú
     if (updateNote !== null) {
       detailOrder.tabledetail[0].order["note"] = updateNote;
       setDetailOrder(detailOrder);
@@ -263,13 +312,14 @@ const OutLine = ({ id, arrange, numRow }) => {
     }).then((res) => {
       console.log("ok update product");
     });
-   
+
   };
 
   // Pay order;
   const payOrder = () => { };
 
   // Cancel the dish
+
   const [itemDish, setItemDish] = useState();
   const [open, setOpen] = useState(false);
   const [openE, setOpenE] = useState(false);
@@ -285,14 +335,29 @@ const OutLine = ({ id, arrange, numRow }) => {
     item["status"] = "xoa";
     products[index] = item;
     setProducts(products);
-    getTotal(products);
+    getTotal(products); 
     await axios
-      .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
-      .then((res) => {
-        const temp = res?.data;
-        setOpen(false);
-      });
+    .put(`http://localhost:4000/api/orderdetail/update=${item._id}/cancel`)
+    .then((res) => {
+      const temp = res?.data;
+      setOpen(false);
+    });
   }
+  const handleSeclect = async( props) => {
+    const index = products.indexOf(props.item);
+    props.item["status"] = props.statusO;
+    products[index] = props.item;
+    setProducts(products);
+     getTotal(products);
+     await axios
+       .put(
+         `http://localhost:4000/api/orderdetail/update=${props.item._id}/undo`
+       )
+       .then((res) => {
+         const temp = res?.data;
+       });
+}
+
     /** TEMPORARILY DISCONTINUED;
      * Discard any changes made previously;
      */
@@ -303,8 +368,7 @@ const OutLine = ({ id, arrange, numRow }) => {
     //     icon: "faCheckCircle"
     //   };
     //   showModal(message);
-    // };
-
+  // };
     const style = {
       width: "100%",
       height: "100%",
@@ -313,7 +377,7 @@ const OutLine = ({ id, arrange, numRow }) => {
       left: 0,
       top: 0,
   };
-  
+
     return (
       <>
         {
@@ -687,6 +751,7 @@ const OutLine = ({ id, arrange, numRow }) => {
                             updateQty={updateQty}
                             infoStaff={infoStaff}
                             handleCancel={handleCancel}
+                            handleSeclect={handleSeclect}
                           />
                         ))}
                       <tr>
@@ -748,15 +813,15 @@ const OutLine = ({ id, arrange, numRow }) => {
                         <button className="updateButton" onClick={() => setOpenE(true)}>
                           Cập nhật yêu cầu
                         </button>
-                     
-                        <button className="updateButton" onClick={() => {
+
+                        {/* <button className="updateButton" onClick={() => {
                           setSelectedOrderId(detailOrder.listpro[0].Order)
                           // setCriteria(1)
                           showPaymentModal()
                         }
                         }>
                           Thanh toán
-                        </button>
+                        </button> */}
                         <button onClick={handleCancelOrder}>Hủy đơn</button>
                       </div>
                     </div>
@@ -766,7 +831,7 @@ const OutLine = ({ id, arrange, numRow }) => {
               ) : null}
                 </Box>
                 </Box>
-      
+
        )}
 
           {/* Modal xóa theo từng sản phẩm */}
@@ -818,7 +883,7 @@ const OutLine = ({ id, arrange, numRow }) => {
               </Box>
             </Box>
           </StyledModal>
-        
+
         </>
       </>
     );

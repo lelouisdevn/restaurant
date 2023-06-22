@@ -7,6 +7,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import StoreIcon from "@mui/icons-material/Store";
+import ListIcon from "@mui/icons-material/List";
 import FlatwareIcon from "@mui/icons-material/Flatware";
 import InboxIcon from "@mui/icons-material/Inbox";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
@@ -67,7 +68,19 @@ const Sidebar = () => {
 
           <ListItemButton
             selected={selectedIndex === 3}
-            onClick={(event) => handleListItemClick(event, 3, "/manage/lobby")}
+            onClick={(event) =>
+              handleListItemClick(event, 3, "/manage/orders")
+            }
+          >
+            <ListItemIcon>
+              <ListIcon />
+            </ListItemIcon>
+            <ListItemText primary="Hoá đơn" />
+          </ListItemButton>
+
+          <ListItemButton
+            selected={selectedIndex === 4}
+            onClick={(event) => handleListItemClick(event, 4, "/manage/lobby")}
           >
             <ListItemIcon>
               <StoreIcon />

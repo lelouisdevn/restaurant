@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react'
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faHome } from "@fortawesome/free-solid-svg-icons";
 import ProductImage from './ProductImage';
 import Toolbar from './Toolbar';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
@@ -14,9 +14,10 @@ import Success from './Success';
 const ProductDetail = () => {
   const { id } = useParams();
   console.log(id)
-  const [url, setUrl] = useState({
+  const toolbar = {
     "add": "/manage/product/new",
-  })
+    "cate": true,
+  }
 
   /**
    * Get a product with provided id;
@@ -183,7 +184,9 @@ const ProductDetail = () => {
                   <h2>Quản lý sản phẩm</h2>
                 </Link>
               </div>
-              <Toolbar url={url} />
+              <Toolbar
+                toolbar = {toolbar}
+              />
             </div>
             <div className="content">
               <div className="header-product n_right_content" style={{ width: "100%" }}>
@@ -198,16 +201,17 @@ const ProductDetail = () => {
               </div>
               <div className="product-content">
                 <div className="n_left">
-                  <div>
+                  <div style={{position: "relative", width: 'fit-content'}}>
                     <ProductImage img={product.prod_img} />
-                  </div>
-                  <div>
+                    {/* <div> */}
                     <button
+                      style={{position: "absolute", top: "0", right: "0", fontSize: "16px"}}
                       className='updateButton'
                       onClick={() => setStatus(!isDisplay)}
                     >
-                      Toàn màn hình
+                      <FontAwesomeIcon icon={faExpand} />
                     </button>
+                  {/* </div> */}
                   </div>
                 </div>
                 <div className="n_right">

@@ -8,7 +8,11 @@ import VND from "../../components/currency";
 
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
+import QRCode from "react-qr-code";
+import { ReactDOM } from "react";
+import React from "react";
 const OrderModal = (props) => {
+    const HOST = "http://localhost:4000/api";
     const [orderId, setOrderId] = useState(props.order.Order);
     const [order, setOrder] = useState("");
     const [user, setUser] = useState("");
@@ -18,6 +22,19 @@ const OrderModal = (props) => {
     const [documentTitle, setDocumentTitle] = useState("");
     const [rest, setRest] = useState("");
 
+    const bankAccount = {
+        "first": "00020101021238580010A000000727012800069704070114190392627080170208QRIBFTTA520460115303704540",
+        "n_char": String(order.total).length,
+        "money": order.total,
+        "second": "5802VN5903TCB6005Hanoi62090805",
+        "content": "ttoan",
+        "third": "6304c7c3"
+    };
+    var qrcode =  bankAccount.first + bankAccount.n_char + bankAccount.money 
+                + bankAccount.second + bankAccount.content + bankAccount.third;
+    var qrcode = qrcode.toString();
+    console.log(qrcode);
+    
      const json = localStorage.getItem("infoRestaurant");
      const valuejson = JSON.parse(json);
     console.log(valuejson);
@@ -31,7 +48,7 @@ const OrderModal = (props) => {
     const [billExportStatus, setBillExportStatus] = useState(true);
     const getRestInfo = async () => {
         const id = localStorage.getItem("RestaurantID");
-        const url = `http://localhost:4000/api/info/id=${infoStaff._id}`;
+        const url = `${HOST}/info/id=${infoStaff._id}`;
         await axios
             .get(url)
             .then((res) => {
@@ -40,20 +57,25 @@ const OrderModal = (props) => {
             })
     }
     const getDetails = async () => {
-        const url = `http://localhost:4000/api/order/${orderId}/details`;
-        try {
-            await axios
-                .get(url)
-                .then((res) => {
-                    console.log(res?.data.details);
-                    setOrderDetails(res?.data.details);
-                })
-        } catch (error) {
-            console.log(error);
+        const url = `${HOST}/order/${orderId}/details`;
+        const res = await axios.get(url)
+                // .then((res) => {
+                //     console.log(res?.data.details);
+                //     setOrderDetails(res?.data.details);
+                // })
+        var data = [];
+        if (res.status === 200) {
+          data = res.data.details;
+          console.log(data);
         }
+        if (data.length != 0) {
+            data = data.filter((item) => item.status != "xoa");
+        }
+        console.log(data);
+        setOrderDetails(data);
     }
     const getTables = async () => {
-        const url = `http://localhost:4000/api/order/${orderId}/tables`;
+        const url = `${HOST}/order/${orderId}/tables`;
         await axios
             .get(url)
             .then((res) => {
@@ -61,7 +83,7 @@ const OrderModal = (props) => {
             })
     }
     const getOrderInfo = async () => {
-        const url = `http://localhost:4000/api/order/${orderId}`;
+        const url = `${HOST}/order/${orderId}`;
         await axios
             .get(url)
             .then((res) => {
@@ -130,7 +152,7 @@ const OrderModal = (props) => {
                                     </td>
                                 </tr>
                                 <tr><td>Mã hóa đơn:</td><td>{order._id}</td></tr>
-                                <tr><td>Đặt lúc:</td><td>{order.order_at}</td></tr>
+                                <tr><td>Đặt lúc:</td><td>{new Date(order.order_at).toLocaleString("vi-VN", {hour12: false})}</td></tr>
                                 <tr><td>Thanh toán lúc:</td><td>{new Date().toLocaleString("vi-VN", { hour12: false })}</td></tr>
                                 <tr>
                                     <td>Bàn:</td>
@@ -160,10 +182,18 @@ const OrderModal = (props) => {
                                 ))}
                                 <tr>
                                     <td colSpan={4}>Tổng:</td>
-                                    <td>{VND.format(order.total)}</td>
+                                    <td
+                                        style={{fontWeight: "bold"}}
+                                    >{VND.format(order.total)}</td>
                                 </tr>
                             </table>
+                            {/* <center> */}
+                            <div>
+                                <QRCode style={{width: "150px", margin: "0 auto"}} value={qrcode} />
+                            </div>
+                            {/* </center> */}
                         </div>
+
                         <div style={{ fontSize: "16px" }}>
                             <div>
                                 Tiền khách đưa:
@@ -177,7 +207,7 @@ const OrderModal = (props) => {
                         </div>
                     </div>
                     <div className="order-modal-footer">
-                        <button disabled={billExportStatus} onClick={() => handlePay()}>Thanh toán hoá đơn</button>
+                        {/* <button disabled={billExportStatus} onClick={() => handlePay()}>Thanh toán hoá đơn</button> */}
                         <button
                             onClick={() => {
                                 generateBillPDF()

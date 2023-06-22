@@ -18,9 +18,9 @@ function ProductForm() {
     const [Category, setCate] = useState("");   // store selected category;
     const [categories, setCategory] = useState(""); // store categories fetched from servers;
 
-    const [url, setUrl] = useState({
+    const toolbar = {
         "add": "/manage/product/new",
-      })
+    }
 
     const [success, setSuccess] = useState(false);
     const [successClass, setSuccessClass] = useState("");
@@ -121,7 +121,7 @@ function ProductForm() {
             <div className='title'>
                 <h2>Quản lý sản phẩm</h2>
             </div>
-            <Toolbar url={url} />
+            <Toolbar toolbar={toolbar} />
             </div>
             <div className='content'>
                 <div className="header-product n_right_content" style={{width: "100%"}}>

@@ -85,8 +85,17 @@
 }
 
 .footer {
-    margin: 7px;
     cursor: pointer;
+}
+.footer div {
+    width: fit-content;
+    padding: 3px 7px;
+    margin: 0 auto;
+}
+.footer div:hover {
+    background: rgb(225, 225, 225);
+    border-radius: 10px;
+    transition: 400ms;
 }
 
 .left-navigate {

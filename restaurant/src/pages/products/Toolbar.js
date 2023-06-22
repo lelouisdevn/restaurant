@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
-import { faArrowAltCircleUp, faArrowUp, faListDots, faPlus, faSortAlphaDesc } from "@fortawesome/free-solid-svg-icons";
+import { faArrowAltCircleUp, faArrowUp, faFilter, faListDots, faPlus, faSortAlphaDesc } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import { faSortAlphaAsc } from "@fortawesome/free-solid-svg-icons";
@@ -43,6 +43,9 @@ const Toolbar = (props) => {
       setShowClass("hd-menu");
     }
   }
+  const showFilterModal = () => {
+    props.toggleFilter();
+  }
 
   // get categories when page is loaded;
   const getCategories = async () => {
@@ -59,15 +62,19 @@ const Toolbar = (props) => {
   }, []);
   return (
     <div className="toolbar">
-      <Link to={props.url.add}>
+      {
+        props.toolbar.add && 
+        <Link to={props.toolbar.add}>
         <div>
           <FontAwesomeIcon icon={faPlus} />
           <span> Thêm</span>
         </div>
       </Link>
+      }
 
-      {/* dropdown menu */}
-      <div style={{ position: "relative" }} onClick={showDropdownMenu}>
+      {
+        props.toolbar.cate &&
+        <div style={{ position: "relative" }} onClick={showDropdownMenu}>
         <ul className='menu'>
           <li>
             <span style={{margin: "0"}}>
@@ -94,10 +101,16 @@ const Toolbar = (props) => {
           </li>
         </ul>
       </div>
-      {/* dropdown menu */}
+      }
+      {
+        props.toolbar.filter &&
+        <div onClick={showFilterModal}>
+          <FontAwesomeIcon icon={faFilter}  />
+          <> Bộ lọc</>
+        </div>
+      }
 
-      {/* Sort */}
-      { isSort &&
+      { props.toolbar.sort &&
       <div onClick={sort}>
         {
           props.sortType == 'sortaz' ?
@@ -112,10 +125,8 @@ const Toolbar = (props) => {
         }
       </div>
       }
-      {/* Sort */}
 
-      {/* Search */}
-      {isSearch &&
+      {props.toolbar.search &&
         <div className='search'>
           {input &&
             <input defaultValue="" type='search' placeholder='Search' autoFocus className='inputsearch' onChange={handleKeyDown} />
@@ -126,7 +137,7 @@ const Toolbar = (props) => {
           }
         </div>
       }
-      {/* Search */}
+
     </div>
   );
 }

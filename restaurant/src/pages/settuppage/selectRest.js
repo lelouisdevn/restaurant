@@ -41,16 +41,19 @@ const SelectRest = () => {
             });
 
     }
-    const handleRestClick = async(info) =>{
-        localStorage.setItem("RestaurantID",info._id);
+    const [isSelected,setisSelected] = useState(false);
+    const handleRestClick = async(row) =>{
+        localStorage.setItem("RestaurantID",row.info._id);
         localStorage.setItem(
             "infoRestaurant",
-            JSON.stringify(info)
-          );   
-        navigate("/manage/home");
-        
+            JSON.stringify(row.info)
+          );
+        setisSelected(true);
+        setTimeout(() => {
+            navigate("/manage/home");
+        }, 1500);
     }
-    const [isSelected,setisSelected] = useState(false);
+    
 
 
 
@@ -67,14 +70,16 @@ const SelectRest = () => {
                     <div className='main-content'>
                         {
                     isLoading? null : rest.map((row)=>(
-                        <div><button onClick={(e)=>handleRestClick(row.info)} type="button">{row.info.rest_name}</button></div>
+                        <div onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</div>
                         // <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
                             ))
                         }
                     </div>
                     <div className='footer' onClick={createRest}>
+                        <div>
                         <FontAwesomeIcon icon={faGear} />
                         <> Thêm nhà hàng khác</>
+                        </div>
                     </div>
                 </>
             }

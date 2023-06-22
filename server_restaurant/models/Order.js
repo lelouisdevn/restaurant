@@ -12,11 +12,11 @@ const OrderSchema = new Schema({
         required: true,
     },
     order_at: {
-        type: String,
+        type: Date,
         required: true,
     },
     bill_at: {
-        type: String,
+        type: Date,
     },
     user: {
         type: Schema.Types.ObjectId,

@@ -177,23 +177,25 @@
     border: solid 1px crimson;
     border-radius: 10px;
     padding: 5px 10px;
-    color: crimson;
-    background-color: rgb(237, 237, 237);
+    color: white;
+    /* background-color: rgb(237, 237, 237); */
+    background-color: crimson;
 }
 
 .content button:hover {
-    background-color: crimson;
+    background-color: rgb(201, 20, 56);
     color: white;
     transition: 200ms;
 }
 
 button.updateButton {
-    border: solid 1px grey;
-    color: black;
+    border: solid 1px #1976d2;
+    color: white;
+    background-color: #1976d2;
 }
 
 button.updateButton:hover {
-    background-color: #1976d2;
+    background-color: #0f579e;
     color: white;
     transition: 200ms;
     border: solid 1px #1976d2
@@ -254,6 +256,7 @@ button.updateButton:hover {
     transition: 500ms;
     position: absolute;
     z-index: 9;
+    left: 0;
 }
 
 .productimg {
@@ -312,7 +315,7 @@ button.updateButton:hover {
     text-align: left;
     margin: 0 10px;
     height: 40px;
-    width: 100px;
+    width: 300px;
     border: solid 1px grey;
     border-radius: 10px;
     color: black;
@@ -364,6 +367,8 @@ button.updateButton:hover {
 }
 .opacity-success {
     opacity: 0.1;
+    position: fixed;
+    width: calc(100% - 370px);
 }
 .btn-dlt {
     margin: 15px 0;

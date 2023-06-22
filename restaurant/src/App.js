@@ -37,6 +37,7 @@ import ProtectedManage from './components/protectedManage'
 import ProtectedRestSelect from './components/protectedRestSelect';
 import Rest from './pages/login/Rest';
 import { useNavigate } from "react-router-dom";
+import ManageOrderList from './pages/orders/manage/ManageOrderList';
 
 function App() {
 
@@ -76,7 +77,7 @@ function App() {
             </ProtectedManage>
           } >
             <Route path="home">
-              <Route element={<Home />} />
+              <Route index element={<Home />} />
             </Route>
             <Route path="lobby">
               <Route index element={<Lobby />} />
@@ -90,6 +91,9 @@ function App() {
               <Route path=":id" element={<ProductDetail />} />
               <Route path="new" element={<ProductForm />} />
               <Route path="all/category/:id" element={<ProductList />} />
+            </Route>
+            <Route path='orders'>
+              <Route index element={<ManageOrderList />} />
             </Route>
             <Route path="category">
               <Route index element={<Category />} />

@@ -7,7 +7,7 @@ function OrderDetail(props) {
   const [qty, setQty] = useState(props.item.qty);
   const [statusO, setStatusO] = useState(props.item.status);
   const [isShow, setisShow] = useState(false);
-  // console.log("item: ", props.item);
+  // console.log("item: ", statusO);
   // console.log("staff: ", props.infoStaff);
   /**
    * Increase product quantity by 1 unit;
@@ -34,6 +34,16 @@ function OrderDetail(props) {
       props.handleCancel({ isShow: !isShow, item: props.item });
    }
   };
+  const handleSelect = (e) => {
+    if (e.target.value === "hoantac") {
+      setStatusO(e.target.value);
+      props.handleSeclect({ statusO: "dadat", item: props.item });
+    } else {
+      setStatusO(e.target.value);
+      props.handleSeclect({ statusO: e.target.value, item: props.item });
+    } 
+  }
+    
 
   /**
    * HTML template;
@@ -54,12 +64,23 @@ function OrderDetail(props) {
             </div>
           </td>
           <td>
-            <div className="flex justify-center items-center">
-              <button onClick={decreaseOne}>-</button>
-             
+            <div
+              disable
+              className="flex justify-center items-center"
+              style={{ color: "#a3a3a3" }}
+            >
+              <button
+              // onClick={decreaseOne}
+              >
+                -
+              </button>
+
               <input value={props.item.qty} />
-              
-              <button className="right-btn" onClick={increaseOne}>
+
+              <button
+                className="right-btn"
+                // onClick={increaseOne}
+              >
                 +
               </button>
             </div>
@@ -72,19 +93,12 @@ function OrderDetail(props) {
           </td>
           <td>
             <select
-              disabled
               className="slbtn"
               value={props.item.status}
-              onChange={(e) => setStatusO(e.target.value)}
+              onChange={(e) => handleSelect(e)}
             >
-              <option value="dadat" disable>
-                Đã gửi bếp
-              </option>
-              <option value="chebien">Đang chế biến</option>
-              <option value="xuatmon">Xuất món</option>
-              <option value="hetmon">Hết món</option>
               <option value="xoa">Hủy món</option>
-              <option value="phucvu">Đã phục vụ</option>
+              <option value="hoantac">Hoàn tác</option>
             </select>
           </td>
           <td>
@@ -103,9 +117,9 @@ function OrderDetail(props) {
           <td>
             <div className="flex justify-center items-center">
               <button onClick={decreaseOne}>-</button>
-              
-                <input value={props.item.qty} />
-              
+
+              <input value={props.item.qty} />
+
               <button className="right-btn" onClick={increaseOne}>
                 +
               </button>
@@ -117,11 +131,9 @@ function OrderDetail(props) {
             <select
               className="slbtn"
               value={statusO}
-              onChange={(e) => setStatusO(e.target.value)}
+              onChange={(e) => handleSelect(e)}
             >
-              <option value="dadat" disable selected>
-                Đã gửi bếp
-              </option>
+              <option value="dadat">Đã gửi bếp</option>
               <option value="chebien">Đang chế biến</option>
               <option value="xuatmon">Xuất món</option>
               <option value="hetmon">Hết món</option>
