@@ -124,14 +124,14 @@ const Navbar = () => {
       >
         <div style={{width: "350px", }}>
           <div style={{width: "350px"}}>
-            <div className="logo" style={{textAlign: "center", marginTop: "0"}}>
-              <img src="/images/logoo.png" />
-              <div>Trinity</div>
+            <div className="logo" style={{textAlign: "left", margin: "5px 7px"}}>
+              <img style={{display: "inline"}} src="/images/avatar.jpg" />
+              <div style={{display: "inline"}}>{infoStaff.staff_name}</div>
             </div>
             <div className="main-content">
               {
                 isLoading ? null : rest.map((row) => (
-                  <div onClick={(e) => handleRestClick(row.info)}>
+                  <div onClick={(e) => handleRestClick(row.info)} style={{fontSize: "16px"}}>
                     { row.info.rest_name }
                   </div>
                 ))
