@@ -34,7 +34,8 @@ import SetUpPage from './pages/settuppage/setUpPage';
 import SelectRest from './pages/settuppage/selectRest';
 import CreateRest from './pages/settuppage/CreateRest';
 import ProtectedManage from './components/protectedManage'
-import ProtectedRestSelect from './components/protectedRestSelect';
+import ProtectedChef from './components/protectedChef';
+import ProtectedCashier from './components/protectedCashier';
 import Rest from './pages/login/Rest';
 import { useNavigate } from "react-router-dom";
 import ManageOrderList from './pages/orders/manage/ManageOrderList';
@@ -44,10 +45,11 @@ function App() {
   const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
   const [infoRestaurant, setInfoRestaurant] = useState(valuejson);
-  
+
   const json1 = localStorage.getItem("infoStaff");
   const valuejson1 = JSON.parse(json1);
   const [infoStaff, setInfoStaff] = useState(valuejson1);
+
   return (
     <div>
       <BrowserRouter>
@@ -67,15 +69,8 @@ function App() {
             <Route index path='select' element={<SelectRest />} />
             <Route path='restaurant/new' element={<CreateRest />} />
           </Route>
-          
-          <Route path="/manage/*" element={
-            <ProtectedManage
-              redirectPath="/login"
-              isAllowed={
-                infoStaff
-              } > <Layout />
-            </ProtectedManage>
-          } >
+
+          <Route path="/manage/*" element={<Layout />} >
             <Route path="home">
               <Route index element={<Home />} />
             </Route>
@@ -92,8 +87,15 @@ function App() {
               <Route path="new" element={<ProductForm />} />
               <Route path="all/category/:id" element={<ProductList />} />
             </Route>
-            <Route path='orders'>
-              <Route index element={<ManageOrderList />} />
+            <Route path='orders' element={
+            <ProtectedCashier
+              redirectPath="/login"
+              isAllowed={
+                infoStaff
+              } > <ManageOrderList />
+            </ProtectedCashier>
+          }>
+              {/* <Route index element={<ManageOrderList />} /> */}
             </Route>
             <Route path="category">
               <Route index element={<Category />} />
@@ -105,17 +107,24 @@ function App() {
               <Route path=":idUser" element={<UserDetail />} />
               <Route path="add" element={<UserAdd />}></Route>
             </Route>
-            <Route path="chef" element={<LayoutChef />}>
-
-            </Route>
-            <Route path="info" element={
-            <ProtectedManage
+            <Route path="chef" element={
+            <ProtectedChef
               redirectPath="/login"
               isAllowed={
                 infoStaff
-              } > <Info />
-            </ProtectedManage>
+              } >  <LayoutChef />
+            </ProtectedChef>
           }>
+
+            </Route>
+            <Route path="info" element={
+              <ProtectedManage
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <Info />
+              </ProtectedManage>
+            }>
               <Route index element={<Info />} />
               <Route path="edit/:id" element={<InfoEdit />}></Route>
             </Route>
@@ -134,7 +143,7 @@ function App() {
               /> */}
             </Route>
           </Route>
-          
+
         </Routes>
       </BrowserRouter>
     </div>
