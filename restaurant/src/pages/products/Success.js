@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faCircleXmark, faQuestion, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import './this.css';
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,9 @@ function Success(props) {
     position: "absolute",
     zIndex: 10,
   };
+  const payOrder = () => {
+    props.payOrder("thanhtoan");
+  }
   const deleteOrder = () => {
     props.functioner("huydon");
   }
@@ -24,8 +27,31 @@ function Success(props) {
   return (
     <div style={props.style ? props.style : style}>
       <div className='update-modal'>
-        {props.message.icon == "faClose"
-          ?
+        {
+          props.message.icon == 'faTrash' &&
+          <>
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
+              <div style={{ fontSize: "75px", color: "crimson" }}>
+                <FontAwesomeIcon icon={faTrash} />
+              </div>
+              <div>{props.message.noti}</div>
+              <button className="btn-dlt" onClick={deleteOrder} >Xóa</button>
+            </div>
+          </>
+        }
+        {
+          props.message.icon == 'faCheck' &&
+<>
+                <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
+                  <div style={{ fontSize: "75px", color: "#43AA8B" }}>
+                    <FontAwesomeIcon icon={faCheckCircle} />
+                  </div>
+                  {props.message.noti}
+                </div>
+              </>
+        }
+        {
+          props.message.icon === 'faClose' &&
           <>
             <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
               <div style={{ fontSize: "75px", color: "crimson" }}>
@@ -34,29 +60,17 @@ function Success(props) {
               {props.message.noti}
             </div>
           </>
-          :
+        }
+        {
+          props.message.icon === 'faQuestion' &&
           <>
-            {props.message.icon == "faTrash"
-              ?
-              <>
-                <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
-                  <div style={{ fontSize: "75px", color: "crimson" }}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </div>
-                  <div>{props.message.noti}</div>
-                  <button className="btn-dlt" onClick={deleteOrder} >Xóa</button>
-                </div>
-              </>
-              :
-              <>
-                <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
-                  <div style={{ fontSize: "75px", color: "#43AA8B" }}>
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                  </div>
-                  {props.message.noti}
-                </div>
-              </>
-            }
+            <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
+              <div style={{ fontSize: "75px", color: "#43AA8B" }}>
+                <FontAwesomeIcon icon={faQuestionCircle} />
+              </div>
+              {props.message.noti}
+              <button className="btn-dlt btn-pay" onClick={payOrder}> Thanh toán</button>
+            </div>
           </>
         }
         <span onClick={(e) => {
