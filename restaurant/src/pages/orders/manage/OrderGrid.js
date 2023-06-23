@@ -34,33 +34,11 @@ function OrderGrid (props) {
     const [status, setStatus] = useState(props.order.status);
     const [updating, setUpdating] = useState(true);
     const payOrder = async () => {
-        setUpdating(false);
-        const url = `${HOST}/order/update`;
-        const res = await axios
-            .post(url, {
-                orderId: order._id,
-                criteria: 1,
-            })
-        if (res.status === 200) {
-            setStatus('dathanhtoan');
-            setUpdating(true);
-        }else {
-            setStatus(order.status);
-            setUpdating(true);
-        }
+        props.pay(order);
     }
     const cancelOrder = async () => {
         if (status === 'dadat') {
-            // setUpdating(false);
-            // setTimeout(() => {
-            //     setUpdating(true);
-            // }, 1500);
             props.cancelOrder(order)
-            // if (props.cancelAccepted) {
-            //     setStatus("dahuy");
-            // }
-        }else {
-
         }
     }
     const seeDetails = () => {
@@ -126,9 +104,16 @@ return(
                 <button className='updateButton' onClick={seeDetails}>
                     <FontAwesomeIcon icon={faEye} />
                 </button>
-                <button onClick={cancelOrder}>
+                {
+                    order.status === 'dahuy' || order.status === 'dathanhtoan' ?
+                    <button onClick={cancelOrder} disabled={true}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    :
+                    <button onClick={cancelOrder}>
                     <FontAwesomeIcon icon={faTrash} />
-                </button>
+                    </button>
+                }
             </td>
         </tr>
         }
