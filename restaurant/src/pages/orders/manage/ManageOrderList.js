@@ -26,7 +26,7 @@ const ManageOrderList = () => {
     };
     const successNoti = {
         noti: "Đơn hàng đã được hủy thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
     }
     const errorOnCancel = {
         noti: "Đơn hàng không thể hủy do đã được chế biến",
@@ -35,6 +35,14 @@ const ManageOrderList = () => {
     const errorOccurred = {
         noti: "Đã có lỗi xãy ra, hãy thử lại sau",
         icon: "faClose",
+    }
+    const comfirmPayment = {
+        noti: "Bạn đang thanh toán cho hóa đơn này?",
+        icon: "faQuestion"
+    }
+    const paymentSuccess = {
+        noti: "Hóa đơn đã được thanh toán thành công",
+        icon: "faCheck",
     }
     const [criteria, setCriteria] = useState(1);
     const getOrderList = async () => {
@@ -199,6 +207,31 @@ const ManageOrderList = () => {
             }, 3000);
         }
     }
+    const confirmPayOrder = (order) => {
+        setSuccess(true);
+        setSuccessClass("opacity-success");
+        setMessage(comfirmPayment);
+        setSelectedOrder(order);
+    }
+    const [orderActionStatus, setOrderActionStatus] = useState("");
+    const payOrder = async (status) => {
+        if (status === 'thanhtoan') {
+            const url = `${HOST}/order/update`;
+            const res = await axios
+                .post(url, {
+                    orderId: selectedOrder._id,
+                    criteria: 1,
+                })
+            if (res.status === 200) {
+                setOrderActionStatus('dathanhtoan');
+                setMessage(paymentSuccess);
+                setTimeout(() => {
+                    setSuccess(false);
+                    setSuccessClass("");
+                }, 3000);
+            }
+        }
+    }
     return (
         <>
             {
@@ -209,6 +242,8 @@ const ManageOrderList = () => {
                     functioner={proceedCancelling}
                     setSuccess={setSuccess}
                     setSuccessClass={setSuccessClass}
+                    payOrder={payOrder}
+                    status={orderActionStatus}
                 />
             }
             {
@@ -288,6 +323,7 @@ const ManageOrderList = () => {
                                         stt={index + 1}
                                         seeDetails={seeDetails}
                                         cancelOrder={cancelOrder}
+                                        pay={confirmPayOrder}
                                     />
                                 ))
                                 // : <Loading message="Đang tải dữ liệu từ server...." />
