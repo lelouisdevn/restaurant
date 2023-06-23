@@ -64,11 +64,11 @@ function Success(props) {
         {
           props.message.icon === 'faQuestion' &&
           <>
-            <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
               <div style={{ fontSize: "75px", color: "#43AA8B" }}>
                 <FontAwesomeIcon icon={faQuestionCircle} />
               </div>
-              {props.message.noti}
+              <div>{props.message.noti}</div>
               <button className="btn-dlt btn-pay" onClick={payOrder}> Thanh toán</button>
             </div>
           </>
