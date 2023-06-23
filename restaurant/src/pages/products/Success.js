@@ -41,19 +41,21 @@ function Success(props) {
         }
         {
           props.message.icon == 'faCheck' &&
-<>
-                <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
-                  <div style={{ fontSize: "75px", color: "#43AA8B" }}>
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                  </div>
-                  {props.message.noti}
-                </div>
-              </>
+          <>
+            {/* <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}> */}
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
+              <div style={{ fontSize: "75px", color: "#43AA8B" }}>
+                <FontAwesomeIcon icon={faCheckCircle} />
+              </div>
+              {props.message.noti}
+            </div>
+          </>
         }
         {
           props.message.icon === 'faClose' &&
           <>
-            <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}>
+            {/* <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}> */}
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
               <div style={{ fontSize: "75px", color: "crimson" }}>
                 <FontAwesomeIcon icon={faCircleXmark} />
               </div>
