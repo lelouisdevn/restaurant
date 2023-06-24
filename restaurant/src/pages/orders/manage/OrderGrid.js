@@ -92,7 +92,7 @@ return(
                                 <button
                                     disabled={true}
                                     style={{ background: "#FFA737", border: "solid 1px #FFA737", color: "black" }}
-                                > Đã hủy</button>
+                                > Đơn đã hủy</button>
                                 : <button
                                     onClick={() => payOrder()}
                                     className='updateButton'
@@ -101,7 +101,7 @@ return(
                             // : <button className='updateButton'> Đã thanh toán</button>
                             :
                             <button
-                                disabled={true}
+                                disabled={true} 
                                 style={{ background: "lightgrey", border: "solid 1px lightgrey", color: "black" }}
                             > Đã thanh toán</button>
                     : <button className='updateButton'>

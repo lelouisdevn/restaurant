@@ -57,17 +57,7 @@ const OrderFilter = (props) => {
                             <input type="date" onChange={(e) => setToDate(e.target.value)} />
                         </div>
                     </div>
-                    <div>
-                        <div>Trạng thái hóa đơn</div>
-                        <div>
-                            <select onChange={(e) => setStatus(e.target.value)}>
-                                <option value="dathanhtoan">Hóa đơn đã thanh toán</option>
-                                <option value="dadat">Hóa đơn chưa thanh toán</option>
-                                <option value="dahuy">Hóa đơn đã hủy</option>
-                                {/* <option>Tất cả hóa đơn</option> */}
-                            </select>
-                        </div>
-                    </div>
+                    
                     {/* <div>
                         item 3
                     </div>
