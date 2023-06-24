@@ -30,7 +30,7 @@ function Success(props) {
         {
           props.message.icon == 'faTrash' &&
           <>
-            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px", width: "100%"  }}>
               <div style={{ fontSize: "75px", color: "crimson" }}>
                 <FontAwesomeIcon icon={faTrash} />
               </div>
@@ -43,7 +43,7 @@ function Success(props) {
           props.message.icon == 'faCheck' &&
           <>
             {/* <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}> */}
-            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px", width: "100%"  }}>
               <div style={{ fontSize: "75px", color: "#43AA8B" }}>
                 <FontAwesomeIcon icon={faCheckCircle} />
               </div>
@@ -55,7 +55,7 @@ function Success(props) {
           props.message.icon === 'faClose' &&
           <>
             {/* <div style={{ position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)" }}> */}
-            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px", width: "100%"  }}>
               <div style={{ fontSize: "75px", color: "crimson" }}>
                 <FontAwesomeIcon icon={faCircleXmark} />
               </div>
@@ -66,7 +66,7 @@ function Success(props) {
         {
           props.message.icon === 'faQuestion' &&
           <>
-            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px" }}>
+            <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", padding: "0 10px", width: "100%"  }}>
               <div style={{ fontSize: "75px", color: "#43AA8B" }}>
                 <FontAwesomeIcon icon={faQuestionCircle} />
               </div>
