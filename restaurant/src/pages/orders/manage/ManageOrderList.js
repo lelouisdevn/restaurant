@@ -241,6 +241,34 @@ const ManageOrderList = () => {
             }
         }
     }
+    const [isSorted, setSort] = useState("false");
+    const sort = () => {
+        if (isSorted === 'sortaz') {
+            sortZA();
+        }else {
+            sortAZ();
+        }
+    }
+    const sortAZ = () => {
+        const sortedOrder = filteredOrder.sort((a,b) => {
+            if (a._id < b._id) {
+                return -1;
+            }else {
+                return 1;
+            }
+        })
+        setSort("sortaz");
+    };
+    const sortZA = () => {
+        filteredOrder.sort((a, b) => {
+            if (a._id < b._id) {
+                return 1;
+            }else {
+                return -1;
+            }
+        });
+        setSort("sortza");
+    };
     return (
         <>
             {
@@ -277,6 +305,8 @@ const ManageOrderList = () => {
                         toolbar={toolbar}
                         functioner={getSearchQuery}
                         toggleFilter={toggleFilter}
+                        sort={sort}
+                        sortType={isSorted}
                     />
                 </div>
                 <div className="content">
