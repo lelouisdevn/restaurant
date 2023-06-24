@@ -19,12 +19,15 @@ const OrderFilter = (props) => {
         const url = `${HOST}/order/filter/`;
         const restaurant = JSON.parse(localStorage.getItem('infoRestaurant'));
         console.log(restaurant)
+        const d = new Date().getDate();
+        const m = new Date().getMonth();
+        const y = new Date().getFullYear();
         const res = await axios
             .post(url, {
                 restaurant: restaurant._id,
-                from: fromDate,
-                to: toDate,
-                status: status,
+                from: fromDate ? fromDate : y+"-"+(m+1)+"-"+d,
+                to: toDate ? toDate : y+"-"+(m+1)+"-"+(d+1),
+                status: 1,
             })
         if (res.status === 200) {
             console.log(res?.data.orders);
