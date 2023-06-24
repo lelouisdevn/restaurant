@@ -196,8 +196,12 @@ const ManageOrderList = () => {
                 })
             if (res.status === 200) {
                 setMessage(successNoti);
-                setFilteredOrder([]);
-                getOrderList();
+                // setFilteredOrder([]);
+                // getOrderList();
+                setOrderActionStatus({
+                  status: "dahuy",
+                  order: selectedOrder,
+                })
             } else {
                 setMessage(errorOccurred);
             }
@@ -213,7 +217,7 @@ const ManageOrderList = () => {
         setMessage(comfirmPayment);
         setSelectedOrder(order);
     }
-    const [orderActionStatus, setOrderActionStatus] = useState("");
+    const [orderActionStatus, setOrderActionStatus] = useState({});
     const payOrder = async (status) => {
         if (status === 'thanhtoan') {
             const url = `${HOST}/order/update`;
@@ -223,7 +227,12 @@ const ManageOrderList = () => {
                     criteria: 1,
                 })
             if (res.status === 200) {
-                setOrderActionStatus('dathanhtoan');
+                setOrderActionStatus(
+                  {
+                    status: 'dathanhtoan',
+                    order: selectedOrder,
+                  }
+                );
                 setMessage(paymentSuccess);
                 setTimeout(() => {
                     setSuccess(false);
@@ -243,7 +252,6 @@ const ManageOrderList = () => {
                     setSuccess={setSuccess}
                     setSuccessClass={setSuccessClass}
                     payOrder={payOrder}
-                    status={orderActionStatus}
                 />
             }
             {
@@ -324,6 +332,8 @@ const ManageOrderList = () => {
                                         seeDetails={seeDetails}
                                         cancelOrder={cancelOrder}
                                         pay={confirmPayOrder}
+                                        status={orderActionStatus}
+
                                     />
                                 ))
                                 // : <Loading message="Đang tải dữ liệu từ server...." />

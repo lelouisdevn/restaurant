@@ -11,6 +11,7 @@ function OrderGrid (props) {
     const HOST = "http://localhost:4000/api";
     const [order, setOrder] = useState("");
     const [tables, setTables] = useState([]);
+    const [orderActionStatus, setOrderActionStatus] = useState("");
 
     const getTables = async () => {
         const url = `${HOST}/order/${props.order._id}/tables`;
@@ -33,7 +34,7 @@ function OrderGrid (props) {
     }
     const [status, setStatus] = useState(props.order.status);
     const [updating, setUpdating] = useState(true);
-    const payOrder = async () => {
+    const payOrder = () => {
         props.pay(order);
     }
     const cancelOrder = async () => {
@@ -56,6 +57,16 @@ function OrderGrid (props) {
         }
     }, []);
 
+    useEffect(() => {
+      // setOrderActionStatus(props.status);
+      if (props.status.status === 'dathanhtoan' && props.status.order._id === order._id) {
+        setStatus("dathanhtoan");
+      }
+      if (props.status.status === 'dahuy' && props.status.order._id === order._id) {
+        setStatus("dahuy");
+      }
+      console.log("trang thai: ", props.status);
+    }, [props.status]);
 
 return(
     <>
@@ -64,7 +75,7 @@ return(
             <td>{props.stt}</td>
             <td>{order._id}</td>
             <td>{
-                tables.map((tbl) => 
+                tables.map((tbl) =>
                     <>{tbl.tables[0].tbl_id}, </>
                 )
             }</td>
@@ -73,8 +84,8 @@ return(
             <td>
                 {
                     updating ?
-                
-                    
+
+
                         status !== 'dathanhtoan' ?
 
                             status === 'dahuy' ?
@@ -97,7 +108,7 @@ return(
                         <FontAwesomeIcon icon={faCircleDot} />
                         <> Cập nhật...</>
                     </button>
-                    
+
                 }
             </td>
             <td>
