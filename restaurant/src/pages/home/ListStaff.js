@@ -30,15 +30,14 @@ const headCells = [
 ];
 
 export default function ListStaff(props) {
-  const rows = props.item;
-  console.log("props: ", props.item);
+  const rows = props.item; 
   const [dense, setDense] = React.useState(false);
 
   return ( 
     <>
       <Paper sx={{ width: "100%" }}>
         <Box className="outer-wrapper">
-          <Box className="table-wrapper">
+          <Box className="table-wrapper2">
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"

@@ -20,6 +20,8 @@ import axios from "axios";
 import ListStaff from "./ListStaff";
 import ListBill from "./ListBill";
 import BarChartPro from "./BarChart";
+import Synthetic from "./Synthetic";
+import SyntheticSearch from "./SyntheticSearch";
 // import BarChart from "./BarChart";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -30,15 +32,28 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
   height: '575px'
 }));
+const Item2 = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+  height: '600px',
+  borderWidth: '2px',
+  borderColor: 'black',
+}));
 const Home = () => {
    const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
   console.log("nhà hàng: ", valuejson);
+  const jsonStaff = localStorage.getItem("infoStaff");
+  const valuejsonStaff = JSON.parse(jsonStaff); 
 
   const [listStaff, setListStaff] = useState([]);
   const [listBill, setListBill] = useState([]);
-  const [bar, setBar] = useState('tuantruoc')
-  
+  const [bar, setBar] = useState('tuannay')
+  const [listSearch, setListSearch] = useState([]);
+  const [totalsearch, setTotalSearch] = useState();
 const getBillToDay = async() => {
     await axios
       .get("http://localhost:4000/api/list/bills/today", {
@@ -66,7 +81,7 @@ const getBillToDay = async() => {
    }, []); 
   
   const [dates, setDates] = useState([]);
-
+  const [isSearch, setisSearch] = useState(true);
   console.log("datess: ", dates);
 
   const today = moment().format("YYYY-MM-DD");
@@ -90,20 +105,39 @@ const getBillToDay = async() => {
         restaurant: valuejson._id,
          arraydate : tempParams
       })
-      // .get("http://localhost:4000/api/list/bills/bydate", {
-      //   params: { foo: dates.length === 0 ? list : dates }
-      // })
-      .then((res) => {
+     .then((res) => {
         const temp = res?.data.listTBill;
         setListBill(temp)
         console.log("dc mak gsa ", temp);
+      });
+  };
+  const handleSearchAll = async () => {
+    console.log("ok la ", dates.length === 0 ? "ok" : "no");
+    let tempParams;
+    if (dates.length === 0) {
+      tempParams= list
+    } else {
+      tempParams= dates
+      
+    }
+    await axios
+      .post("http://localhost:4000/api/list/statistical/bydate", {
+        staffMana: valuejsonStaff._id,
+         arraydate : tempParams
+      }) 
+      .then((res) => {
+        const temp = res?.data.listBill2;
+        const to = res?.data.to;
+        setListSearch(temp);
+        setTotalSearch(to);
+        setisSearch(false); 
       });
   };
   return (
     <Box flex={5}>
       <Box sx={{ width: "100%", marginTop: "20px" }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={6} bgcolor="grey" p={2}>
+          <Grid item xs={6} sm={6} bgcolor="grey" p={2}>
             <Item>
               <Typography variant="h5" sx={{ fontWeight: 600 }}>
                 Danh sách hóa đơn hôm nay của nhà hàng
@@ -152,7 +186,7 @@ const getBillToDay = async() => {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} bgcolor="#BEC0C2" p={2}>
+          <Grid item xs={6} sm={6} bgcolor="#BEC0C2" p={2}>
             <Item>
               <Typography variant="h5" sx={{ fontWeight: 600 }}>
                 Danh sách nhân viên của nhà hàng
@@ -164,6 +198,7 @@ const getBillToDay = async() => {
           <Grid
             item
             xs={12}
+            sm={12}
             // bgcolor="yellow"
             p={2}
           >
@@ -171,7 +206,11 @@ const getBillToDay = async() => {
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
                   Thống kê doanh thu theo{" "}
-                  {bar === "tuantruoc" ? "tuần trước" : "3 tháng trước"}
+                  {bar === "tuannay"
+                    ? "tuần hiện tại"
+                    : bar === "thang"
+                    ? "thang"
+                    : "nam"}
                 </Typography>
                 <div className="flex items-end justify-end mb-3 pr-6">
                   <label className="text-black text-xl" htmlFor="selectCP">
@@ -183,35 +222,92 @@ const getBillToDay = async() => {
                       value={bar}
                       onChange={(e) => setBar(e.target.value)}
                     >
-                      <option value="tuantruoc">tuần trước </option>
-                      <option value="thangtruoc">3 tháng trước </option>
+                      <option value="tuannay">tuần hiện tại</option>
+                      <option value="thang">tháng </option>
+                      <option value="nam">năm </option>
                     </select>
                   </label>
                 </div>
-                {bar === "tuantruoc" ? (
-                  <BarChartPro
-                    restaurant={valuejson}
-                    aspect={3.35 / 1}
-                    title="Theo 3 tháng trước"
-                    type="1"
-                  />
-                ) : (
-                  <BarChartPro
-                    restaurant={valuejson}
-                    aspect={3.35 / 1}
-                    title="Theo 3 tháng trước"
-                    type="2"
-                  />
+                {
+                  bar === "tuannay" ? (
+                    <BarChartPro
+                      restaurant={valuejson}
+                      aspect={3.35 / 1}
+                      type="1"
+                    />
+                  ) : bar === "thang" ? (
+                    <BarChartPro
+                      restaurant={valuejson}
+                      aspect={3.35 / 1}
+                      type="2"
+                    />
+                  ) : (
+                    <BarChartPro
+                      restaurant={valuejson}
+                      aspect={3.35 / 1}
+                      title="Theo 3 tháng trước"
+                    />
+                  )
                   // <Typography>bd cot tuan </Typography>
-                )}
+                }
               </Box>
             </Item>
           </Grid>
-          {/* <Grid item xs={6} bgcolor="green">
-            <Item>
-              <Typography>Danh sách nhân viên của của nhà nhà hàng </Typography>
-            </Item>
-          </Grid> */}
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            // bgcolor="green"
+            p={2}
+          >
+            <Item2>
+              <Box bgcolor="#fff" sx={{ width: "100%" }}>
+                <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                  Tổng hợp
+                </Typography>
+                <Box className=" calendar flex items-center justify-center">
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    sx={{ width: "50%" }}
+                  >
+                    <DemoContainer
+                      components={["DateRangePicker", "DateRangePicker"]}
+                    >
+                      <DemoItem
+                        // label="Controlled picker"
+                        component="DateRangePicker"
+                      >
+                        <DateRangePicker
+                          value={value}
+                          onChange={(values) => {
+                            setDates(
+                              values.map((item) => {
+                                return moment(item.$d).format("MM/DD/YYYY");
+                              })
+                            );
+                          }}
+                          // onChange={(newValue) => setValue(newValue)}
+                        />
+                      </DemoItem>
+                    </DemoContainer>
+                  </LocalizationProvider>
+                  <Box sx={{ width: "10%", paddingTop: "15px" }}>
+                    <IconButton aria-label="search " onClick={handleSearchAll}>
+                      <SearchIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </Box>
+              {
+                isSearch ? (
+                
+                  <Synthetic user={valuejsonStaff} restaurant={valuejson} />
+                ): (
+                    <SyntheticSearch data={listSearch} dataTotal = {totalsearch}></SyntheticSearch>
+                )
+              }
+            </Item2>
+          </Grid>
         </Grid>
       </Box>
     </Box>

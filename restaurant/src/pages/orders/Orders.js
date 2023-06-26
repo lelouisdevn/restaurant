@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 function Orders() {
   const navigate = useNavigate();
   const { id, name } = useParams();
+
   const [products, setProducts] = useState("");
   const [criteria, setCriteria] = useState("true");
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -42,17 +43,23 @@ function Orders() {
   const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
   const [idRestaurant, setidRestaurant] = useState(valuejson);
+  //Lấy infoRestaurant trên localStorage dạng object
+  const jsonStaff = localStorage.getItem("infoStaff");
+  const valuejsonStaff = JSON.parse(jsonStaff);
+  // const [idRestaurant, setidRestaurant] = useState(valuejson);
 
   const getProducts = async () => {
+    console.log("nah hanf : ", valuejson._id);
+    console.log("criteria : ", criteria);
     const url = `http://localhost:4000/api/products`;
     // const restaurantId = localStorage.getItem("RestaurantID");
     await axios
       .post(url, {
-        restaurantId: idRestaurant._id,
+        restaurantId: valuejson._id,
         status: criteria
       })
       .then((res) => {
-        // console.log(res?.data.document);
+        console.log(res?.data.document);
         setProducts(res?.data.document);
       });
   };
@@ -249,6 +256,8 @@ function Orders() {
                   icon: "faCheckCircle"
                 };
                 showModal(message);
+          setRedirect("/staff/outline");
+
               });
           });
         }
@@ -381,7 +390,11 @@ function Orders() {
         </div>
         <div className="order-right">
           <div className="order-right-content">
-            <OrderInfo user={user} restaurant={restaurant} nameTable={name} />
+            <OrderInfo
+              user={valuejsonStaff}
+              restaurant={valuejson}
+              nameTable={name}
+            />
 
             {/* Display when selected products are not empty; */}
             {selectedProducts.length > 0 && (

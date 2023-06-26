@@ -38,7 +38,7 @@ const StyledModal = styled(Modal)({
   justifyContent: "center"
 });
 
-const OutLine = ({ id, arrange, numRow }) => {
+const OutLine = ({ idL, arrange, numRow }) => {
   const HOST = 'http://localhost:4000/api';
   // const { id, arrange, numRow } = useParams();
   const navigate = useNavigate();
@@ -57,25 +57,28 @@ const OutLine = ({ id, arrange, numRow }) => {
   const [infoStaff, setInfoStaff] = useState(valuejson);
 
   useEffect(() => {
-    getTables(id);
-  }, [id]);
+    console.log(" laaaaaa: ", idL);
+    getTables(idL);
+  }, [idL]);
+ 
 
   const getTables = async (id) => {
-    await axios
-      .get(`http://localhost:4000/api/lobby/${id}/detailtable/status=1`)
-      .then((res) => {
-        const temp = res?.data.sit;
-        // console.log("Ban theo khu vu ", temp);
-        setTables(temp);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      })
-      .finally(() => {
-        setisLoading(false);
-      });
+  console.log("khu vuc getTables: ", id);
+    console.log("isLoading: ", isLoading);
+      await axios
+        .get(`http://localhost:4000/api/lobby/${id}/detailtable/status=1`)
+        .then((res) => {
+          const temp = res?.data.sit;
+          console.log("Ban theo khu vu ", temp);
+          setTables(temp);
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        })
+        .finally(() => {
+          setisLoading(false);
+        });
   };
-
   const ChooseATable = (table) => {
     navigate(`/staff/order/table/${table._id}/${table.tbl_id}`);
   };
@@ -152,7 +155,6 @@ const OutLine = ({ id, arrange, numRow }) => {
         tempt = tempt + productPrice;
       }
     }
-    console.log("getTotal: ", tempt);
     setupdateTotal(tempt);
   };
 
@@ -171,7 +173,7 @@ const OutLine = ({ id, arrange, numRow }) => {
 
   //update message when criteria changes and call updateOrder;
   useEffect(() => {
-    console.log(criteria);
+  //   console.log(criteria);
     let message = {};
     if (criteria === 0) {
       message = {
@@ -203,7 +205,7 @@ const OutLine = ({ id, arrange, numRow }) => {
         })
         .then((res) => {
           showModal(message);
-          getTables(id);
+          // getTables(idL);
           setCriteria(100); //set criteria === 100 for paying bills without reloading page;
         })
     }
