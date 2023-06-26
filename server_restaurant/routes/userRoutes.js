@@ -139,4 +139,16 @@ router.get("/restaurant/byuser=:iduser", async (req, res) => {
   }
 });
 
+//Lấy all nhân viên của nhà hàng
+// router.get('/all/users/idres=:id', async (req, res) => {
+//   try {
+//     let all = await UserRestDetail.find({ info: req.params.id }).populate('user').exec();
+//     res.send({ all });
+    
+//   } catch (error) {
+//      console.log("Data err: ", error);
+//      return res.status(422).send({ Error: error.message });
+//   }
+// })
+
 module.exports = router;
