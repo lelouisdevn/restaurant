@@ -116,7 +116,7 @@ return(
                     <FontAwesomeIcon icon={faEye} />
                 </button>
                 {
-                    order.status === 'dahuy' || order.status === 'dathanhtoan' ?
+                    status === 'dahuy' || status === 'dathanhtoan' ?
                     <button onClick={cancelOrder} disabled={true}>
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
