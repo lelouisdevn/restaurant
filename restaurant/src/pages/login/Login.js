@@ -15,8 +15,8 @@ const Login = () => {
   const [restaurant, setRestaurant] = useState("sagarestaurant@rest.vn");
 
   const [PorT, setPorT] = useState(true);
-  // const [UserID, setUserID] = useState([]);
-  // const [RestaurantID, setRestaurantID] = useState([]);
+  const [UserID, setUserID] = useState([]);
+  const [RestaurantID, setRestaurantID] = useState([]);
 
   // useEffect (()=>{
   //   if(localStorage.getItem("UserID") !== undefined){
@@ -62,7 +62,8 @@ const Login = () => {
                   JSON.stringify(tempInfoRestaurant)
                 );
               });
-            navigate("/staff/outline");
+            //navigate("/staff/outline");
+            window.location.href = '/staff/outline';
           } else if(res?.data.login[0].role === "3"){
             const tempInfoStaff = res?.data.login[0];
             //console.log(tempInfoStaff);

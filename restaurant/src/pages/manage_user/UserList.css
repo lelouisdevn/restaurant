@@ -1,0 +1,21 @@
+.container {
+    /* background-color: rgb(242, 242, 242); */
+    background-color: white;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px;
+    /* border: solid grey 0.25px; */
+    border-radius: 10px;
+    width: fit-content;
+    display: flex;
+    filter: drop-shadow(1px 1px 5px rgb(182, 181, 181));
+}
+.tile {
+    width: 150px;
+    height: 150px;
+    /* background-color: black; */
+    color: white;
+    margin: 10px;
+    border-radius: 7px;
+    display: inline-block;
+}

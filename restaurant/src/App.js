@@ -8,6 +8,7 @@ import Lobby from './pages/lobby/Lobby';
 import ProductDetail from './pages/products/ProductDetail';
 import ProductList from './pages/products/ProductList';
 import Layout from './components/Layout';
+import Temp from './components/Temp';
 
 import Info from "./pages/info_restaurant/Info";
 import User from "./pages/manage_user/User";
@@ -36,9 +37,16 @@ import CreateRest from './pages/settuppage/CreateRest';
 import ProtectedManage from './components/protectedManage'
 import ProtectedChef from './components/protectedChef';
 import ProtectedCashier from './components/protectedCashier';
+import ProtectedOrder from './components/protectedOrder';
 import Rest from './pages/login/Rest';
 import { useNavigate } from "react-router-dom";
 import ManageOrderList from './pages/orders/manage/ManageOrderList';
+
+import Bep from './pages/managa_chef/bep';
+import DS_Order from './pages/managa_chef/ds_order';
+
+
+
 
 function App() {
 
@@ -71,8 +79,8 @@ function App() {
           </Route>
 
           <Route path="/manage/*" element={<Layout />} >
-            <Route path="home">
-              <Route index element={<Home />} />
+            <Route index path="home" element={<Home />}>
+              {/* <Route index element={<Home />} /> */}
             </Route>
             <Route path="lobby">
               <Route index element={<Lobby />} />
@@ -81,7 +89,14 @@ function App() {
                 element={<SettingMap />}
               ></Route>{" "}
             </Route>
-            <Route path="product">
+            <Route path="product" element={
+              <ProtectedManage
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <Temp />
+              </ProtectedManage>
+            }>
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetail />} />
               <Route path="new" element={<ProductForm />} />
@@ -94,7 +109,7 @@ function App() {
                 infoStaff
               } > <ManageOrderList />
             </ProtectedCashier>
-          }>
+            }>
               {/* <Route index element={<ManageOrderList />} /> */}
             </Route>
             <Route path="category">
@@ -114,23 +129,35 @@ function App() {
                 infoStaff
               } >  <LayoutChef />
             </ProtectedChef>
-          }>
-
+            }>
             </Route>
-            <Route path="info" element={
+
+            <Route path="info/*" element={
               <ProtectedManage
                 redirectPath="/login"
                 isAllowed={
                   infoStaff
-                } > <Info />
+                } > <Temp />
               </ProtectedManage>
             }>
+            {/* <Route path="info"> */}
               <Route index element={<Info />} />
-              <Route path="edit/:id" element={<InfoEdit />}></Route>
+              <Route path='edit/:id' element={<InfoEdit />} />
+            </Route>
+            
+            <Route path='bep/*' element={<Bep/>}>
+              <Route index path='order' element={<DS_Order/>}></Route>
             </Route>
           </Route>
 
-          <Route path="/staff/*" element={<NavbarStaff />}>
+          <Route path="/staff/*" element={
+              <ProtectedOrder
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <NavbarStaff />
+              </ProtectedOrder>
+            }>
             {/* <Route path="orders" element={<LoadingT />} /> */}
             {/* <Route path="orders" element={<Orders />} />  */}
             <Route path="order/table/:id/:name" element={<Orders />} />

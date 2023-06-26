@@ -3,7 +3,8 @@ import React from "react";
 import LayoutChef from '../pages/chef/LayoutChef';
 const ProtectedManage = ({isAllowed, redirectPath,children}) =>{
 
-    console.log(window.location.pathname);
+    //console.log(window.location.pathname);
+    
     if(isAllowed.role !== "1"){
         return <Navigate to={redirectPath}></Navigate>;
     } else {
