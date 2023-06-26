@@ -47,7 +47,7 @@ function ProductForm() {
                 const id = res?.data.product._id;
                 const message = {
                     "noti": "Sản phẩm đã được thêm thành công",
-                    "icon": "faCheckCircle",
+                    "icon": "faCheck",
                   };
                 showModal(message);
                 setTimeout(() => {
