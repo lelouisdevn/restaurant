@@ -22,7 +22,8 @@ const SetUpPage = () => {
                 <div className='setup-box'>
                     <div className='setup-content'>
                         <div className='logo'>
-                            <img src='/images/logoo.png' />
+                            {/* <img src='/images/logoo.png' /> */}
+                            <img style={{opacity: 0}} />
                             <div>Trinity</div>
                         </div>
 

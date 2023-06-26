@@ -67,6 +67,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+    z-index: 10;
     animation: r1 1s ease infinite;
     /* transform-origin: 48%; */
 }
@@ -77,7 +78,7 @@
     transform: translate(-50%, -50%);
     position: absolute;
     animation: bigger 1s ease-in-out 1;
-    animation-fill-mode: backwards;
+    animation-fill-mode: forwards;
     margin: 0!important;
 }
 @keyframes r1 {
@@ -108,19 +109,21 @@
         opacity: 1;
     }
     25% {
-        opacity: 0.8;
+        opacity: 0.5;
     }
     75% {
-        opacity: 0.5;
+        opacity: 0.8;
     }
     90% {
         transform: translate(-50%, -450%);
         background-color: black;
-        opacity: 0.2;
+        opacity: 0.9;
     }
     100% {
-        opacity: 0;
-        z-index: 0;
+        opacity: 1;
+        z-index: 10;
+        transform: translate(-50%, -450%);
+
     }
 }
 @keyframes fadebg {
