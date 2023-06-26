@@ -181,6 +181,16 @@
     /* background-color: rgb(237, 237, 237); */
     background-color: crimson;
 }
+.content button[disabled] {
+    background-color: lightgrey;
+    border: solid 1px lightgrey;
+    color: black;
+}
+.content button[disabled]:hover {
+    background-color: lightgrey;
+    border: solid 1px lightgrey;
+    color: black;
+}
 
 .content button:hover {
     background-color: rgb(201, 20, 56);
@@ -375,7 +385,7 @@ button.updateButton:hover {
     padding: 0 20px;
     border: solid 1px crimson;
     border-radius: 10px;
-    width: 80%;
+    /* width: 80%; */
     color: crimson;
     font-size: 18px;
 }
@@ -383,6 +393,14 @@ button.updateButton:hover {
     background-color: crimson;
     color: white;
     transition: 400ms;
+}
+.btn-pay {
+    background-color: #43AA8B;
+    border: solid 1px #43AA8B;
+    color: white;
+}
+.btn-pay:hover {
+    background-color: #2f7a64;
 }
 
 .menu li > .hd-menu {

@@ -62,8 +62,14 @@ const SelectRest = () => {
     */
     return (
         <>
-            {isSelected ? <Loading message={"Đang tải xuống dữ liệu..."} /> :
+            {isSelected ?
                 <>
+                  <Loading message={"Đang tải xuống dữ liệu..."} />
+                  <div style={{position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)"}}>
+                    <div>Trinity &copy; copyright 2023</div>
+                  </div>
+                </>
+               : <>
                     <div>
                         Vui lòng chọn 1 nhà hàng để bắt đầu!
                     </div>

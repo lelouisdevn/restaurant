@@ -19,12 +19,15 @@ const OrderFilter = (props) => {
         const url = `${HOST}/order/filter/`;
         const restaurant = JSON.parse(localStorage.getItem('infoRestaurant'));
         console.log(restaurant)
+        const d = new Date().getDate();
+        const m = new Date().getMonth();
+        const y = new Date().getFullYear();
         const res = await axios
             .post(url, {
                 restaurant: restaurant._id,
-                from: fromDate,
-                to: toDate,
-                status: status,
+                from: fromDate ? fromDate : y+"-"+(m+1)+"-"+d,
+                to: toDate ? toDate : y+"-"+(m+1)+"-"+(d+1),
+                status: 1,
             })
         if (res.status === 200) {
             console.log(res?.data.orders);
@@ -57,17 +60,7 @@ const OrderFilter = (props) => {
                             <input type="date" onChange={(e) => setToDate(e.target.value)} />
                         </div>
                     </div>
-                    <div>
-                        <div>Trạng thái hóa đơn</div>
-                        <div>
-                            <select onChange={(e) => setStatus(e.target.value)}>
-                                <option value="dathanhtoan">Hóa đơn đã thanh toán</option>
-                                <option value="dadat">Hóa đơn chưa thanh toán</option>
-                                <option value="dahuy">Hóa đơn đã hủy</option>
-                                {/* <option>Tất cả hóa đơn</option> */}
-                            </select>
-                        </div>
-                    </div>
+                    
                     {/* <div>
                         item 3
                     </div>

@@ -153,7 +153,10 @@ const OrderModal = (props) => {
                                 </tr>
                                 <tr><td>Mã hóa đơn:</td><td>{order._id}</td></tr>
                                 <tr><td>Đặt lúc:</td><td>{new Date(order.order_at).toLocaleString("vi-VN", { hour12: false })}</td></tr>
-                                <tr><td>Thanh toán lúc:</td><td>{new Date().toLocaleString("vi-VN", { hour12: false })}</td></tr>
+                                {
+                                    order.bill_at &&
+                                    <tr><td>Thanh toán lúc:</td><td>{new Date(order.bill_at).toLocaleString("vi-VN")}</td></tr>
+                                }
                                 <tr>
                                     <td>Bàn:</td>
                                     <td>{
@@ -182,9 +185,15 @@ const OrderModal = (props) => {
                                 ))}
                                 <tr>
                                     <td colSpan={4}>Tổng:</td>
-                                    <td
-                                        style={{ fontWeight: "bold" }}
-                                    >{VND.format(order.total)}</td>
+                                    {
+                                        order.total === undefined ?
+                                        <td style={{ fontWeight: "bold" }}>
+                                            Loading...
+                                        </td> :
+                                        <td style={{ fontWeight: "bold" }}>
+                                            {VND.format(order.total)}
+                                        </td>
+                                    }
                                 </tr>
                             </table>
                         </div>
@@ -195,7 +204,12 @@ const OrderModal = (props) => {
                                 value={qrcode} />
                             <div>Mã QR thanh toán cho đơn hàng</div>
                             <div style={{color: "crimson"}}>{order._id}</div>
-                            <div>{new Date().toLocaleString("vi-VN")}</div>
+                            {
+                                order.bill_at ?
+                                <div>{new Date(order.bill_at).toLocaleString("vi-VN")}</div>
+                                :
+                                <div>{new Date().toLocaleString("vi-VN")}</div>
+                            }
                         </div>
                         <div style={{ fontSize: "16px" }}>
                             {/* <div>

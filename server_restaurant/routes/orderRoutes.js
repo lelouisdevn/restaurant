@@ -60,8 +60,8 @@ router.post("/order/filter", async (req, res) => {
     order_at: {
       $gte: new Date(from),
       $lte: new Date(to)
-      // status: status,
-    }
+    },
+     status: "dadat",
   });
   res.send({ orders });
 });
