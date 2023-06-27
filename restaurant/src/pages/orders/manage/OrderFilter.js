@@ -13,7 +13,7 @@ const OrderFilter = (props) => {
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
     // const [status, setStatus] = useState("");
-    const [filterCriteria, setFilterCriteria] = useState(1);
+    const [filterCriteria, setFilterCriteria] = useState(0);
 
     // filter orders;
     const search = async () => {
@@ -28,7 +28,7 @@ const OrderFilter = (props) => {
                 restaurant: restaurant._id,
                 from: fromDate ? fromDate : y+"-"+(m+1)+"-"+d,
                 to: toDate ? toDate : y+"-"+(m+1)+"-"+(d+1),
-                filter: filterCriteria ? filterCriteria : 1,
+                filter: filterCriteria ? filterCriteria : 0,
             })
         if (res.status === 200) {
             console.log(res?.data.orders);
