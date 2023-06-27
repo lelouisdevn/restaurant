@@ -159,7 +159,10 @@ const getBillToDay = async() => {
                         onChange={(values) => {
                           setDates(
                             values.map((item) => {
-                              return moment(item.$d).format("MM/DD/YYYY");
+                              console.log("item: ", item);
+                              if (item !== null) {
+                                return moment(item.$d).format("MM/DD/YYYY");
+                              }
                             })
                           );
                         }}
@@ -205,7 +208,7 @@ const getBillToDay = async() => {
             <Item sx={{ backgroundColor: "#91C5F8" }}>
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
                 <Typography variant="h5" sx={{ fontWeight: 600, paddingTop: "10px" }}>
-                  Thống kê doanh thu theo{" "}
+                 Biểu đồ cột thống kê doanh thu theo{" "}
                   {bar === "tuannay"
                     ? "tuần hiện tại"
                     : bar === "thang"
@@ -263,7 +266,7 @@ const getBillToDay = async() => {
             <Item2>
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  Tổng hợp
+                  Thống kê tổng hợp
                 </Typography>
                 <Box className=" calendar flex items-center justify-center">
                   <LocalizationProvider
@@ -282,7 +285,9 @@ const getBillToDay = async() => {
                           onChange={(values) => {
                             setDates(
                               values.map((item) => {
-                                return moment(item.$d).format("MM/DD/YYYY");
+                                if (item !== null) {
+                                  return moment(item.$d).format("MM/DD/YYYY");
+                                }
                               })
                             );
                           }}

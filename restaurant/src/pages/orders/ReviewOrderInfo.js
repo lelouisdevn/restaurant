@@ -10,17 +10,20 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, Typography } from "@mui/material";
 
-const ReviewOrderInfo = (props) => {
-  // console.log("resOreserinfo", props.restaurant);
-  const listTable= props.table;
-  // console.log("resOreUserinfo", props.user);
+const ReviewOrderInfo = ({user, restaurant, table})=> {
+  console.log("ReviewOrderInfo restaurant", restaurant);
+  console.log("ReviewOrderInfo user ", user);
+  console.log("ReviewOrderInfo table ", table);
+  // console.log("resOreserinfo", restaurant);
+  const listTable= table;
+  // console.log("resOreUserinfo", user);
   const [infoRes, setInfoRes] = useState([]);
   const [infoUser, setInfoUser] = useState([]);
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
-    getInfoRes(props.restaurant, props.user);
-  }, [props.restaurant, props.user]);
+    getInfoRes(restaurant, user);
+  }, [restaurant, user]);
 
   const getInfoRes = async (idRes, idUser) => {
     await axios
