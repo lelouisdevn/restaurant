@@ -195,7 +195,16 @@ const OrderModal = (props) => {
                                         </td>
                                     }
                                 </tr>
+                                {
+                                    order.note &&
+                                    <tr>
+                                        <td>Ghi chú:</td>
+                                        <td colSpan={4}>{order.note}</td>
+                                    </tr>
+                                }
                             </table>
+
+                            
                         </div>
                         <div style={{fontSize: "18px"}}>
                             
@@ -211,20 +220,8 @@ const OrderModal = (props) => {
                                 <div>{new Date().toLocaleString("vi-VN")}</div>
                             }
                         </div>
-                        <div style={{ fontSize: "16px" }}>
-                            {/* <div>
-                                Tiền khách đưa:
-                                <input
-                                    style={{ border: "solid 1px lightgrey", borderRadius: "10px", padding: "5px 7px", margin: "0 7px" }}
-                                    onChange={(e) => setMoneyReceived(e.target.value)} />
-                            </div>
-                            <div>
-                                Tiền thối: {VND.format(money - order.total)}
-                            </div> */}
-                        </div>
                     </div>
                     <div className="order-modal-footer">
-                        {/* <button disabled={billExportStatus} onClick={() => handlePay()}>Thanh toán hoá đơn</button> */}
                         <button
                             onClick={() => {
                                 generateBillPDF()
