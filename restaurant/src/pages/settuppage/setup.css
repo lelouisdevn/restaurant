@@ -61,6 +61,7 @@
     height: 100vh;
     background-color: white;
     /* animation: fadebg 1s ease infinite; */
+    display: block!important;
 }
 .logo-ani-prev img {
     top: 50%;

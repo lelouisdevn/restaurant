@@ -4,6 +4,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import '../settuppage/setup.css';
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +24,8 @@ const Login = () => {
   //     localStorage.clear();
   //   }
   // },[]);
-  console.log("link ne: ",localStorage.getItem('currentUrl'));
+  console.log("link ne: ", localStorage.getItem('currentUrl'));
+  const [float, setFloat] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,7 +38,7 @@ const Login = () => {
           password: password
         })
         .then(async (res) => {
-          
+          setFloat("logo-ani-prev");
           let tempInfoRestaurant;
           localStorage.setItem("UserID", res?.data.login[0]._id);
           console.log(res?.data.login[0]);
@@ -63,7 +65,7 @@ const Login = () => {
                 );
               });
             navigate("/staff/outline");
-          } else if(res?.data.login[0].role === "3"){
+          } else if (res?.data.login[0].role === "3") {
             const tempInfoStaff = res?.data.login[0];
             //console.log(tempInfoStaff);
             localStorage.setItem("infoStaff", JSON.stringify(tempInfoStaff));
@@ -120,22 +122,28 @@ const Login = () => {
     }
   };
   return (
-    <section className="h-screen">
-      <div className="h-full">
-        <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-            <img
-              src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-              className="w-full"
-              alt="Sample image"
-            />
-          </div>
-          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
-            <form onSubmit={handleLogin}>
-              <div className="w-full sm:w-2/3 lg:2/3 px-6 bg-blue-600 bg-clip-padding backdrop-filter backdrop-blur-sm text-white z-50 py-4  rounded-lg">
-                <div className="w-full flex justify-center text-[#fff] text-3xl font-bold mb:2 md:mb-5">
-                  Đăng nhập
-                </div>
+    <>
+      <div>
+        <div className={`logo ${float}`} style={{ margin: 0, display: "none" }}>
+          <img src='/images/logoo.png' />
+        </div>
+      </div>
+      <section className="h-screen">
+        <div className="h-full">
+          <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+            <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+              <img
+                src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                className="w-full"
+                alt="Sample image"
+              />
+            </div>
+            <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+              <form onSubmit={handleLogin}>
+                <div className="w-full sm:w-2/3 lg:2/3 px-6 bg-blue-600 bg-clip-padding backdrop-filter backdrop-blur-sm text-white z-50 py-4  rounded-lg">
+                  <div className="w-full flex justify-center text-[#fff] text-3xl font-bold mb:2 md:mb-5">
+                    Đăng nhập
+                  </div>
 
                 {/* {msgerr ? (
                   <div className="mb-6 bg-green-200 flex justify-center items-center">
@@ -231,6 +239,7 @@ const Login = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
