@@ -275,6 +275,38 @@ router.put("/orderdetail/update=:id/undo", async (req, res) => {
     console.log(error);
   }
 });
+router.put("/orderdetail/chebien/update=:id", async (req, res) => {
+  try {
+    console.log("order:", req.params.id);
+    let statusOP = await OrderDetail.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: "chebien"
+        }
+      }
+    );
+    res.send({ statusOP });
+  } catch (error) {
+    console.log(error);
+  }
+});
+router.put("/orderdetail/xuatmon/update=:id", async (req, res) => {
+  try {
+    console.log("order:", req.params.id);
+    let statusOP = await OrderDetail.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: "xuatmon"
+        }
+      }
+    );
+    res.send({ statusOP });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 router.put("/order/note/update", async (req, res) => {
   try {

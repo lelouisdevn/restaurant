@@ -22,6 +22,8 @@ const OrderModal = (props) => {
     const [documentTitle, setDocumentTitle] = useState("");
     const [rest, setRest] = useState("");
 
+
+
     const bankAccount = {
         "first": "00020101021238580010A000000727012800069704070114190392627080170208QRIBFTTA520460115303704540",
         "n_char": String(order.total).length,
