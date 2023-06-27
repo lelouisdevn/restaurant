@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import "./info.css";
 import { Link } from 'react-router-dom';
 import axios from "axios";
-
+import { useNavigate } from 'react-router-dom';
 
 const Info = () => {
+    const navigator = useNavigate();
+
     const [info, setInfo] = useState([]);
 
     const [rest_name, setInfoName] = useState("");
@@ -25,7 +27,9 @@ const Info = () => {
             console.log("Error: ", error);
           });
     }
-
+    const editRest = (info) => {
+        navigator(`./edit/${info._id}`);
+    };
     useEffect(() => {
         getInfo();
     }, []);
@@ -79,7 +83,7 @@ const Info = () => {
                         <br/>
                         <tr className='flex justify-center'>
                             <td colspan="2">
-                                <button type="button" className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"><Link to={`./edit/${info._id}`}>Sửa</Link></button>
+                                <button type="button" className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" onClick={() =>editRest(info)}>Sửa</button>
                             </td>
                         </tr>
                     </tbody>

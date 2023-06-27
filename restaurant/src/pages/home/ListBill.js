@@ -6,7 +6,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TableSortLabel,
+  TableSortLabel
 } from "@mui/material";
 import React from "react";
 import "./home.scss";
@@ -17,26 +17,26 @@ const headCells = [
     id: "stt",
     numeric: false,
     disablePadding: true,
-    label: "STT",
+    label: "STT"
   },
   {
     id: "mahoadon",
     numeric: true,
     disablePadding: false,
-    label: "Mã hóa đơn ",
+    label: "Mã hóa đơn "
   },
   {
     id: "nhanvien",
     numeric: true,
     disablePadding: false,
-    label: "Nhân viên",
+    label: "Nhân viên"
   },
   {
     id: "tong",
     numeric: true,
     disablePadding: false,
-    label: "Tổng hóa đơn",
-  },
+    label: "Tổng hóa đơn"
+  }
 ];
 function ListBill(props) {
   const rows = props.item;
@@ -57,7 +57,7 @@ function ListBill(props) {
                   <TableCell
                     key={headCell.id}
                     align="center"
-                   padding={headCell.disablePadding ? "none" : "normal"}
+                    padding={headCell.disablePadding ? "none" : "normal"}
                     sx={{ fontWeight: 500, fontSize: 18 }}
                   >
                     <TableSortLabel>{headCell.label}</TableSortLabel>
@@ -68,14 +68,15 @@ function ListBill(props) {
             <TableBody>
               {rows.length === 0 ? (
                 <TableRow>
-                  <TableCell scope="row">
+                  <td colSpan={4} >
                     <Typography
                       variant="p"
-                      sx={{ fontWeight: 600, textAlign: "center" }}
+                    className="text-2xl"
+                      sx={{  fontWeight: 600, textAlign: "center" }}
                     >
                       Hiện tại chưa có dữ liệu
                     </Typography>
-                  </TableCell>
+                  </td>
                 </TableRow>
               ) : (
                 rows.map((row, index) => (
@@ -85,11 +86,7 @@ function ListBill(props) {
                     key={index}
                     sx={{ cursor: "pointer" }}
                   >
-                    <TableCell
-                      align="center"
-                    >
-                      {index + 1}
-                    </TableCell>
+                    <TableCell align="center">{index + 1}</TableCell>
                     <TableCell align="center">{row._id}</TableCell>
                     <TableCell align="center">{row.user.staff_name}</TableCell>
                     <TableCell align="center">
@@ -98,61 +95,61 @@ function ListBill(props) {
                   </TableRow>
                 ))
               )}
+
+               
             </TableBody>
           </Table>
         </Box>
       </Box>
     </Paper>
-    
-      // <div className="outer-wrapper">
-      //   <div className="table-wrapper">
-      //     <table
-      //      >
-      //     <thead>
-      //       <th>STT</th>  
-      //       <th>Mã hóa đơn </th>  
-      //       <th>Nhân viên</th>  
-      //       <th>Tổng hóa đơn</th>  
-      //       </thead>
-      //       <tbody>
-      //         {rows.length === 0 ? (
-      //           <tr>
-      //             <td scope="row">
-      //               <Typography
-      //                 variant="p"
-      //                 sx={{ fontWeight: 600, textAlign: "center" }}
-      //               >
-      //                 Hiện tại chưa có dữ liệu
-      //               </Typography>
-      //             </td>
-      //           </tr>
-      //         ) : (
-      //           rows.map((row, index) => (
-      //             <tr
-      //               // hover
-      //               // tabIndex={-1}
-      //               // key={index}
-      //               // sx={{ cursor: "pointer" }}
-      //             >
-      //               <td
-      //                 align="center"
-      //               >
-      //                 {index + 1}
-      //               </td>
-      //               <td align="center">{row._id}</td>
-      //               <td align="center">{row.user.staff_name}</td>
-      //               <td align="center">
-      //                 {VND.format(row.total)}
-      //               </td>
-      //             </tr>
-      //           ))
-      //         )}
-      //       </tbody>
-      //     </table>
-      //   </div>
-      // </div>
-   
-    
+
+    // <div className="outer-wrapper">
+    //   <div className="table-wrapper">
+    //     <table
+    //      >
+    //     <thead>
+    //       <th>STT</th>
+    //       <th>Mã hóa đơn </th>
+    //       <th>Nhân viên</th>
+    //       <th>Tổng hóa đơn</th>
+    //       </thead>
+    //       <tbody>
+    //         {rows.length === 0 ? (
+    //           <tr>
+    //             <td scope="row">
+    //               <Typography
+    //                 variant="p"
+    //                 sx={{ fontWeight: 600, textAlign: "center" }}
+    //               >
+    //                 Hiện tại chưa có dữ liệu
+    //               </Typography>
+    //             </td>
+    //           </tr>
+    //         ) : (
+    //           rows.map((row, index) => (
+    //             <tr
+    //               // hover
+    //               // tabIndex={-1}
+    //               // key={index}
+    //               // sx={{ cursor: "pointer" }}
+    //             >
+    //               <td
+    //                 align="center"
+    //               >
+    //                 {index + 1}
+    //               </td>
+    //               <td align="center">{row._id}</td>
+    //               <td align="center">{row.user.staff_name}</td>
+    //               <td align="center">
+    //                 {VND.format(row.total)}
+    //               </td>
+    //             </tr>
+    //           ))
+    //         )}
+    //       </tbody>
+    //     </table>
+    //   </div>
+    // </div>
   );
 }
 

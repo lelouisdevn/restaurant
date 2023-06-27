@@ -5,6 +5,7 @@ import {
     ListItemText
   } from "@mui/material";
 import "./UserDetail.css"
+import "./UserList.css";
 import React,  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 //import UserBase from './UserBase';
@@ -54,12 +55,13 @@ function UserList() {
     }
     return (
         <table className='table-auto bg-indigo-900 rounded p-5 m-5'>
-            <tbody className="">
-                <tr className="flex flex-wrap">
+            <tbody className="static ">
+                <tr className="container flex flex-wrap" style={{position: "relattive"}}>
                     {(users).map((row,index) => (
                         <td key={index}>
-                            <Link to={`${row.user._id}`}>
-                            <ul className="list-inside bg-slate-50 rounded-lg p-2 m-3 w-52 h-48 shortedword" >
+                            <Link to={`${row.user._id}`} className="fLink">
+                            <ul className=" list-inside bg-slate-50 rounded-lg p-2 m-3 w-52 h-48 shortedword" >
+                            {/* <ul className="" > */}
                                     <li className="bg-indigo-200 rounded p-2">Nhân Viên:  {rolechar(row.user.role)}</li>
                                     <li>Tên: {row.user.staff_name}</li>
                                     <li>Giới Tính: {row.user.staff_gender}</li>

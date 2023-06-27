@@ -1,22 +1,23 @@
 import './orders.css';
 
-function OrderInfo(props) {
+function OrderInfo({user, restaurant, nameTable }) {
+
     return(
         <div className="restInfo">
-            <div>{props.restaurant.rest_name}</div>
+            <div>{restaurant.rest_name}</div>
             <div className='orderInfo'>
                 <table>
                     <tr>
                         <td>Địa chỉ:</td>
-                        <td>{props.restaurant.rest_addr}</td>
+                        <td>{restaurant.rest_addr}</td>
                     </tr>
                     <tr>
                         <td>Số điện thoại:</td>
-                        <td>{props.restaurant.rest_phone}</td>
+                        <td>{restaurant.rest_phone}</td>
                     </tr>
                     <tr> 
                         <td>Bàn</td>
-                        <td>{props.nameTable}</td>
+                        <td>{nameTable}</td>
                     </tr>
                     {/* <tr>
                         <td>Nhân viên:</td>
@@ -33,7 +34,7 @@ function OrderInfo(props) {
                      */} 
                     <tr>
                         <td>Nhân viên:</td>
-                        <td>{props.user.staff_name}</td>
+                        <td>{user.staff_name}</td>
                     </tr>
                 </table>
             </div>
