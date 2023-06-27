@@ -135,7 +135,7 @@ function DS_Order() {
     height: "90%",
     position: "absolute",
     left: "0",
-    top: "0",
+    top: "7%",
 };
   return (
     <>
