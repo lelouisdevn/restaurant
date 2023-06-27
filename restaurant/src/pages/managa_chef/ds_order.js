@@ -10,6 +10,7 @@ import './bep.css';
 import Modal from "./modal";
 import useModal from './useModal';
 import Bep_Modal from './bep_modal';
+import Get_Table from './get_table';
 function DS_Order() {
   const navigate = useNavigate();
   const HOST = 'http://localhost:4000/api';
@@ -65,61 +66,7 @@ function DS_Order() {
 
 
   };
-  //lay khu vuc khi có id rest
-
-  const getLobbies = async (id) => {
-    //console.log(id);
-    await axios
-      .get(`http://localhost:4000/api/all/lobbies/restaurant=${id}`)
-      .then((res) => {
-        const temp = res?.data.lobbies;
-        console.log("templobbies: ", temp);
-        setLobbies(temp);
-
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        //setErr(error);
-      });
-  };
-  //xem chi tiet order
-  const [detailOrder, setDetailOrder] = useState();
-  const [products, setProducts] = useState([]);
-  const viewDetailTable = async (props) => {
-    // console.log("ok: ", props);
-
-    if (props.status) {
-      await axios
-        .get(`http://localhost:4000/api/table=${props.table}/orderdetail`)
-        .then((res) => {
-          const temp = res?.data.detailOrder[0];
-          console.log("detailOrder: ", temp);
-          setDetailOrder(temp);
-          setProducts(temp.listpro);
-        })
-    }
-  };
-  //   const [detailModal, setDetailModal] = useState(false);
-  //   const [selectedOrder, setSelectedOrder] = useState("");
-  //   const seeDetails = (order) => {
-  //     let new_order = { Order: order._id };
-  //     console.log(new_order)
-  //     setSelectedOrder(new_order);
-  //     console.log(order);
-  //     setDetailModal(true);
-  //     //setSuccessClass("opacity-success");
-  // }
-  // const closeModal = () => {
-  //   //setFilter(false);
-  //   setDetailModal(false);
-  //   //setSuccessClass("");
-  // }
-  // const style = {
-  //     width: "100%",
-  //     height: "90%",
-  //     position: "absolute",
-  //     left: "0",
-  // };
+  
   const {isShowing, toggle} = useModal();
   const [selectedOrder, setSelectedOrder] = useState("");
   const [detailModal, setDetailModal] = useState(false);
@@ -159,6 +106,7 @@ function DS_Order() {
                   <tbody>
                     <tr style={{ background: "aliceblue", fontWeight: "bold" }}>
                       <td scope="col" class="px-6 py-4">OrderID</td>
+                      <td scope="col" class="px-6 py-4">Bàn</td>
                       <td scope="col" class="px-6 py-4">Trạng Thái</td>
                       <td scope="col" class="px-6 py-4">Giờ đặt</td>
                       <td scope="col" class="px-6 py-4">Ghi Chú</td>
@@ -168,6 +116,7 @@ function DS_Order() {
                       <tr
                         class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                         <td class="whitespace-nowrap px-6 py-4 font-medium">{row._id}</td>
+                        <td class="whitespace-nowrap px-6 py-4"> <Get_Table orderid={row._id}/></td>
                         <td class="whitespace-nowrap px-6 py-4"> {row.status}</td>
                         <td class="whitespace-nowrap px-6 py-4">{new Date(row.order_at).toLocaleString("vi-VN", { hour12: false })}</td>
                         <td class="whitespace-nowrap px-6 py-4">{row.note}</td>

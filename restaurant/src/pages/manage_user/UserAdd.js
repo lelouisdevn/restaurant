@@ -70,14 +70,14 @@ function UserAdd(){
                     <tr>
                         <td>SĐT:</td>
                         <td>
-                            <input value={staff_phone} onChange={(text) => setStaffPhone(text.target.value)}></input>
+                            <input type='number' value={staff_phone} onChange={(text) => setStaffPhone(text.target.value)}></input>
                         </td>
                     </tr>
                     <br/>
                     <tr>
                         <td>Ngày Sinh:</td>
                         <td>
-                            <input value={staff_dob} onChange={(text) => setStaffDob(text.target.value)}></input>
+                            <input type="date" value={staff_dob} onChange={(text) => setStaffDob(text.target.value)}></input>
                         </td>
                     </tr>
                     <br/>
@@ -91,7 +91,12 @@ function UserAdd(){
                     <tr>
                         <td>Giới Tính:</td>
                         <td>
-                            <input value={staff_gender} onChange={(text) => setStaffGender(text.target.value)}></input>
+                            {/* <input value={staff_gender} onChange={(text) => setStaffGender(text.target.value)}></input> */}
+                            <select value={staff_gender} onChange={(text) => setStaffGender(text.target.value)}>
+                                <option value="Nữ">Nữ</option>
+                                <option value="Nam">Nam</option>
+                                
+                            </select>
                         </td>
                     </tr>
                     <br/>
