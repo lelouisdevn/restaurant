@@ -333,7 +333,7 @@ const ManageOrderList = () => {
                                 </option>
                                 <option value="2">
                                     Hóa đơn đã hủy</option>
-                                <option value="3">Tất cả hóa đơn</option>
+                                {/* <option value="3">Tất cả hóa đơn</option> */}
                             </select>
                         </div>
                     </div>
