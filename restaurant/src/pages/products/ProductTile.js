@@ -34,7 +34,7 @@ const ProductTitle = (props) => {
   }, [props.criteria]);
 
   return (
-    <div className={`container ${blurtile}`} style={{position: "relattive"}}>
+    <div className={`container-product-tile ${blurtile}`} style={{position: "relattive"}}>
       {product ?
         <div>
           <Link to={`/manage/product/${product._id}`} className="fLink">
