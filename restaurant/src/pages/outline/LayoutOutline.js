@@ -24,22 +24,7 @@ const LayoutOutline = () => {
   // };
   return (
     <div display="flex">
-      {/* <Box
-        height={40}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Typography variant="h6">
-          Bàn đang chọn:{" "}
-          {ls &&
-            ls.map((l, i) => (
-              <Typography variant="span" key={i}>
-                {l.tbl_id} {i > -1 && i < ls.length - 1 ? "," : null}
-              </Typography>
-            ))}
-        </Typography>
-      </Box> */}
+      
       <Box
         direction="row"
         display="flex"
@@ -86,12 +71,12 @@ const LayoutOutline = () => {
           ) : (
             <Box flex={5}>
               {/* <Outlet /> */}
-              <OutLine
-                id={idlobby}
+               <OutLine  
+                idL={idlobby}
                 arrange={arrange}
-                numRow={numRow}
-                // selectTableCallback={selectTableFunction}
-              />
+                numRow={numRow}  
+                 // selectTableCallback={selectTableFunction}  
+                />  
             </Box>
           )}
         </Stack>
