@@ -26,6 +26,7 @@ const SiderbarStaff = ({parentCallback}) => {
   const handleListItemClick = async (event, index, path, id, arrange, numRow) => {
     setSelectedIndex(index);
     // navigate(path);
+    console.log("Chon khu vuc: ", id + arrange + numRow);
     parentCallback(id, arrange, numRow);
   };
 
