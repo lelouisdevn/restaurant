@@ -178,17 +178,17 @@ const OutLine = ({ idL, arrange, numRow }) => {
     if (criteria === 0) {
       message = {
         noti: "Đơn hàng đã được xóa thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
       };
     } else if (criteria === 1) {
       message = {
         noti: "Đơn hàng đã được thanh toán thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
       };
     } else {
       message = {
         noti: "Đơn hàng đã được cập nhật thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
       };
     }
     updateOrder(message);
