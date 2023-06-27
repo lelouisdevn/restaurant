@@ -13,7 +13,7 @@ function DS_Order() {
   const navigate = useNavigate();
   const HOST = 'http://localhost:4000/api';
   const id = localStorage.getItem("RestaurantID");
-  console.log(id);
+  //console.log(id);
   const [table, setTable] = useState([]);
   const [lobbies, setLobbies] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -153,6 +153,7 @@ function DS_Order() {
                             isShowing={isShowing}
                             hide={toggle}
                             order={row}
+                            key={row._id}
                           />
                         </td>
                       </tr>

@@ -4,7 +4,7 @@ import axios from "axios";
 import './bep.css';
 import DS_Detail from './ds_detail';
 
-const Modal = ({ isShowing, hide, order }) => isShowing ? ReactDOM.createPortal(
+const Modal = ({ isShowing, hide, order, key  }) => isShowing ? ReactDOM.createPortal(
     
     <React.Fragment>
         <div className="modal-overlay " />
@@ -17,7 +17,8 @@ const Modal = ({ isShowing, hide, order }) => isShowing ? ReactDOM.createPortal(
                 </div>
                 <div>
                     
-                    <DS_Detail order={order}/>
+                    <DS_Detail key={key} order={order}/>
+                    {console.log(key)}
                 </div>
             </div>
         </div>
