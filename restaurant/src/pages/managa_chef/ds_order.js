@@ -120,9 +120,33 @@ function DS_Order() {
   //     left: "0",
   // };
   const {isShowing, toggle} = useModal();
+  const [selectedOrder, setSelectedOrder] = useState("");
+  const [detailModal, setDetailModal] = useState(false);
+  const showModal = (o) => {
+    setDetailModal(true);
+    o['Order'] = o._id;
+    setSelectedOrder(o);
+  }
+  const closeModal = () => {
+    setDetailModal(false);
+  }
+  const style = {
+    width: "100%",
+    height: "90%",
+    position: "absolute",
+    left: "0",
+    top: "0",
+};
   return (
     <>
-
+      {
+        detailModal &&
+          <OrderModal
+          order={selectedOrder}
+          style={style}
+          functioner={closeModal}
+        />
+      }
       <table className="order-grid-container p-5 m-5">
 
         <div class="flex flex-col ">
@@ -149,11 +173,12 @@ function DS_Order() {
                         <td class="whitespace-nowrap px-6 py-4">
                           {/* <DS_Detail order={row}/> */}
                           <button className="button-default" onClick={toggle}>Xem chi tiết</button>
-                          <Modal
+                          {/* <Modal
                             isShowing={isShowing}
                             hide={toggle}
                             order={row}
-                          />
+                          /> */}
+                          <button onClick={() => showModal(row)}>chi tiet</button>
                         </td>
                       </tr>
                     ))}
