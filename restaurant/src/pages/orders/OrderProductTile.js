@@ -21,7 +21,7 @@ const OrderProductTitle = (props) => {
     setStatus(!status);
   }
   return (
-    <div className="container" style={{ position: "relative" }} onClick={handleClick}>
+    <div className="container-product-tile" style={{ position: "relative" }} onClick={handleClick}>
 
       {product ?
         <div>
@@ -34,7 +34,7 @@ const OrderProductTitle = (props) => {
           </div>
           <button
             
-            style={{ position: "absolute", right: 0, top: 0 }}
+            style={{ position: "absolute", right: 0, top: 0, padding: "0" }}
           >
             {status
               ? <FontAwesomeIcon icon={faCircle}
