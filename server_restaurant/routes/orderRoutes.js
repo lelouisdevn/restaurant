@@ -290,14 +290,14 @@ router.put("/orderdetail/update=:id/undo", async (req, res) => {
     console.log(error);
   }
 });
-router.put("/orderdetail/chebien/update=:id", async (req, res) => {
+router.put("/orderdetail/:stt/update=:id", async (req, res) => {
   try {
     console.log("order:", req.params.id);
     let statusOP = await OrderDetail.updateOne(
       { _id: new ObjectId(req.params.id)  },
       {
         $set: {
-          status: "chebien"
+          status: req.params.stt
         }
       }
     );
