@@ -11,12 +11,12 @@ function Set_Status(props) {
                 console.log(res?.data.statusOP);
             })
     }
-    useEffect(() => {
-        if(stt != "dadat"){
-            setStatus(props.orderdetailID);
-        }
+    // useEffect(() => {
+    //     if(stt != "dadat"){
+    //         setStatus(props.orderdetailID);
+    //     }
         
-    }, [stt]);
+    // }, [stt]);
 
     function rolechar(i){
         const dd = "Đã gửi bếp";
@@ -30,10 +30,9 @@ function Set_Status(props) {
     }
     return (
         <>
-            {props.status}
-            {/* <select
+            <select
                     className=""
-                    defaultValue={props.status} onChange={(text) => setSTT(text.target.value)}
+                    defaultValue={props.status} onChange={(text) => setStatus(props.orderdetailID)}
             >
                 <option value={props.status}>{rolechar(props.status)}</option>
                 {
@@ -41,7 +40,7 @@ function Set_Status(props) {
                     : ""
                 }
 
-            </select> */}
+            </select>
             
         </>
     );

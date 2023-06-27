@@ -9,6 +9,7 @@ import DS_Detail from './ds_detail';
 import './bep.css';
 import Modal from "./modal";
 import useModal from './useModal';
+import Bep_Modal from './bep_modal';
 function DS_Order() {
   const navigate = useNavigate();
   const HOST = 'http://localhost:4000/api';
@@ -141,7 +142,7 @@ function DS_Order() {
     <>
       {
         detailModal &&
-          <OrderModal
+          <Bep_Modal
           order={selectedOrder}
           style={style}
           functioner={closeModal}
@@ -172,13 +173,13 @@ function DS_Order() {
                         <td class="whitespace-nowrap px-6 py-4">{row.note}</td>
                         <td class="whitespace-nowrap px-6 py-4">
                           {/* <DS_Detail order={row}/> */}
-                          <button className="button-default" onClick={toggle}>Xem chi tiết</button>
+                          {/* <button className="button-default" onClick={toggle}>Xem chi tiết</button> */}
                           {/* <Modal
                             isShowing={isShowing}
                             hide={toggle}
                             order={row}
                           /> */}
-                          <button onClick={() => showModal(row)}>chi tiet</button>
+                          <button className="button-default" onClick={() => showModal(row)}>Chi Tiết</button>
                         </td>
                       </tr>
                     ))}

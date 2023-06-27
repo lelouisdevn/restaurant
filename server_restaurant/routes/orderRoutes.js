@@ -294,7 +294,7 @@ router.put("/orderdetail/chebien/update=:id", async (req, res) => {
   try {
     console.log("order:", req.params.id);
     let statusOP = await OrderDetail.updateOne(
-      { _id: req.params.id },
+      { _id: new ObjectId(req.params.id)  },
       {
         $set: {
           status: "chebien"
