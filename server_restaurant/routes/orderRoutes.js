@@ -53,17 +53,29 @@ router.post("/order/detail/new", async (req, res) => {
 });
 /**Get orders with filter */
 router.post("/order/filter", async (req, res) => {
-  const { restaurant, from, to, status } = req.body;
-  console.log(from, to);
-  const orders = await Order.find({
-    restaurant: new ObjectId(restaurant),
-    order_at: {
-      $gte: new Date(from),
-      $lte: new Date(to)
-    },
-     status: "dadat",
-  });
-  res.send({ orders });
+  const { restaurant, from, to, filter } = req.body;
+  // console.log(from, to);
+  const methods = ["dahuy", 'dadat', 'dathanhtoan']
+  if (filter === 3) {
+    const orders = await Order.find({
+      restaurant: new ObjectId(restaurant),
+      order_at: {
+        $gte: new Date(from),
+        $lte: new Date(to)
+      },
+    });
+    res.send({orders});
+  }else {
+    const orders = await Order.find({
+      restaurant: new ObjectId(restaurant),
+      order_at: {
+        $gte: new Date(from),
+        $lte: new Date(to)
+      },
+       status: methods[filter],
+    });
+    res.send({ orders });
+  }
 });
 
 /**Get all orders */

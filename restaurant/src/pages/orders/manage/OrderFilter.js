@@ -12,7 +12,8 @@ const OrderFilter = (props) => {
     }
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
-    const [status, setStatus] = useState("");
+    // const [status, setStatus] = useState("");
+    const [filterCriteria, setFilterCriteria] = useState(0);
 
     // filter orders;
     const search = async () => {
@@ -27,7 +28,7 @@ const OrderFilter = (props) => {
                 restaurant: restaurant._id,
                 from: fromDate ? fromDate : y+"-"+(m+1)+"-"+d,
                 to: toDate ? toDate : y+"-"+(m+1)+"-"+(d+1),
-                status: 1,
+                filter: filterCriteria ? filterCriteria : 0,
             })
         if (res.status === 200) {
             console.log(res?.data.orders);
@@ -58,6 +59,17 @@ const OrderFilter = (props) => {
                         <div>
                             <label>Ngày kết thúc:</label>
                             <input type="date" onChange={(e) => setToDate(e.target.value)} />
+                        </div>
+                    </div>
+                    <div>
+                        <div>Trạng thái: </div>
+                        <div>
+                            <select onChange={(e) => setFilterCriteria(e.target.value)}>
+                                <option value={0} >Đơn đã hủy</option>
+                                <option value={1}>Đơn chưa thanh toán</option>
+                                <option value={2}>Đơn đã thanh toán</option>
+                                <option value={3}>Tất cả hóa đơn</option>
+                            </select>
                         </div>
                     </div>
                     
