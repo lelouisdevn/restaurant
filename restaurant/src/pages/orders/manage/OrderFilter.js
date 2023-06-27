@@ -6,25 +6,29 @@ import axios from 'axios';
 const OrderFilter = (props) => {
     const HOST = 'http://localhost:4000/api';
     const style = {
-        height: "50%",
+        height: "fit-content",
         width: "30%",
         position: "absolute"
     }
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
-    const [status, setStatus] = useState("");
+    // const [status, setStatus] = useState("");
+    const [filterCriteria, setFilterCriteria] = useState(1);
 
     // filter orders;
     const search = async () => {
         const url = `${HOST}/order/filter/`;
         const restaurant = JSON.parse(localStorage.getItem('infoRestaurant'));
         console.log(restaurant)
+        const d = new Date().getDate();
+        const m = new Date().getMonth();
+        const y = new Date().getFullYear();
         const res = await axios
             .post(url, {
                 restaurant: restaurant._id,
-                from: fromDate,
-                to: toDate,
-                status: status,
+                from: fromDate ? fromDate : y+"-"+(m+1)+"-"+d,
+                to: toDate ? toDate : y+"-"+(m+1)+"-"+(d+1),
+                filter: filterCriteria ? filterCriteria : 1,
             })
         if (res.status === 200) {
             console.log(res?.data.orders);
@@ -58,22 +62,23 @@ const OrderFilter = (props) => {
                         </div>
                     </div>
                     <div>
-                        <div>Trạng thái hóa đơn</div>
+                        <div>Trạng thái: </div>
                         <div>
-                            <select onChange={(e) => setStatus(e.target.value)}>
-                                <option value="dathanhtoan">Hóa đơn đã thanh toán</option>
-                                <option value="dadat">Hóa đơn chưa thanh toán</option>
-                                <option value="dahuy">Hóa đơn đã hủy</option>
-                                {/* <option>Tất cả hóa đơn</option> */}
+                            <select onChange={(e) => setFilterCriteria(e.target.value)}>
+                                <option value={0} >Đơn đã hủy</option>
+                                <option value={1}>Đơn chưa thanh toán</option>
+                                <option value={2}>Đơn đã thanh toán</option>
+                                <option value={3}>Tất cả hóa đơn</option>
                             </select>
                         </div>
                     </div>
-                    <div>
+                    
+                    {/* <div>
                         item 3
                     </div>
                     <div>
                         item 4
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="order-modal-footer">

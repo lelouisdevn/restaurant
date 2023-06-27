@@ -97,7 +97,7 @@ const ProductDetail = () => {
       .then((res) => {
         const message = {
           "noti": "Thông tin sản phẩm đã được cập nhật thành công",
-          "icon": "faCheckCircle",
+          "icon": "faCheck",
         };
         showModal(message);
       })

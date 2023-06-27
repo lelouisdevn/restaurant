@@ -816,14 +816,14 @@ const OutLine = ({ idL, arrange, numRow }) => {
                           Cập nhật yêu cầu
                         </button>
 
-                        <button className="updateButton" onClick={() => {
+                        {/* <button className="updateButton" onClick={() => {
                           setSelectedOrderId(detailOrder.listpro[0].Order)
                           // setCriteria(1)
                           showPaymentModal()
                         }
                         }>
                           Thanh toán
-                        </button>
+                        </button> */}
                         <button onClick={handleCancelOrder}>Hủy đơn</button>
                       </div>
                     </div>

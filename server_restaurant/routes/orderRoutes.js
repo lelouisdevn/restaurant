@@ -54,26 +54,48 @@ router.post("/order/detail/new", async (req, res) => {
 });
 /**Get orders with filter */
 router.post("/order/filter", async (req, res) => {
-  const { restaurant, from, to, status } = req.body;
-  const orders = await Order.find({
-    restaurant: new ObjectId(restaurant),
-    order_at: {
-      $gte: new Date(from),
-      $lte: new Date(to)
-      // status: status,
-    }
-  });
-  res.send({ orders });
+  const { restaurant, from, to, filter } = req.body;
+  // console.log(from, to);
+  const methods = ["dahuy", 'dadat', 'dathanhtoan']
+  if (filter === 3) {
+    const orders = await Order.find({
+      restaurant: new ObjectId(restaurant),
+      order_at: {
+        $gte: new Date(from),
+        $lte: new Date(to)
+      },
+    });
+    res.send({orders});
+  }else {
+    const orders = await Order.find({
+      restaurant: new ObjectId(restaurant),
+      order_at: {
+        $gte: new Date(from),
+        $lte: new Date(to)
+      },
+       status: methods[filter],
+    });
+    res.send({ orders });
+  }
 });
 
 /**Get all orders */
-router.post("/order/all", async (req, res) => {
-  const { restaurant } = req.body;
+router.post('/order/all', async (req, res) => {
+  const {restaurant, criteria} = req.body;
+  const methods = ["dathanhtoan", "dadat", "dahuy", "tatca"];
+  const day = new Date().getDate();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
+  console.log(day, month, year);
   try {
     const orders = await Order.aggregate([
       {
         $match: {
-          restaurant: new ObjectId(restaurant)
+          restaurant: new ObjectId(restaurant),
+          order_at: {
+            $gte: new Date(+year, +month, +day),
+          },
+          status: methods[criteria],
         }
       },
       {

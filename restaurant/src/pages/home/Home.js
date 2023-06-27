@@ -204,13 +204,13 @@ const getBillToDay = async() => {
           >
             <Item sx={{ backgroundColor: "#91C5F8" }}>
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                <Typography variant="h5" sx={{ fontWeight: 600, paddingTop: "10px" }}>
                   Thống kê doanh thu theo{" "}
                   {bar === "tuannay"
                     ? "tuần hiện tại"
                     : bar === "thang"
-                    ? "thang"
-                    : "nam"}
+                    ? "tháng"
+                    : "năm"}
                 </Typography>
                 <div className="flex items-end justify-end mb-3 pr-6">
                   <label className="text-black text-xl" htmlFor="selectCP">

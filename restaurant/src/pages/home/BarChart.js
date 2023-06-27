@@ -58,89 +58,82 @@ function BarChartPro({ restaurant, aspect, title , type}) {
    }, [restaurant._id]);
 
   return (
-  <>
+    <>
       {type === "1" ? (
-    <div className="barchart bg-white">
-      <ResponsiveContainer width="100%" aspect={aspect}>
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Thứ" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Số lượng" fill="#8884d8" />
-          <Bar dataKey="Doanh thu" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-      
+        <div className="barchart bg-white">
+          <ResponsiveContainer width="100%" aspect={aspect}>
+            <BarChart
+              width={500}
+              height={300}
+              data={data}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="Thứ" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Số lượng" fill="#8884d8" />
+              <Bar dataKey="Doanh thu" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      ) : type === "2" ? (
+        <div className="barchart bg-white">
+          <ResponsiveContainer width="100%" aspect={aspect}>
+            <BarChart
+              width={500}
+              height={300}
+              data={dataW}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="Tuần" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Số ngày của tuần" fill="#7AB1E7" />
+              <Bar dataKey="Số lượng hóa đơn" fill="#8884d8" />
+              <Bar dataKey="Doanh thu" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       ) : (
-          type === "2" ? (
-    <div className="barchart bg-white">
-      <ResponsiveContainer width="100%" aspect={aspect}>
-        <BarChart
-          width={500}
-          height={300}
-          data={dataW}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Tuần" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Số ngày của tuần" fill="#8883c8" />
-          <Bar dataKey="Số lượng hóa đơn" fill="#8884d8" />
-          <Bar dataKey="Doanh thu" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
-
-    </div>
-          ) : (
-    <div className="barchart bg-white">
-      <ResponsiveContainer width="100%" aspect={aspect}>
-        <BarChart
-          width={500}
-          height={300}
-          data={dataM}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Tháng" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Số lượng hóa đơn" fill="#8884d8" />
-          <Bar dataKey="Doanh thu" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
-
-    </div>
-              
-          )
-
+        <div className="barchart bg-white">
+          <ResponsiveContainer width="100%" aspect={aspect}>
+            <BarChart
+              width={500}
+              height={300}
+              data={dataM}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="Tháng" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Số lượng hóa đơn" fill="#8884d8" />
+              <Bar dataKey="Doanh thu" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
-  </>
+    </>
   );
 }
 

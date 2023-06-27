@@ -11,6 +11,7 @@ function OrderGrid (props) {
     const HOST = "http://localhost:4000/api";
     const [order, setOrder] = useState("");
     const [tables, setTables] = useState([]);
+    const [orderActionStatus, setOrderActionStatus] = useState("");
 
     const getTables = async () => {
         const url = `${HOST}/order/${props.order._id}/tables`;
@@ -33,28 +34,13 @@ function OrderGrid (props) {
     }
     const [status, setStatus] = useState(props.order.status);
     const [updating, setUpdating] = useState(true);
-    const payOrder = async () => {
-        setUpdating(false);
-        const url = `${HOST}/order/update`;
-        const res = await axios
-            .post(url, {
-                orderId: order._id,
-                criteria: 1,
-            })
-        if (res.status === 200) {
-            setStatus('dathanhtoan');
-            setUpdating(true);
-        }else {
-            setStatus(order.status);
-            setUpdating(true);
-        }
+    const payOrder = () => {
+        props.pay(order);
     }
     const cancelOrder = async () => {
-        setUpdating(false);
-        setStatus("dahuy");
-        setTimeout(() => {
-            setUpdating(true);
-        }, 1500);
+        if (status === 'dadat') {
+            props.cancelOrder(order)
+        }
     }
     const seeDetails = () => {
         props.seeDetails(order);
@@ -71,6 +57,16 @@ function OrderGrid (props) {
         }
     }, []);
 
+    useEffect(() => {
+      // setOrderActionStatus(props.status);
+      if (props.status.status === 'dathanhtoan' && props.status.order._id === order._id) {
+        setStatus("dathanhtoan");
+      }
+      if (props.status.status === 'dahuy' && props.status.order._id === order._id) {
+        setStatus("dahuy");
+      }
+      console.log("trang thai: ", props.status);
+    }, [props.status]);
 
 return(
     <>
@@ -79,7 +75,7 @@ return(
             <td>{props.stt}</td>
             <td>{order._id}</td>
             <td>{
-                tables.map((tbl) => 
+                tables.map((tbl) =>
                     <>{tbl.tables[0].tbl_id}, </>
                 )
             }</td>
@@ -88,15 +84,15 @@ return(
             <td>
                 {
                     updating ?
-                
-                    
+
+
                         status !== 'dathanhtoan' ?
 
                             status === 'dahuy' ?
                                 <button
                                     disabled={true}
                                     style={{ background: "#FFA737", border: "solid 1px #FFA737", color: "black" }}
-                                > Đã hủy</button>
+                                > Đơn đã hủy</button>
                                 : <button
                                     onClick={() => payOrder()}
                                     className='updateButton'
@@ -105,23 +101,30 @@ return(
                             // : <button className='updateButton'> Đã thanh toán</button>
                             :
                             <button
-                                disabled={true}
+                                disabled={true} 
                                 style={{ background: "lightgrey", border: "solid 1px lightgrey", color: "black" }}
                             > Đã thanh toán</button>
                     : <button className='updateButton'>
                         <FontAwesomeIcon icon={faCircleDot} />
                         <> Cập nhật...</>
                     </button>
-                    
+
                 }
             </td>
             <td>
-                <button className='updateButton'>
-                    <FontAwesomeIcon icon={faEye} onClick={seeDetails} />
+                <button className='updateButton' onClick={seeDetails}>
+                    <FontAwesomeIcon icon={faEye} />
                 </button>
-                <button onClick={cancelOrder}>
+                {
+                    status === 'dahuy' || status === 'dathanhtoan' ?
+                    <button onClick={cancelOrder} disabled={true}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    :
+                    <button onClick={cancelOrder}>
                     <FontAwesomeIcon icon={faTrash} />
-                </button>
+                    </button>
+                }
             </td>
         </tr>
         }

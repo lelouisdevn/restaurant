@@ -20,6 +20,7 @@ router.get("/info/id=:id", async (req, res) => {
   try {
     let info = await Info.find({_id: req.params.id});
     res.send({ info });
+    
   } catch (error) {
     console.log("Data err: ", error);
     return res.status(422).send({ Error: error.message });

@@ -62,22 +62,30 @@ const SelectRest = () => {
     */
     return (
         <>
-            {isSelected ? <Loading message={"Đang tải xuống dữ liệu..."} /> :
+            {isSelected ?
                 <>
+                  <Loading message={"Đang tải xuống dữ liệu..."} />
+                  <div style={{position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)"}}>
+                    <div>Trinity &copy; copyright 2023</div>
+                  </div>
+                </>
+               : <>
                     <div>
                         Vui lòng chọn 1 nhà hàng để bắt đầu!
                     </div>
                     <div className='main-content'>
                         {
                     isLoading? null : rest.map((row)=>(
-                        <div><button onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</button></div>
+                        <div onClick={(e)=>handleRestClick(row)} type="button">{row.info.rest_name}</div>
                         // <div><button onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</button></div>
                             ))
                         }
                     </div>
                     <div className='footer' onClick={createRest}>
+                        <div>
                         <FontAwesomeIcon icon={faGear} />
                         <> Thêm nhà hàng khác</>
+                        </div>
                     </div>
                 </>
             }

@@ -40,19 +40,22 @@ function UserList() {
     function rolechar(i){
         const qly = "Quản Lý";
         const order = "Order";
-        const tng = "Bếp";
+        const b = "Bếp"
+        const tng = "Thu Ngân";
         if (i == "1") {
             return qly;
         } else if(i == "2") {
             return order;
-        }else{
+        }else if(i == "3"){
+            return b;
+        }else {
             return tng;
         }
     }
     return (
         <table className='table-auto bg-indigo-900 rounded p-5 m-5'>
-            <tbody>
-                <tr className="flex flex-wrap ">
+            <tbody className="">
+                <tr className="flex flex-wrap">
                     {(users).map((row,index) => (
                         <td key={index}>
                             <Link to={`${row.user._id}`}>

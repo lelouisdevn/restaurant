@@ -113,9 +113,10 @@ function UserAdd(){
                         <td>Vai Trò:</td>
                         <td>
                             {/* <input value={role} onChange={(text) => setRole(text.target.value)}></input> */}
-                            <select  onClick={handleSelect}>
+                            <select  onClick={handleSelect} defaultValue={"2"}>
                                 <option value="2">Nhân viên phục vụ</option>
                                 <option value="3">Bếp</option>
+                                <option value="4">Thu Ngân</option>
                             </select>
                         </td>
                     </tr>

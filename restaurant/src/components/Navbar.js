@@ -15,6 +15,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SetUpPage from "../pages/settuppage/setUpPage";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -32,7 +36,7 @@ const Icons = styled(Box)(({ them }) => ({
   gap: "20px",
   alignItems: "center"
 }));
-const Navbar = () => {
+const Navbar = (props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const id = localStorage.getItem("UserID");
@@ -42,6 +46,7 @@ const Navbar = () => {
 
   const setOut = () => {
     localStorage.clear();
+    props.setLogout();
   }
 
   useEffect(() => {
@@ -50,26 +55,26 @@ const Navbar = () => {
 
   // console.log(rest);
   // console.log("lay du lieu rest[0]: ", (rest[0].info));
-  const getRest = async (id) =>{
+  const getRest = async (id) => {
     await axios
       .get(`http://localhost:4000/api/getallrestfromone/id=${id}`)
-      .then((res) =>{
+      .then((res) => {
         const temp = res?.data.rest;
         setRest(temp);
         //console.log(temp);
       })
-      .catch((error) =>{
-        console.log("Error: ",error);
-      }) .finally(() => {
+      .catch((error) => {
+        console.log("Error: ", error);
+      }).finally(() => {
         setisLoading(false);
       });
 
   }
 
-  const handleRestClick = async(id) =>{
-    localStorage.setItem("RestaurantID",id);
-    navigate("/manage/home");
-
+  const handleRestClick = async (id) => {
+    localStorage.setItem("RestaurantID", id._id);
+    localStorage.setItem("infoRestaurant", JSON.stringify(id));
+    window.location.reload();
   }
   const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
@@ -79,6 +84,7 @@ const Navbar = () => {
   const json1 = localStorage.getItem("infoStaff");
   const valuejson1 = JSON.parse(json1);
   const [infoStaff, setInfoStaff] = useState(valuejson1);
+  //console.log(infoStaff)
   console.log(infoStaff)
   const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
   const brandLogo = "/images/logoo.png";
@@ -86,13 +92,13 @@ const Navbar = () => {
     <AppBar position="sticky">
       <StyledToolbar>
         <Typography variant="h6">
-          <img style={{width: "40px", borderRadius: "50%"}} src={restaurant.logo ? restaurant.logo : brandLogo} />
+          <img style={{ width: "40px", borderRadius: "50%" }} src={restaurant.logo ? restaurant.logo : brandLogo} />
         </Typography>
 
         {/* <Search>
           <InputBase placeholder="search...." />
         </Search> */}
-        <Typography style={{position: "absolute",left: "50%", transform: "translateX(-50%)"}} variant="h6">{infoRestaurant.rest_name}</Typography>
+        <Typography style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }} variant="h6">{infoRestaurant.rest_name}</Typography>
         <Icons>
           <Avatar
             sx={{ width: 30, height: 30 }}
@@ -115,18 +121,46 @@ const Navbar = () => {
           vertical: "top",
           horizontal: "right"
         }}
+      // style={{width: "", borderRadius: "10px!important", padding: "0"}}
       >
-        <MenuItem>Thông tin cá nhân</MenuItem>
+        <div style={{ width: "350px", }}>
+          <div style={{ width: "350px" }}>
+            <div className="logo" style={{ textAlign: "left", margin: "5px 7px" }}>
+              <img style={{ display: "inline" }} src="/images/avatar.jpg" />
+              <div style={{ display: "inline" }}>{infoStaff.staff_name}</div>
+            </div>
+            <div className="main-content">
+              {
+                isLoading ? null : rest.map((row) => (
+                  <div onClick={(e) => handleRestClick(row.info)} style={{ fontSize: "16px" }}>
+                    {row.info.rest_name}
+                  </div>
+                ))
+              }
+            </div>
+            <div className="footer" onClick={() => setOut()} style={{ textAlign: "center" }}>
+              <div>
+                <Link>
+                  <FontAwesomeIcon icon={faSignOut} />
+                  <> Đăng xuất</>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <MenuItem>Thông tin cá nhân</MenuItem>
         {isLoading? null: rest.map((row)=>(
           <MenuItem onClick={(e)=>handleRestClick(row.info._id)} type="button">{row.info.rest_name}</MenuItem>
         ))}
         <MenuItem //   onClick={handleClose}
         >
+          
           <Link to={"/login"} onClick={() => setOut()}>
             <Typography variant="span"> Thoát</Typography>
           </Link>
 
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </AppBar>
   );

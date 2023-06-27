@@ -12,16 +12,48 @@ import FlatwareIcon from "@mui/icons-material/Flatware";
 import InboxIcon from "@mui/icons-material/Inbox";
 import FoodBankIcon from "@mui/icons-material/FoodBank";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import OutdoorGrillIcon from '@mui/icons-material/OutdoorGrill';
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const json = localStorage.getItem("infoRestaurant");
+  const valuejson = JSON.parse(json);
+  const [infoRestaurant, setInfoRestaurant] = useState(valuejson);
+
+
+  const json1 = localStorage.getItem("infoStaff");
+  const valuejson1 = JSON.parse(json1);
+  const [infoStaff, setInfoStaff] = useState(valuejson1);
+  //console.log(infoStaff)
+
   const [selectedIndex, setSelectedIndex] = useState(null);
   const handleListItemClick = (event, index, path) => {
     setSelectedIndex(index);
-    navigate(path);
+    if(infoStaff.role === "1"){
+      navigate(path);
+    }
   };
+  const handleListItemClick1 = (event, index, path) => {
+    setSelectedIndex(index);
+    if(infoStaff.role === "4" && infoStaff.role === "1"){
+      navigate(path);
+    }else if(infoStaff.role === "3"){
+      navigate("./chef");
+    }
+    
+  };
+  const handleListItemClick2 = (event, index, path) => {
+    setSelectedIndex(index);
+    if(infoStaff.role === "3" && infoStaff.role === "1"){
+      navigate(path);
+    }else if(infoStaff.role === "4"){
+      navigate("./orders");
+    }
+    
+  };
+
 
   return (
     <Box
@@ -68,13 +100,13 @@ const Sidebar = () => {
           <ListItemButton
             selected={selectedIndex === 3}
             onClick={(event) =>
-              handleListItemClick(event, 3, "/manage/orders")
+              handleListItemClick1(event, 3, "/manage/orders")
             }
           >
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Đơn hàng" />
+            <ListItemText primary="Hoá đơn" />
           </ListItemButton>
 
           <ListItemButton
@@ -97,8 +129,17 @@ const Sidebar = () => {
             <ListItemText primary="Nhân viên" />
           </ListItemButton>
           <ListItemButton
-            selected={selectedIndex === 6}
-            onClick={(event) => handleListItemClick(event, 6, "/manage/info")}
+            selected={selectedIndex === 7}
+            onClick={(event) => handleListItemClick2(event, 7, "/manage/chef")}
+          >
+            <ListItemIcon>
+              <OutdoorGrillIcon />
+            </ListItemIcon>
+            <ListItemText primary="Bếp" />
+          </ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 8}
+            onClick={(event) => handleListItemClick(event, 8, "/manage/info")}
           >
             <ListItemIcon>
               <FoodBankIcon />
