@@ -37,7 +37,7 @@ const Sidebar = () => {
   };
   const handleListItemClick1 = (event, index, path) => {
     setSelectedIndex(index);
-    if(infoStaff.role === "4" && infoStaff.role === "1"){
+    if(infoStaff.role === "4" || infoStaff.role === "1"){
       navigate(path);
     }else if(infoStaff.role === "3"){
       navigate("./chef");
@@ -46,7 +46,7 @@ const Sidebar = () => {
   };
   const handleListItemClick2 = (event, index, path) => {
     setSelectedIndex(index);
-    if(infoStaff.role === "3" && infoStaff.role === "1"){
+    if(infoStaff.role === "3" || infoStaff.role === "1"){
       navigate(path);
     }else if(infoStaff.role === "4"){
       navigate("./orders");
@@ -145,6 +145,15 @@ const Sidebar = () => {
               <FoodBankIcon />
             </ListItemIcon>
             <ListItemText primary="Thông tin" />
+          </ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 9}
+            onClick={(event) => handleListItemClick(event, 9, "/manage/bep/order")}
+          >
+            <ListItemIcon>
+              <FoodBankIcon />
+            </ListItemIcon>
+            <ListItemText primary="Cheff" />
           </ListItemButton>
         </List>
       </Box>
