@@ -81,16 +81,18 @@ const ManageOrderList = () => {
         if (searchQuery === "") {
             getOrderList();
         }
-        const filterBySearch = filteredOrder.filter((order) => {
-            let name = String(order._id);
-            let mquery = String(searchQuery);
-            if (name.includes(mquery)) {
-                return order;
+        else {
+            const filterBySearch = filteredOrder.filter((order) => {
+                let name = String(order._id);
+                let mquery = String(searchQuery);
+                if (name.includes(mquery)) {
+                    return order;
+                }
+            })
+            setFilteredOrder(filterBySearch);
+            if (filterBySearch.length === 0) {
+                setEmptySearch(`Không tìm thấy hóa đơn với mã số "${searchQuery}"`);
             }
-        })
-        setFilteredOrder(filterBySearch);
-        if (filterBySearch.length === 0) {
-            setEmptySearch(`Không tìm thấy hóa đơn với mã số "${searchQuery}"`);
         }
     }, [searchQuery]);
     const status = {
