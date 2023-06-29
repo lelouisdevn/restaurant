@@ -120,6 +120,7 @@ const Login = () => {
         progress: undefined,
         theme: "colored"
       });
+      window.location.href = '/login';
     }
   };
   return (

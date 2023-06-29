@@ -1,6 +1,6 @@
 .order-grid-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto!important;
     height: 100%;
     border: solid 1px rgb(205, 205, 205);
     border-radius: 10px;
