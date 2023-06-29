@@ -152,6 +152,7 @@ const ManageOrderList = () => {
         height: "90%",
         position: "absolute",
         left: "0",
+        zIndex: "10",
     };
     // Order cancellation;
     const [success, setSuccess] = useState(false);
