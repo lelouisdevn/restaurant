@@ -426,7 +426,7 @@ router.get("/list/bills/today", async (req, res) => {
 // Thống kê các đơn hàng từ - đến ngày
 router.post("/list/bills/bydate", async (req, res) => {
   const { restaurant, arraydate } = req.body;
-  console.log(" tu ngay den ngay ", arraydate);
+  // console.log(" tu ngay den ngay ", arraydate);
   try {
     let listTBill = [];
     if (arraydate[0] === arraydate[1]) {
@@ -481,7 +481,7 @@ router.post("/list/statistical/bydate", async (req, res) => {
       let restaurant = await UserRestDetail.find({ user: staffMana })
         .populate("info")
         .exec();
-      console.log("dsafaf: ", restaurant.length);
+      // console.log("dsafaf: ", restaurant.length);
 
       // So luong nhan vien cua tung nha hang
       let staff = await UserRestDetail.aggregate([
@@ -532,7 +532,7 @@ router.post("/list/statistical/bydate", async (req, res) => {
           staff: arrS[i].staff,
           bill: bill
         });
-        console.log("bill: ", listBill);
+        // console.log("bill: ", listBill);
       }
       for (let x = 0; x < listBill.length; x++) {
         if (listBill[x].bill.length > 0) {
@@ -661,7 +661,7 @@ router.post("/list/statistical/bydate", async (req, res) => {
       const groupedObjects = make.map(groupByWom);
       // console.log("so sanh lay duoc gia tri: ", groupedObjects );
       for (let x = 0; x < staff.length; x++) {
-        console.log("staff: ", staff[x]);
+        // console.log("staff: ", staff[x]);
         let count = 0;
         let total = 0;
         for (let y = 0; y < groupedObjects.length; y++) {
@@ -907,6 +907,90 @@ router.get("/bill/profit/bymonth/idRes=:id", async (req, res) => {
       make.push({ w: x, day: day });
     }
 
+    bill = await Order.aggregate([
+      {
+        $match: {
+          status: "dathanhtoan",
+          restaurant: new mongoose.Types.ObjectId("" + req.params.id + "")
+        }
+      },
+      {
+        $group: {
+          _id: {
+            date: { $dateToString: { format: "%m/%d/%Y", date: "$bill_at" } }
+          },
+          count: { $sum: 1 },
+          total: {
+            $sum: "$total"
+          }
+        }
+      }
+    ]);
+
+    let statistical = [];
+    for (let y = 0; y < make.length; y++) {
+      let total = 0;
+      let count = 0;
+      for (let x = 0; x < make[y].day.length; x++) {
+        for (let i = 0; i < bill.length; i++) {
+          if (make[y].day[x] === bill[i]._id.date) {
+            total += bill[i].total;
+            count += bill[i].count;
+          }
+        }
+      }
+      statistical.push({
+        Tuần: make[y].w,
+        "Số lượng hóa đơn": count,
+        "Doanh thu": total,
+        "Số ngày của tuần": make[y].day.length
+      });
+    }
+    // console.log("total: ", statistical);
+    res.send({ statistical });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
+router.post("/bill/profit/select/bymonth/idRes=:id", async (req, res) => {
+  const { dataSelect } = req.body;
+  const dateParts = dataSelect.split("/");
+  const year = parseInt(dateParts[1]);
+  const month = parseInt(dateParts[0]-1); // months in JavaScript start from 0
+  const currentDate = new Date(year, month);
+
+  // console.log(currentDate);
+  let bill; 
+  try {
+    const result = dateFns.getWeekOfMonth(new Date());
+    const startOfMonth = dateFns.startOfMonth(currentDate);
+    const endOfMonth = dateFns.endOfMonth(currentDate);
+     let wOm = [];
+    for (let i = startOfMonth; i <= endOfMonth; i = dateFns.addDays(i, 1)) {
+      const weekOfMonth = dateFns.getWeekOfMonth(i);
+      const dateOfMonth = dateFns.format(i, "MM/dd/yyyy");
+      wOm.push({ wom: weekOfMonth, dom: dateOfMonth });
+    }
+    
+    const groupByWom = (object) => {
+      return {
+        wom: object.wom,
+        objects: [object]
+      };
+    };
+
+    const groupedObjects = wOm.map(groupByWom);
+    let make = [];
+    for (let x = 1; x <= result; x++) {
+      let day = [];
+      for (let y = 0; y < groupedObjects.length; y++) {
+        if (x === groupedObjects[y].wom) {
+          day.push(groupedObjects[y].objects[0].dom);
+        }
+      }
+      make.push({ w: x, day: day });
+    }
     bill = await Order.aggregate([
       {
         $match: {

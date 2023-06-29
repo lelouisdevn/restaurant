@@ -54,6 +54,10 @@ const Home = () => {
   const [bar, setBar] = useState('tuannay')
   const [listSearch, setListSearch] = useState([]);
   const [totalsearch, setTotalSearch] = useState();
+  const getMY = ({ data }) => {
+    setBar(data.Tháng);
+    console.log("data truyen  getMY:", data);
+  }
 const getBillToDay = async() => {
     await axios
       .get("http://localhost:4000/api/list/bills/today", {
@@ -159,8 +163,9 @@ const getBillToDay = async() => {
                         onChange={(values) => {
                           setDates(
                             values.map((item) => {
-                              return moment(item.$d).format("MM/DD/YYYY");
-                            })
+                              if (item !== null) {
+                                return moment(item.$d).format("MM/DD/YYYY");
+                              } })
                           );
                         }}
                         // onChange={(newValue) => setValue(newValue)}
@@ -204,13 +209,18 @@ const getBillToDay = async() => {
           >
             <Item sx={{ backgroundColor: "#91C5F8" }}>
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
-                <Typography variant="h5" sx={{ fontWeight: 600, paddingTop: "10px" }}>
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: 600, paddingTop: "10px" }}
+                >
                   Thống kê doanh thu theo{" "}
                   {bar === "tuannay"
                     ? "tuần hiện tại"
                     : bar === "thang"
                     ? "tháng"
-                    : "năm"}
+                    : bar === "nam"
+                    ? "năm"
+                    : bar}
                 </Typography>
                 <div className="flex items-end justify-end mb-3 pr-6">
                   <label className="text-black text-xl" htmlFor="selectCP">
@@ -241,11 +251,19 @@ const getBillToDay = async() => {
                       aspect={3.35 / 1}
                       type="2"
                     />
-                  ) : (
+                  ) : bar === "nam" ? (
                     <BarChartPro
                       restaurant={valuejson}
                       aspect={3.35 / 1}
                       title="Theo 3 tháng trước"
+                      type="3"
+                      getMY={getMY}
+                    />
+                  ) : (
+                    <BarChartPro
+                      restaurant={valuejson}
+                      aspect={3.35 / 1}
+                      type="4"
                     />
                   )
                   // <Typography>bd cot tuan </Typography>
@@ -282,7 +300,11 @@ const getBillToDay = async() => {
                           onChange={(values) => {
                             setDates(
                               values.map((item) => {
-                                return moment(item.$d).format("MM/DD/YYYY");
+                                console.log("item: ", item);
+                                if (item !== null) {
+                                  return moment(item.$d).format("MM/DD/YYYY");
+                                  }
+                                
                               })
                             );
                           }}
@@ -298,14 +320,14 @@ const getBillToDay = async() => {
                   </Box>
                 </Box>
               </Box>
-              {
-                isSearch ? (
-                
-                  <Synthetic user={valuejsonStaff} restaurant={valuejson} />
-                ): (
-                    <SyntheticSearch data={listSearch} dataTotal = {totalsearch}></SyntheticSearch>
-                )
-              }
+              {isSearch ? (
+                <Synthetic user={valuejsonStaff} restaurant={valuejson} />
+              ) : (
+                <SyntheticSearch
+                  data={listSearch}
+                  dataTotal={totalsearch}
+                ></SyntheticSearch>
+              )}
             </Item2>
           </Grid>
         </Grid>
