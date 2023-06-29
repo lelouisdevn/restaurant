@@ -167,7 +167,7 @@ function UserDetail() {
                                 {
                                     user.staff_gender == "Nữ" ? <option value="Nam">Nam</option>
                                     : user.staff_gender == "Nam" ? <option value="Nữ">Nữ</option>
-                                    : ""
+                                    : <><option value="Nữ">Nữ</option><option value="Nam">Nam</option></>
                                 }
                             </select>
                         </td>

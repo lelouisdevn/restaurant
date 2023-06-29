@@ -113,6 +113,9 @@ router.post('/order/all', async (req, res) => {
           foreignField: "order",
           as: "tables"
         }
+      },
+      { 
+        $sort : { order_at : -1 } 
       }
     ]);
     res.send({ orders });
