@@ -55,9 +55,9 @@ router.post("/order/detail/new", async (req, res) => {
 /**Get orders with filter */
 router.post("/order/filter", async (req, res) => {
   const { restaurant, from, to, filter } = req.body;
-  // console.log(from, to);
+  console.log(filter);
   const methods = ["dahuy", 'dadat', 'dathanhtoan']
-  if (filter === 3) {
+  if (parseInt(filter) === 3) {
     const orders = await Order.find({
       restaurant: new ObjectId(restaurant),
       order_at: {
