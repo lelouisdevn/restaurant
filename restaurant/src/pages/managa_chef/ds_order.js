@@ -11,6 +11,7 @@ import Modal from "./modal";
 import useModal from './useModal';
 import Bep_Modal from './bep_modal';
 import Get_Table from './get_table';
+import Loading from '../products/Loading';
 function DS_Order() {
   const navigate = useNavigate();
   const HOST = 'http://localhost:4000/api';
@@ -20,6 +21,7 @@ function DS_Order() {
   const [lobbies, setLobbies] = useState([]);
   const [orders, setOrders] = useState([]);
   const [orderdetail, setOrderDetail] = useState([]);
+  const [message, setMessage] = useState("Chưa có dữ liệu ....");
 
   const getOrderList = async () => {
     const URL = `${HOST}/order/all/`;
@@ -112,7 +114,7 @@ function DS_Order() {
                       <td scope="col" class="px-6 py-4">Ghi Chú</td>
                       <td scope="col" class="px-6 py-4">Xem Chi Tiết</td>
                     </tr>
-                    {(orders).map((row, index) => (
+                    {orders.length > 0 ?(orders).map((row, index) => (
                       <tr
                         class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                         <td class="whitespace-nowrap px-6 py-4 font-medium">{row._id}</td>
@@ -131,7 +133,7 @@ function DS_Order() {
                           <button className="button-default" onClick={() => showModal(row)}>Chi Tiết</button>
                         </td>
                       </tr>
-                    ))}
+                    )): <><tr><td colSpan={6}><Loading message={message} /></td></tr></>}
                   </tbody>
                 </table>
               </div>

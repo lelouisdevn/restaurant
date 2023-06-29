@@ -103,7 +103,7 @@ const Lobby = () => {
 
   return (
     <>
-      <Container flex={5} position="fixed">
+      <Container flex={5} position="fixed" >
         <Box mt={2}>
           <Typography
             variant="h4"
