@@ -120,7 +120,9 @@ const Login = () => {
         progress: undefined,
         theme: "colored"
       });
-      window.location.href = '/login';
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
     }
   };
   return (
