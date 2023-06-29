@@ -141,6 +141,20 @@ router.get("/table=:id/orderdetail", async (req, res) => {
      return res.status(422).send({ Error: error.message });
     }
   })
+
+  router.get("/order=:id/orderdetail", async (req, res) => {
+    let listOrderPro = []
+    let detailOrder = [];
+    try {
+      let tabledetail = await TableDetail.find({ status: 1, order: req.params.id }).populate("table order").exec();
+      console.log("order in tabledetail1: ", tabledetail);
+  
+      res.send({ tabledetail });
+     } catch (error) {
+       console.log("Database err", error);
+       return res.status(422).send({ Error: error.message });
+      }
+    })
   
   // Test table have sitted person
   router.get('/test/table/id=:id/status=1', async (req, res) => {

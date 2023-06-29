@@ -85,7 +85,7 @@ const Login = () => {
                 );
               });
             //navigate("/manage/chef");
-            window.location.href = '/manage/chef';
+            window.location.href = '/manage/bep/order';
           }else if(res?.data.login[0].role === "4"){
             const tempInfoStaff = res?.data.login[0];
             //console.log(tempInfoStaff);
@@ -120,6 +120,7 @@ const Login = () => {
         progress: undefined,
         theme: "colored"
       });
+      window.location.href = '/login';
     }
   };
   return (

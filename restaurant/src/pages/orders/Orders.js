@@ -253,7 +253,7 @@ function Orders() {
               .then((res) => {
                 const message = {
                   noti: "Thông tin đặt món đã được ghi nhận thành công",
-                  icon: "faCheckCircle"
+                  icon: "faCheck"
                 };
                 showModal(message);
           setRedirect("/staff/outline");

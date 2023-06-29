@@ -10,7 +10,7 @@ const useModal = (props) => {
   return {
     isShowing,
     toggle,
-    props,
+    props
   }
 };
 

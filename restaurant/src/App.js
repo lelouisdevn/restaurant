@@ -79,10 +79,25 @@ function App() {
           </Route>
 
           <Route path="/manage/*" element={<Layout />} >
-            <Route index path="home" element={<Home />}>
+            <Route index path="home" element={
+              <ProtectedManage
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <Home />
+              </ProtectedManage>
+            }>
               {/* <Route index element={<Home />} /> */}
             </Route>
-            <Route path="lobby">
+            <Route path="lobby" element={
+              <ProtectedManage
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <Temp />
+              </ProtectedManage>
+            
+            }>
               <Route index element={<Lobby />} />
               <Route
                 path="settingmap/:id/:name/:num"
@@ -112,12 +127,26 @@ function App() {
             }>
               {/* <Route index element={<ManageOrderList />} /> */}
             </Route>
-            <Route path="category">
+            <Route path="category" element={
+              <ProtectedManage
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <Temp />
+              </ProtectedManage>
+            }>
               <Route index element={<Category />} />
               <Route path=":id" element={<CategoryDetail />} />
               <Route path="new" element={<CategoryForm />} />
             </Route>
-            <Route path="user" element={<User />}>
+            <Route path="user" element={
+              <ProtectedManage
+                redirectPath="/login"
+                isAllowed={
+                  infoStaff
+                } > <User />
+              </ProtectedManage>
+            }>
               <Route index element={<UserList />} />
               <Route path=":idUser" element={<UserDetail />} />
               <Route path="add" element={<UserAdd />}></Route>
@@ -145,7 +174,14 @@ function App() {
               <Route path='edit/:id' element={<InfoEdit />} />
             </Route>
             
-            <Route path='bep/*' element={<Bep/>}>
+            <Route path='bep/*' element={
+            <ProtectedChef
+              redirectPath="/login"
+              isAllowed={
+                infoStaff
+              } > <Bep/>
+            </ProtectedChef>
+            }>
               <Route index path='order' element={<DS_Order/>}></Route>
             </Route>
           </Route>

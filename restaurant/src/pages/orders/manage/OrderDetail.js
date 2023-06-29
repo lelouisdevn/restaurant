@@ -38,10 +38,15 @@ function OrderDetail(props) {
     if (e.target.value === "hoantac") {
       setStatusO(e.target.value);
       props.handleSeclect({ statusO: "dadat", item: props.item });
-    } else {
+    }
+    if (e.target.value === "phucvu") {
       setStatusO(e.target.value);
-      props.handleSeclect({ statusO: e.target.value, item: props.item });
-    } 
+      props.handleSeclect({ statusO: "phucvu", item: props.item });
+    }
+    // else {
+    //   setStatusO(e.target.value);
+    //   props.handleSeclect({ statusO: e.target.value, item: props.item });
+    // } 
   }
     
 
@@ -133,10 +138,18 @@ function OrderDetail(props) {
               value={statusO}
               onChange={(e) => handleSelect(e)}
             >
-              <option value="dadat">Đã gửi bếp</option>
-              <option value="chebien">Đang chế biến</option>
-              <option value="xuatmon">Xuất món</option>
-              <option value="hetmon">Hết món</option>
+              <option value="dadat" disabled>
+                Đã gửi bếp
+              </option>
+              <option value="chebien" disabled>
+                Đang chế biến
+              </option>
+              <option value="xuatmon" disabled>
+                Xuất món
+              </option>
+              <option value="hetmon" disabled>
+                Hết món
+              </option>
               <option value="phucvu">Đã phục vụ</option>
             </select>
           </td>

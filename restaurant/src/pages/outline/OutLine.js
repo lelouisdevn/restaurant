@@ -83,12 +83,12 @@ const OutLine = ({ idL, arrange, numRow }) => {
     navigate(`/staff/order/table/${table._id}/${table.tbl_id}`);
   };
 
-  const viewDetailTable = async (props) => {
+  const viewDetailTable = async ({status, table}) => {
     // console.log("ok: ", props);
-    setShow(props.status);
-    if (props.status) {
+    setShow(status);
+    if (status) {
       await axios
-        .get(`http://localhost:4000/api/table=${props.table}/orderdetail`)
+        .get(`http://localhost:4000/api/table=${table}/orderdetail`)
         .then((res) => {
           const temp = res?.data.detailOrder[0];
           console.log("detailOrder: ", temp);
@@ -178,17 +178,17 @@ const OutLine = ({ idL, arrange, numRow }) => {
     if (criteria === 0) {
       message = {
         noti: "Đơn hàng đã được xóa thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
       };
     } else if (criteria === 1) {
       message = {
         noti: "Đơn hàng đã được thanh toán thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
       };
     } else {
       message = {
         noti: "Đơn hàng đã được cập nhật thành công",
-        icon: "faCheckCircle"
+        icon: "faCheck"
       };
     }
     updateOrder(message);

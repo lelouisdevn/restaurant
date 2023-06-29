@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react"
 import '../products/this.css'
-import './modal.css';
+import '../orders/modal.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import VND from "../../components/currency";
-
+import Set_Status from "./set_status";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import QRCode from "react-qr-code";
 import { ReactDOM } from "react";
 import React from "react";
-const OrderModal = (props) => {
+const Bep_Modal = (props) => {
     const HOST = "http://localhost:4000/api";
     const [orderId, setOrderId] = useState(props.order.Order);
     const [order, setOrder] = useState("");
@@ -126,7 +126,7 @@ const OrderModal = (props) => {
             <div style={props.style ? props.style : style}>
                 <div className="update-modal order-modal">
                     <div className="order-modal-title">
-                        <div>HOÁ ĐƠN THANH TOÁN</div>
+                        <div>Danh Sách Gọi Món</div>
                         <span style={{ top: "1px", right: "1px" }}
                             onClick={() => {
                                 props.functioner()
@@ -138,7 +138,7 @@ const OrderModal = (props) => {
                     </div>
                     <div className="order-modal-content">
                         <div ref={componentPDF} className="order-table-info order-container">
-                            <table style={styleTable} className="styleTable">
+                            {/* <table style={styleTable} className="styleTable">
                                 <tr>
                                     <td colSpan={2} style={{ fontSize: "20px", fontWeight: "bold" }}>{rest.rest_name}</td>
                                 </tr>
@@ -167,14 +167,14 @@ const OrderModal = (props) => {
                                     }</td>
                                 </tr>
                                 <tr><td>Nhân viên:</td><td>{user.staff_name}</td></tr>
-                            </table>
+                            </table> */}
                             <table style={{ fontSize: "16px" }}>
                                 <tr style={{fontWeight: "bold"}}>
                                     <td>STT</td>
                                     <td>Tên sản phẩm</td>
                                     <td>Số lượng</td>
                                     <td>Đơn giá</td>
-                                    <td>Tổng</td>
+                                    <td>Trạng Thái</td>
                                 </tr>
                                 {orderDetails.map((item, index) => (
                                     <tr>
@@ -182,10 +182,10 @@ const OrderModal = (props) => {
                                         <td>{item.product[0].prod_name}</td>
                                         <td>{item.qty}</td>
                                         <td>{VND.format(item.unit_price)}</td>
-                                        <td>{VND.format(item.unit_price * item.qty)}</td>
+                                        <td><Set_Status orderdetailID={item._id} status={item.status}/></td>
                                     </tr>
                                 ))}
-                                <tr>
+                                {/* <tr>
                                     <td colSpan={4}>Tổng:</td>
                                     {
                                         order.total === undefined ?
@@ -196,7 +196,7 @@ const OrderModal = (props) => {
                                             {VND.format(order.total)}
                                         </td>
                                     }
-                                </tr>
+                                </tr> */}
                                 {
                                     order.note &&
                                     <tr>
@@ -208,7 +208,7 @@ const OrderModal = (props) => {
 
                             
                         </div>
-                        <div style={{fontSize: "18px"}}>
+                        {/* <div style={{fontSize: "18px"}}>
                             
                             <QRCode
                                 style={{ width: "160px", height: "160px", margin: "0 auto", padding: "10px", border: "solid 1px grey", borderRadius: "10px" }} 
@@ -221,9 +221,9 @@ const OrderModal = (props) => {
                                 :
                                 <div>{new Date().toLocaleString("vi-VN")}</div>
                             }
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="order-modal-footer">
+                    {/* <div className="order-modal-footer">
                         <button
                             onClick={() => {
                                 generateBillPDF()
@@ -231,11 +231,11 @@ const OrderModal = (props) => {
                             }
                             }
                         >Xuất hóa đơn</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
     );
 };
 
-export default OrderModal;
+export default Bep_Modal;

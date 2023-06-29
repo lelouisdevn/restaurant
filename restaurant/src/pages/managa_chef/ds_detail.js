@@ -29,9 +29,7 @@ function DS_Detail(props) {
     useEffect(() => {
         getOrderDetail(props.order._id);
     }, []);
-   
-    
-
+    console.log(props.key)
     return (
         <>
             <h3 style={{ fontSize: "25px", fontWeight: "bold" }}>

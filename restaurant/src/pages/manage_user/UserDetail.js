@@ -141,7 +141,7 @@ function UserDetail() {
                     <tr>
                         <td>Ngày Sinh:</td>
                         <td>
-                            <input defaultValue={user.staff_dob}
+                            <input type='date' defaultValue={user.staff_dob}
                                 onChange={(text) => setStaffDob(text.target.value)}
                                 ></input>
                         </td>
@@ -159,9 +159,17 @@ function UserDetail() {
                     <tr>
                         <td>Giới Tính:</td>
                         <td>
-                            <input defaultValue={user.staff_gender}
+                            {/* <input defaultValue={user.staff_gender}
                                 onChange={(text) => setGender(text.target.value)}
-                                ></input>
+                                ></input> */}
+                            <select defaultValue={user.staff_gender} onChange={(text) => setGender(text.target.value)}>
+                                <option value={user.staff_gender}>{user.staff_gender}</option>
+                                {
+                                    user.staff_gender == "Nữ" ? <option value="Nam">Nam</option>
+                                    : user.staff_gender == "Nam" ? <option value="Nữ">Nữ</option>
+                                    : <><option value="Nữ">Nữ</option><option value="Nam">Nam</option></>
+                                }
+                            </select>
                         </td>
                     </tr>
                     <br/>

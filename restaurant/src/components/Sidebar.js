@@ -40,7 +40,7 @@ const Sidebar = () => {
     if(infoStaff.role === "4" || infoStaff.role === "1"){
       navigate(path);
     }else if(infoStaff.role === "3"){
-      navigate("./chef");
+      navigate("./bep/order");
     }
     
   };
@@ -130,7 +130,7 @@ const Sidebar = () => {
           </ListItemButton>
           <ListItemButton
             selected={selectedIndex === 7}
-            onClick={(event) => handleListItemClick2(event, 7, "/manage/chef")}
+            onClick={(event) => handleListItemClick2(event, 7, "/manage/bep/order")}
           >
             <ListItemIcon>
               <OutdoorGrillIcon />
@@ -146,15 +146,7 @@ const Sidebar = () => {
             </ListItemIcon>
             <ListItemText primary="Thông tin" />
           </ListItemButton>
-          <ListItemButton
-            selected={selectedIndex === 9}
-            onClick={(event) => handleListItemClick(event, 9, "/manage/bep/order")}
-          >
-            <ListItemIcon>
-              <FoodBankIcon />
-            </ListItemIcon>
-            <ListItemText primary="Cheff" />
-          </ListItemButton>
+          
         </List>
       </Box>
     </Box>
