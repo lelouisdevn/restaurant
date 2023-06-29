@@ -100,8 +100,8 @@ function SyntheticSearch({ data, dataTotal }) {
                         {row.total ? VND.format(row.total) : 0}
                       </TableCell>
                       <TableCell align="center">
-                        {row.total / dataTotal > 0
-                          ? row.total / dataTotal
+                        {row.total / dataTotal> 0
+                          ? (row.total / dataTotal)*100
                           : 0}
                         %
                       </TableCell>

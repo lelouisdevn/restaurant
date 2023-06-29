@@ -119,7 +119,7 @@ function Synthetic({ user, restaurant }) {
                       </TableCell>
                       <TableCell align="center">
                         {row.bill.total / total > 0
-                          ? row.bill.total / total
+                          ? (row.bill.total / total) *100
                           : 0}
                         %
                       </TableCell>

@@ -46,7 +46,7 @@ router.get("/lobby/:id/detailtable/status=1", async (req, res) => {
         sit.push(table[i]);
       }
     }
-    // console.log("thong tin", sit);
+     console.log("thong tin bàn có người ngồi", sit);
     res.send({ sit });
   } catch (error) {
     console.log("Database err", error);
