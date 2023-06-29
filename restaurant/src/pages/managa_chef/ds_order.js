@@ -117,11 +117,11 @@ function DS_Order() {
                     {orders.length > 0 ?(orders).map((row, index) => (
                       <tr
                         class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
-                        <td class="whitespace-nowrap px-6 py-4 font-medium">{row._id}</td>
-                        <td class="whitespace-nowrap px-6 py-4"> <Get_Table orderid={row._id}/></td>
+                        <td class="whitespace-nowrap px-6 py-4 ">{row._id}</td>
+                        <td class="whitespace-nowrap px-6 py-4" style={{ fontWeight: "bold"  }}> <Get_Table orderid={row._id}/></td>
                         <td class="whitespace-nowrap px-6 py-4"> {row.status}</td>
-                        <td class="whitespace-nowrap px-6 py-4">{new Date(row.order_at).toLocaleString("vi-VN", { hour12: false })}</td>
-                        <td class="whitespace-nowrap px-6 py-4">{row.note}</td>
+                        <td class="whitespace-nowrap px-6 py-4 "  style={{ fontWeight: "bold"  }}>{new Date(row.order_at).toLocaleString("vi-VN", { hour12: false })}</td>
+                        <td class="whitespace-nowrap px-6 py-4"  style={{ fontWeight: "bold"  }}>{row.note}</td>
                         <td class="whitespace-nowrap px-6 py-4">
                           {/* <DS_Detail order={row}/> */}
                           {/* <button className="button-default" onClick={toggle}>Xem chi tiết</button> */}
