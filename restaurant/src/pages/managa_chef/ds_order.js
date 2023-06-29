@@ -97,7 +97,7 @@ function DS_Order() {
           functioner={closeModal}
         />
       }
-      <table className="order-grid-container p-5 m-5">
+      <table className="order-grid-container1 p-5 m-5">
 
         <div class="flex flex-col ">
           <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -105,21 +105,19 @@ function DS_Order() {
               <div class="overflow-hidden">
                 <table class="table table-fixed min-w-full text-left text-sm font-light">
 
-                  <tbody>
+                  <tbody className=''>
                     <tr style={{ background: "aliceblue", fontWeight: "bold" }}>
                       <td scope="col" class="px-6 py-4">OrderID</td>
                       <td scope="col" class="px-6 py-4">Bàn</td>
-                      <td scope="col" class="px-6 py-4">Trạng Thái</td>
                       <td scope="col" class="px-6 py-4">Giờ đặt</td>
                       <td scope="col" class="px-6 py-4">Ghi Chú</td>
                       <td scope="col" class="px-6 py-4">Xem Chi Tiết</td>
                     </tr>
                     {orders.length > 0 ?(orders).map((row, index) => (
                       <tr
-                        class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
+                        class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700" >
                         <td class="whitespace-nowrap px-6 py-4 ">{row._id}</td>
                         <td class="whitespace-nowrap px-6 py-4" style={{ fontWeight: "bold"  }}> <Get_Table orderid={row._id}/></td>
-                        <td class="whitespace-nowrap px-6 py-4"> {row.status}</td>
                         <td class="whitespace-nowrap px-6 py-4 "  style={{ fontWeight: "bold"  }}>{new Date(row.order_at).toLocaleString("vi-VN", { hour12: false })}</td>
                         <td class="whitespace-nowrap px-6 py-4"  style={{ fontWeight: "bold"  }}>{row.note}</td>
                         <td class="whitespace-nowrap px-6 py-4">
