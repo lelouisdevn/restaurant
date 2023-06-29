@@ -46,6 +46,7 @@ const ManageOrderList = () => {
     }
     const [criteria, setCriteria] = useState(1);
     const getOrderList = async () => {
+        setEmptySearch("Đang tải dữ liệu từ server....")
         const URL = `${HOST}/order/all/`;
         const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
         const res = await axios.post(URL, {
@@ -57,6 +58,9 @@ const ManageOrderList = () => {
             console.log(fetchedData);
             setOrders(fetchedData);
             setFilteredOrder(fetchedData);
+            if (fetchedData.length === 0) {
+                setEmptySearch("Chưa có hóa đơn của ngày hôm nay!")
+            }
         }
     }
     useEffect(() => {
@@ -65,7 +69,6 @@ const ManageOrderList = () => {
     //when page is loaded -> get all orders;
     useEffect(() => {
         getOrderList();
-        setEmptySearch("Đang tải dữ liệu từ server....")
     }, []);
 
 
