@@ -35,7 +35,7 @@
 
 .fixed-header {
     position: sticky;
-    top: 64.1px;
+    /* top: 64.1px; */
     z-index: 11;
     background-color: whitesmoke;
     padding: 7px;
@@ -90,6 +90,9 @@
     overflow: auto;
     text-overflow: auto;
     padding: 10px 0;
+    position: sticky;
+    top: 66px;
+    z-index: 10;
 }
 
 .header-product .left-menu {
