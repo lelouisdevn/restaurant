@@ -121,8 +121,8 @@ const Login = () => {
         theme: "colored"
       });
       setTimeout(() => {
-        window.location.href = '/';
-      }, 1000);
+        navigate('/');
+      }, 2500);
     }
   };
   return (
