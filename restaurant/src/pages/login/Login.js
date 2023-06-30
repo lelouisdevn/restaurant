@@ -121,7 +121,7 @@ const Login = () => {
         theme: "colored"
       });
       setTimeout(() => {
-        navigate('/');
+        window.location.href = '/';
       }, 2500);
     }
   };
