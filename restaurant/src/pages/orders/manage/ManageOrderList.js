@@ -75,17 +75,18 @@ const ManageOrderList = () => {
 
     const getSearchQuery = (query) => {
         setSearchQuery(query.toString());
-        console.log(query);
+        console.log(filteredOrder);
     };
     useEffect(() => {
         if (searchQuery === "") {
-            getOrderList();
+            // getOrderList();
+            setFilteredOrder(orders);
         }
         else {
             const filterBySearch = filteredOrder.filter((order) => {
                 let name = String(order._id);
                 let mquery = String(searchQuery);
-                if (name.includes(mquery)) {
+                if (name.includes(mquery) ) {
                     return order;
                 }
             })
@@ -124,6 +125,7 @@ const ManageOrderList = () => {
         // if (filteredOrder.length != 0) {
         //     setFilteredOrder([]);
         // }
+        setOrders(list);
         setFilteredOrder(list);
     }
 
@@ -256,7 +258,7 @@ const ManageOrderList = () => {
         }
     }
     const sortAZ = () => {
-        const sortedOrder = filteredOrder.sort((a,b) => {
+        filteredOrder.sort((a,b) => {
             if (a._id < b._id) {
                 return -1;
             }else {

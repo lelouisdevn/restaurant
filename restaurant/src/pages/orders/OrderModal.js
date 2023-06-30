@@ -162,8 +162,13 @@ const OrderModal = (props) => {
                                 <tr>
                                     <td>Bàn:</td>
                                     <td>{
-                                        tables.map((tbl) =>
-                                            <>{tbl.tables[0].tbl_id}, </>)
+                                        tables.map((tbl, index) =>
+                                            <>{tbl.tables[0].tbl_id}
+                                            {
+                                                index != tables.length-1 &&
+                                                <>, </>
+                                            }
+                                            </>)
                                     }</td>
                                 </tr>
                                 <tr><td>Nhân viên:</td><td>{user.staff_name}</td></tr>

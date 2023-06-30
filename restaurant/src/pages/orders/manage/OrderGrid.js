@@ -75,8 +75,13 @@ return(
             <td>{props.stt}</td>
             <td>{order._id}</td>
             <td>{
-                tables.map((tbl) =>
-                    <>{tbl.tables[0].tbl_id}, </>
+                tables.map((tbl, index) =>
+                    <>{tbl.tables[0].tbl_id}
+                    {
+                        index != tables.length-1 &&
+                        <>, </>
+                    }
+                    </>
                 )
             }</td>
             <td>{new Date(order.order_at).toLocaleString("vi-VN", {hour12: false})}</td>
