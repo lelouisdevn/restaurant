@@ -33,6 +33,7 @@ const OrderFilter = (props) => {
         if (res.status === 200) {
             console.log(res?.data.orders);
             props.updateOrderList(res?.data.orders);
+            props.setFilterCriteria(filterCriteria)
             props.closeModal();
         }
     }
@@ -64,10 +65,12 @@ const OrderFilter = (props) => {
                     <div>
                         <div>Trạng thái: </div>
                         <div>
-                            <select onChange={(e) => setFilterCriteria(e.target.value)}>
-                                <option value={0} >Đơn đã hủy</option>
-                                <option value={1}>Đơn chưa thanh toán</option>
-                                <option value={2}>Đơn đã thanh toán</option>
+                            <select onChange={(e) => {
+                                setFilterCriteria(e.target.value)
+                            }}>
+                                <option value={0} >Hóa đơn đã thanh toán</option>
+                                <option value={1}>Hóa đơn chưa thanh toán</option>
+                                <option value={2}>Hóa đơn đã hủy</option>
                                 <option value={3}>Tất cả hóa đơn</option>
                             </select>
                         </div>

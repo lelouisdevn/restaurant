@@ -45,7 +45,7 @@ const ManageOrderList = () => {
         icon: "faCheck",
     }
     const [criteria, setCriteria] = useState(1);
-    const getOrderList = async () => {
+    const getOrderList = async (criteria) => {
         setEmptySearch("Đang tải dữ liệu từ server....")
         const URL = `${HOST}/order/all/`;
         const restaurant = JSON.parse(localStorage.getItem("infoRestaurant"));
@@ -63,15 +63,14 @@ const ManageOrderList = () => {
             }
         }
     }
-    useEffect(() => {
-        getOrderList();
-    }, [criteria]);
     //when page is loaded -> get all orders;
     useEffect(() => {
-        getOrderList();
+        getOrderList(1);
     }, []);
 
-
+    const setFilterCriteria = (e) => {
+        setCriteria(e);
+    }
 
     const getSearchQuery = (query) => {
         setSearchQuery(query.toString());
@@ -79,7 +78,6 @@ const ManageOrderList = () => {
     };
     useEffect(() => {
         if (searchQuery === "") {
-            // getOrderList();
             setFilteredOrder(orders);
         }
         else {
@@ -102,14 +100,6 @@ const ManageOrderList = () => {
         '2': 'Hóa đơn đã hủy',
         '3': 'Tất cả hóa đơn',
     };
-    // const [showClass, setShowClass] = useState("hd-menu");
-    // const showDropdownMenu = () => {
-    //   if (showClass == "hd-menu") {
-    //     setShowClass("dd-menu");
-    //   } else {
-    //     setShowClass("hd-menu");
-    //   }
-    // }
     const [successClass, setSuccessClass] = useState('');
     const [filter, setFilter] = useState();
     const toggleFilter = () => {
@@ -122,9 +112,6 @@ const ManageOrderList = () => {
         setSuccessClass("");
     }
     const updateOrderList = (list) => {
-        // if (filteredOrder.length != 0) {
-        //     setFilteredOrder([]);
-        // }
         setOrders(list);
         setFilteredOrder(list);
     }
@@ -135,7 +122,7 @@ const ManageOrderList = () => {
         setFilteredOrder([]);
         setEmptySearch("Đang tải dữ liệu từ server....")
         setTimeout(() => {
-            getOrderList();
+            getOrderList(1);
             setRefresh("");
         }, 1500);
     }
@@ -277,6 +264,7 @@ const ManageOrderList = () => {
         });
         setSort("sortza");
     };
+    
     return (
         <>
             {
@@ -300,7 +288,11 @@ const ManageOrderList = () => {
             }
             {
                 filter &&
-                <OrderFilter closeModal={closeModal} updateOrderList={updateOrderList} />
+                <OrderFilter 
+                    closeModal={closeModal} 
+                    updateOrderList={updateOrderList}
+                    setFilterCriteria={setFilterCriteria}
+                     />
             }
             <div className={`detail-container ${successClass}`}>
                 <div className="fixed-header">
@@ -332,7 +324,10 @@ const ManageOrderList = () => {
                             <span onClick={refreshPage}>
                                 <FontAwesomeIcon icon={faRefresh} className={refresh} />
                             </span>
-                            <select value={criteria} onChange={(e) => setCriteria(e.target.value)}>
+                            <select value={criteria} onChange={(e) => {
+                                setCriteria(e.target.value)
+                                getOrderList(e.target.value)
+                            }}>
                                 <option value="0">
                                     Hóa đơn đã thanh toán
                                 </option>

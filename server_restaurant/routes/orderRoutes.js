@@ -56,7 +56,7 @@ router.post("/order/detail/new", async (req, res) => {
 router.post("/order/filter", async (req, res) => {
   const { restaurant, from, to, filter } = req.body;
   console.log(filter);
-  const methods = ["dahuy", 'dadat', 'dathanhtoan']
+  const methods = ["dathanhtoan", 'dadat', 'dahuy']
   if (parseInt(filter) === 3) {
     const orders = await Order.find({
       restaurant: new ObjectId(restaurant),
