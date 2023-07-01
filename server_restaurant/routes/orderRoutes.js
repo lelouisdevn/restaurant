@@ -799,6 +799,7 @@ const dates = eachWeekOfInterval(
 router.get("/bill/profit/currentweek/idRes=:id", async (req, res) => {
   let week = dates[0];
   let arrT = [];
+  console.log("ưeek: ", week);
   const restrant = req.params.id;
 
   let o;
@@ -828,6 +829,10 @@ router.get("/bill/profit/currentweek/idRes=:id", async (req, res) => {
       for (let i = 0; i < o.length; i++) {
         if (format(week[m], "MM/dd/yyyy") === o[i]._id.bill) {
           var day_name = "";
+          console.log(
+            "week[m].getDay()",
+            week[m] + " " + week[m].getDay()
+          );
           let thu = week[m].getDay();
           // Lấy tên thứ của ngày hiện tại
           switch (thu) {
@@ -869,6 +874,93 @@ router.get("/bill/profit/currentweek/idRes=:id", async (req, res) => {
   }
 });
 
+// Lấy ra thống kê theo tuần từ ngày -> ngày
+router.post("/bill/profit/select/currentweek/idRes=:id", async (req, res) => {
+  let week = dates[0];
+  const {dataSelect} = req.body;
+  let arrT = [];
+  const restrant = req.params.id;
+  console.log("data start : ", dataSelect.Start);
+  console.log("data start : ", new Date(dataSelect.Start));
+  console.log("data end : ", dataSelect.End );
+
+  let o;
+  try {
+    // Lấy order theo ngày { _id: {bill: 'MM/DD/YYYY'}, count: 1, total: 210000}
+    o = await Order.aggregate([
+      {
+        $match: {
+          status: "dathanhtoan",
+          restaurant: new mongoose.Types.ObjectId("" + req.params.id + "")
+        }
+      },
+      {
+        $group: {
+          _id: {
+            bill: { $dateToString: { format: "%m/%d/%Y", date: "$bill_at" } }
+          },
+          count: { $sum: 1 },
+          total: {
+            $sum: "$total"
+          }
+        }
+      }
+    ]);
+
+    for (
+      let m = new Date(dataSelect.Start);
+      m <= new Date(dataSelect.End);
+      m =  dateFns.addDays(m, 1)
+    ) {
+      // console.log("Cac ngay trong tuan: ", dateFns.format(m, "MM/dd/yyyy"));
+      for (let i = 0; i < o.length; i++) {
+        if (dateFns.format(m, "MM/dd/yyyy") === o[i]._id.bill) {
+          // console.log("m: ", m.getDay());
+
+        // if (format(week[m], "MM/dd/yyyy") === o[i]._id.bill) {
+          var day_name = "";
+          let thu = m.getDay();
+          // Lấy tên thứ của ngày hiện tại
+          switch (thu) {
+            case 0:
+              day_name = "Chủ nhật";
+              break;
+            case 1:
+              day_name = "Thứ hai";
+              break;
+            case 2:
+              day_name = "Thứ ba";
+              break;
+            case 3:
+              day_name = "Thứ tư";
+              break;
+            case 4:
+              day_name = "Thứ năm";
+              break;
+            case 5:
+              day_name = "Thứ sáu";
+              break;
+            case 6:
+              day_name = "Thứ bảy";
+          }
+          // console.log('day_name: ', day_name);
+
+          arrT.push({
+            Thứ: day_name,
+            Ngày: o[i]._id.bill,
+            "Số lượng": o[i].count,
+            "Doanh thu": o[i].total
+          });
+        }
+      }
+    }
+    res.send({ arrT });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
+
 // Thống kê doanh thu của tháng hiện tại
 // Lấy tháng trước
 const month = eachMonthOfInterval({
@@ -882,7 +974,7 @@ router.get("/bill/profit/bymonth/idRes=:id", async (req, res) => {
     const result = dateFns.getWeekOfMonth(new Date());
     const currentDate = new Date();
     const startOfMonth = dateFns.startOfMonth(currentDate);
-    const endOfMonth = dateFns.endOfMonth(currentDate);
+    const endOfMonth = dateFns.endOfMonth(addDays(currentDate,1));
 
     let wOm = [];
     for (let i = startOfMonth; i <= endOfMonth; i = dateFns.addDays(i, 1)) {
@@ -890,7 +982,6 @@ router.get("/bill/profit/bymonth/idRes=:id", async (req, res) => {
       const dateOfMonth = dateFns.format(i, "MM/dd/yyyy");
       wOm.push({ wom: weekOfMonth, dom: dateOfMonth });
     }
-    // console.log("mmmmmeees: ", wOm);
     const groupByWom = (object) => {
       return {
         wom: object.wom,
@@ -946,7 +1037,9 @@ router.get("/bill/profit/bymonth/idRes=:id", async (req, res) => {
         Tuần: make[y].w,
         "Số lượng hóa đơn": count,
         "Doanh thu": total,
-        "Số ngày của tuần": make[y].day.length
+        "Số ngày của tuần": make[y].day.length,
+        "Start": make[y].day[0],
+        "End": make[y].day[make[y].day.length -1]
       });
     }
     // console.log("total: ", statistical);
@@ -962,13 +1055,19 @@ router.post("/bill/profit/select/bymonth/idRes=:id", async (req, res) => {
   const year = parseInt(dateParts[1]);
   const month = parseInt(dateParts[0]-1); // months in JavaScript start from 0
   const currentDate = new Date(year, month);
-
-  // console.log(currentDate);
+ const sD = format(currentDate, "yyyy-MM-dd");
+  console.log("sD", sD); 
   let bill; 
   try {
-    const result = dateFns.getWeekOfMonth(new Date());
+    const result = 5;
+    // const result = dateFns.getWeekOfMonth(new Date('2023-05-31'));
     const startOfMonth = dateFns.startOfMonth(currentDate);
-    const endOfMonth = dateFns.endOfMonth(currentDate);
+    const endOfMonth = dateFns.endOfMonth(addDays(currentDate,1));
+    
+    console.log(new Date());
+    console.log(result);
+    console.log(startOfMonth);
+    console.log(endOfMonth);
      let wOm = [];
     for (let i = startOfMonth; i <= endOfMonth; i = dateFns.addDays(i, 1)) {
       const weekOfMonth = dateFns.getWeekOfMonth(i);
@@ -994,6 +1093,7 @@ router.post("/bill/profit/select/bymonth/idRes=:id", async (req, res) => {
       }
       make.push({ w: x, day: day });
     }
+    console.log("make: ", make);
     bill = await Order.aggregate([
       {
         $match: {
@@ -1030,7 +1130,9 @@ router.post("/bill/profit/select/bymonth/idRes=:id", async (req, res) => {
         Tuần: make[y].w,
         "Số lượng hóa đơn": count,
         "Doanh thu": total,
-        "Số ngày của tuần": make[y].day.length
+        "Số ngày của tuần": make[y].day.length,
+        Start: make[y].day[0],
+        End: make[y].day[make[y].day.length - 1]
       });
     }
     // console.log("total: ", statistical);
@@ -1089,6 +1191,7 @@ router.get("/bill/profit/byyear/idRes=:id", async (req, res) => {
         }
       }
     }
+    // console.log("arr: ", arr);
     let arrS = [];
     for (let z = 0; z < arr.length; z++) {
       arrS.push({

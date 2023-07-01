@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import LobbiesActions from "./LobbiesActions";
@@ -73,12 +73,10 @@ const Lobby = () => {
       .get(`http://localhost:4000/api/all/lobbies/restaurant=${id}`)
       .then((res) => {
         const temp = res?.data.lobbies;
-        console.log("temp: ", temp); 
-          setLobbies(temp);
-        
+        console.log("temp: ", temp);
+        setLobbies(temp);
       })
       .catch((error) => {
-        // console.log("Error: ", error);
         setErr(error);
       });
   };
@@ -90,7 +88,7 @@ const Lobby = () => {
         .post("http://localhost:4000/api/lobby", {
           lob_name: name,
           lob_tbl_num: count,
-          restaurant: infoRes._id,
+          restaurant: infoRes._id
         })
         .then((res) => {
           setOpen(false);
@@ -103,7 +101,7 @@ const Lobby = () => {
 
   return (
     <>
-      <Container flex={5} position="fixed" >
+      <Container flex={5} position="fixed">
         <Box mt={2}>
           <Typography
             variant="h4"
@@ -134,7 +132,7 @@ const Lobby = () => {
               color="grey"
               height={100}
               width={150}
-            ></ReactLoading> 
+            ></ReactLoading>
           </Box>
         ) : (
           <>
