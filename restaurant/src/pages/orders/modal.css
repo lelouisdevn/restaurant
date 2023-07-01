@@ -11,6 +11,10 @@
     overflow-y: scroll;
     /* font-family: 'Josefin Sans', sans-serif; */
 }
+/* .order-modal::-webkit-scrollbar {
+    background: transparent;
+    width: 0;
+} */
 
 .order-modal-title {
     font-size: 22px;
@@ -25,7 +29,7 @@
     padding: 14px;
 }
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 3px;
     background: transparent;
 }
 
