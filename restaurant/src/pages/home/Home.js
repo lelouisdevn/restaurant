@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import "./home.scss";
 import { DatePicker } from "antd";
 import {
@@ -7,7 +7,7 @@ import {
   IconButton,
   Paper,
   Typography,
-  styled,
+  styled
 } from "@mui/material";
 import moment from "moment";
 import dayjs from "dayjs";
@@ -22,7 +22,6 @@ import ListBill from "./ListBill";
 import BarChartPro from "./BarChart";
 import Synthetic from "./Synthetic";
 import SyntheticSearch from "./SyntheticSearch";
-// import BarChart from "./BarChart";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -30,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
-  height: '575px'
+  height: "575px"
 }));
 const Item2 = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -38,103 +37,107 @@ const Item2 = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
-  height: '600px',
-  borderWidth: '2px',
-  borderColor: 'black',
+  height: "600px",
+  borderWidth: "2px",
+  borderColor: "black"
 }));
 const Home = () => {
-   const json = localStorage.getItem("infoRestaurant");
+  const json = localStorage.getItem("infoRestaurant");
   const valuejson = JSON.parse(json);
-  console.log("nhà hàng: ", valuejson);
+  // console.log("nhà hàng: ", valuejson);
   const jsonStaff = localStorage.getItem("infoStaff");
-  const valuejsonStaff = JSON.parse(jsonStaff); 
+  const valuejsonStaff = JSON.parse(jsonStaff);
 
   const [listStaff, setListStaff] = useState([]);
   const [listBill, setListBill] = useState([]);
-  const [bar, setBar] = useState('tuannay')
+  const [bar, setBar] = useState("tuannay");
+  const [title, setTitle] = useState(null);
   const [listSearch, setListSearch] = useState([]);
   const [totalsearch, setTotalSearch] = useState();
+
   const getMY = ({ data }) => {
-    setBar(data.Tháng);
+    setTitle(data.Tháng);
+    setBar("chonthang");
     console.log("data truyen  getMY:", data);
-  }
-const getBillToDay = async() => {
+  };
+
+  // theo tuần
+  const getMW = ({ data }) => {
+    setTitle(data.Tuần + " " + moment(data.Start).format("MM/YYYY"));
+    setBar("chontuan");
+    // console.log("data truyen  getMW:", data);
+  };
+  const getBillToDay = async () => {
     await axios
       .get("http://localhost:4000/api/list/bills/today", {
         params: { resrant: valuejson._id }
       })
       .then((res) => {
         const temp = res?.data.listTBill;
-        console.log("bill today: ", temp);
+        // console.log("bill today: ", temp);
         setListBill(temp);
       });
-  }
-   const getStaffRes = async () => {
-     await axios
-       .get(`http://localhost:4000/api/users/id=${valuejson._id}`)
-       .then((res) => {
-         const temp = res?.data.users;
-         setListStaff(temp);
-         console.log("inof ", temp);
-       });
-   };
+  };
+  const getStaffRes = async () => {
+    await axios
+      .get(`http://localhost:4000/api/users/id=${valuejson._id}`)
+      .then((res) => {
+        const temp = res?.data.users;
+        setListStaff(temp);
+      });
+  };
 
-   useEffect(() => {
+  useEffect(() => {
     getStaffRes();
     getBillToDay();
-   }, []); 
-  
+  }, []);
+
   const [dates, setDates] = useState([]);
   const [isSearch, setisSearch] = useState(true);
-  console.log("datess: ", dates);
+  // console.log("datess: ", dates);
 
   const today = moment().format("YYYY-MM-DD");
   const [value, setValue] = useState([dayjs(today), dayjs(today)]);
   const list = [];
   value.forEach((e) => {
     list.push(moment(e.$d).format("MM-DD-YYYY"));
-  }); 
+  });
 
   const handleSearch = async () => {
-    console.log("ok la ", dates.length === 0 ? "ok" : "no");
     let tempParams;
     if (dates.length === 0) {
-      tempParams= list
+      tempParams = list;
     } else {
-      tempParams= dates
-      
+      tempParams = dates;
     }
     await axios
       .post("http://localhost:4000/api/list/bills/bydate", {
         restaurant: valuejson._id,
-         arraydate : tempParams
+        arraydate: tempParams
       })
-     .then((res) => {
+      .then((res) => {
         const temp = res?.data.listTBill;
-        setListBill(temp)
-        console.log("dc mak gsa ", temp);
+        setListBill(temp);
       });
   };
   const handleSearchAll = async () => {
-    console.log("ok la ", dates.length === 0 ? "ok" : "no");
     let tempParams;
     if (dates.length === 0) {
-      tempParams= list
+      tempParams = list;
     } else {
-      tempParams= dates
-      
+      tempParams = dates;
     }
     await axios
       .post("http://localhost:4000/api/list/statistical/bydate", {
         staffMana: valuejsonStaff._id,
-         arraydate : tempParams
-      }) 
+        arraydate: tempParams
+      })
       .then((res) => {
         const temp = res?.data.listBill2;
         const to = res?.data.to;
         setListSearch(temp);
         setTotalSearch(to);
-        setisSearch(false); 
+        setisSearch(false);
       });
   };
   return (
@@ -170,7 +173,6 @@ const getBillToDay = async() => {
                             })
                           );
                         }}
-                        // onChange={(newValue) => setValue(newValue)}
                       />
                     </DemoItem>
                   </DemoContainer>
@@ -202,24 +204,25 @@ const getBillToDay = async() => {
             </Item>
           </Grid>
 
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            // bgcolor="yellow"
-            p={2}
-          >
+          <Grid item xs={12} sm={12} p={2}>
             <Item sx={{ backgroundColor: "#91C5F8" }}>
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
-                <Typography variant="h5" sx={{ fontWeight: 600, paddingTop: "10px" }}>
-                 Biểu đồ cột thống kê doanh thu theo{" "}
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: 600, paddingTop: "10px" }}
+                >
+                  Biểu đồ cột thống kê doanh thu theo{" "}
                   {bar === "tuannay"
                     ? "tuần hiện tại"
                     : bar === "thang"
                     ? "tháng"
                     : bar === "nam"
                     ? "năm"
-                    : bar}
+                    : bar === "chonthang"
+                    ? title
+                    : bar === "chontuan"
+                    ? "tuần " + title
+                    : null}
                 </Typography>
                 <div className="flex items-end justify-end mb-3 pr-6">
                   <label className="text-black text-xl" htmlFor="selectCP">
@@ -234,49 +237,56 @@ const getBillToDay = async() => {
                       <option value="tuannay">tuần hiện tại</option>
                       <option value="thang">tháng </option>
                       <option value="nam">năm </option>
+                      {bar === "chonthang" ? (
+                        <option value="chonthang">{title} </option>
+                      ) : null}
+                      {bar === "chontuan" ? (
+                        <option value="chontuan">{title} </option>
+                      ) : null}
                     </select>
                   </label>
                 </div>
-                {
-                  bar === "tuannay" ? (
-                    <BarChartPro
-                      restaurant={valuejson}
-                      aspect={3.35 / 1}
-                      type="1"
-                    />
-                  ) : bar === "thang" ? (
-                    <BarChartPro
-                      restaurant={valuejson}
-                      aspect={3.35 / 1}
-                      type="2"
-                    />
-                  ) : bar === "nam" ? (
-                    <BarChartPro
-                      restaurant={valuejson}
-                      aspect={3.35 / 1}
-                      title="Theo 3 tháng trước"
-                      type="3"
-                      getMY={getMY}
-                    />
-                  ) : (
-                    <BarChartPro
-                      restaurant={valuejson}
-                      aspect={3.35 / 1}
-                      type="4"
-                    />
-                  )
-                  // <Typography>bd cot tuan </Typography>
-                }
+                {bar === "tuannay" ? (
+                  <BarChartPro
+                    restaurant={valuejson}
+                    aspect={3.35 / 1}
+                    type="1"
+                  />
+                ) : bar === "thang" ? (
+                  <BarChartPro
+                    restaurant={valuejson}
+                    aspect={3.35 / 1}
+                    type="2"
+                    getMW={getMW}
+                  />
+                ) : bar === "nam" ? (
+                  <BarChartPro
+                    restaurant={valuejson}
+                    aspect={3.35 / 1}
+                    title="Theo 3 tháng trước"
+                    type="3"
+                    getMY={getMY}
+                  />
+                ) : bar === "chonthang" ? (
+                  <BarChartPro
+                    restaurant={valuejson}
+                    aspect={3.35 / 1}
+                    type="2"
+                    select="select"
+                    getMW={getMW}
+                  />
+                ) : (
+                  <BarChartPro
+                    restaurant={valuejson}
+                    aspect={3.35 / 1}
+                    type="1"
+                    select="select"
+                  />
+                )}
               </Box>
             </Item>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            // bgcolor="green"
-            p={2}
-          >
+          <Grid item xs={12} sm={12} p={2}>
             <Item2>
               <Box bgcolor="#fff" sx={{ width: "100%" }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
@@ -290,10 +300,7 @@ const getBillToDay = async() => {
                     <DemoContainer
                       components={["DateRangePicker", "DateRangePicker"]}
                     >
-                      <DemoItem
-                        // label="Controlled picker"
-                        component="DateRangePicker"
-                      >
+                      <DemoItem component="DateRangePicker">
                         <DateRangePicker
                           value={value}
                           onChange={(values) => {
@@ -305,7 +312,6 @@ const getBillToDay = async() => {
                               })
                             );
                           }}
-                          // onChange={(newValue) => setValue(newValue)}
                         />
                       </DemoItem>
                     </DemoContainer>

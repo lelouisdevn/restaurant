@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,14 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
-import format from "date-fns";
-import moment from "moment";
-import VND from '../../components/currency';
+import VND from "../../components/currency";
 function SyntheticSearch({ data, dataTotal }) {
   console.log("data search: ", data);
   const [dense, setDense] = React.useState(false);
-  
+
   const headCells = [
     {
       id: "stt",
@@ -87,7 +84,6 @@ function SyntheticSearch({ data, dataTotal }) {
                       key={index}
                       sx={{ cursor: "pointer" }}
                     >
-                      {/* format(new Date(), ) */}
                       <TableCell align="center">{index + 1} </TableCell>
                       <TableCell align="center">
                         {row.restaurant.rest_name}
@@ -100,8 +96,8 @@ function SyntheticSearch({ data, dataTotal }) {
                         {row.total ? VND.format(row.total) : 0}
                       </TableCell>
                       <TableCell align="center">
-                        {row.total / dataTotal> 0
-                          ? (row.total / dataTotal)*100
+                        {row.total / dataTotal > 0
+                          ? (row.total / dataTotal) * 100
                           : 0}
                         %
                       </TableCell>
@@ -126,4 +122,4 @@ function SyntheticSearch({ data, dataTotal }) {
   );
 }
 
-export default SyntheticSearch
+export default SyntheticSearch;

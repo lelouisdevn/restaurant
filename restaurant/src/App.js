@@ -44,7 +44,7 @@ import ManageOrderList from './pages/orders/manage/ManageOrderList';
 
 import Bep from './pages/managa_chef/bep';
 import DS_Order from './pages/managa_chef/ds_order';
-
+import HomePage from './pages/login/HomePage';
 
 
 
@@ -64,7 +64,10 @@ function App() {
         <Routes>
           <Route path="*" element={<Navigate to="/login" replace />}></Route>
 
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<HomePage />}></Route>
+          <Route path='/home' element={<HomePage />}>
+            <Route index element={<Login />} />
+          </Route>
 
           <Route path='/setting-up/*' element={
             <ProtectedManage
