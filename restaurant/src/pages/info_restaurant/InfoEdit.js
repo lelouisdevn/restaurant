@@ -77,7 +77,7 @@ const InfoEdit = () => {
                         <br />
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Name:
+                                Tên:
                             </td>
                             <td className='basis-3/4 text-2xl'>
                                 <div className="mb-6">
@@ -88,7 +88,7 @@ const InfoEdit = () => {
                         <br /><br />
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Describe:
+                                Mô tả:
                             </td>
                             <td className='basis-3/4'>
                                 <div className="mb-6">
@@ -99,7 +99,7 @@ const InfoEdit = () => {
                         <br /><br />
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Address:
+                                Địa chỉ:
                             </td>
                             <td className='basis-3/4'>
                                 <div className="mb-6">
@@ -110,7 +110,7 @@ const InfoEdit = () => {
                         <br /><br />
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Phone:
+                                SĐT:
                             </td>
                             <td className='basis-3/4'>
                                 <div className="mb-6">
