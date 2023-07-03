@@ -124,7 +124,19 @@ function BarChartPro({ restaurant, aspect, title, type, getMY , getMW, select}) 
    }, [restaurant._id]);
  
   const colors = ["#8884d8", "#82ca9d", "#ffc658", "#C70039"];
-  
+  // const CustomYAxisTick = ({ x, y, payload }) => (
+  //   <text x={x} y={y} dy={50} textAnchor="end" fill="#666">
+  //     {numeral(payload.value).format("0,0")} VND
+  //   </text>
+  // );
+  const CustomYAxisTick = (props) => {
+    const { x, y, payload } = props;
+    return (
+      <text x={x} y={y} dy={16} fontSize={12} textAnchor="end" fill="#666">
+        {numeral(payload.value).format("0,0")} VND
+      </text>
+    );
+  };
   return (
     <>
       {gettype === "1" ? (
@@ -143,7 +155,7 @@ function BarChartPro({ restaurant, aspect, title, type, getMY , getMW, select}) 
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="Thứ" />
-              <YAxis />
+              <YAxis  />
               {/* <YAxis tick={<CustomYAxisTick />} fill="#8884d8" /> */}
               <Tooltip />
               <Legend />
@@ -204,7 +216,7 @@ function BarChartPro({ restaurant, aspect, title, type, getMY , getMW, select}) 
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="Tháng" />
+              {/* <XAxis dataKey="Tháng" /> */}
               <YAxis />
               <Tooltip />
               <Legend />

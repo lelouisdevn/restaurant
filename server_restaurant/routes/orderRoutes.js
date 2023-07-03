@@ -827,13 +827,13 @@ router.get("/bill/profit/currentweek/idRes=:id", async (req, res) => {
 
     for (let m = 0; m < week.length; m++) {
       for (let i = 0; i < o.length; i++) {
-        if (format(week[m], "MM/dd/yyyy") === o[i]._id.bill) {
+        if (format(subDays(week[m],1), "MM/dd/yyyy") === o[i]._id.bill) {
           var day_name = "";
-          console.log(
-            "week[m].getDay()",
-            week[m] + " " + week[m].getDay()
-          );
-          let thu = week[m].getDay();
+          // console.log(
+          //   "week[m].getDay()",
+          //   week[m] + " " + week[m].getDay()
+          // );
+          let thu = subDays(week[m],1).getDay();
           // Lấy tên thứ của ngày hiện tại
           switch (thu) {
             case 0:
@@ -867,6 +867,7 @@ router.get("/bill/profit/currentweek/idRes=:id", async (req, res) => {
         }
       }
     }
+    console.log("arrT: ", arrT);
     res.send({ arrT });
   } catch (error) {
     console.log("Data err: ", error);
@@ -1235,8 +1236,7 @@ router.get("/statictical/all/today/user=:user", async (req, res) => {
           arrS.push({ restaurant: eRes, staff: eStaff.count });
         }
       });
-    });
-
+    }); 
     // Thống kê nhà hàng theo doanh thu hôm nay
     for (let i = 0; i < arrS.length; i++) {
       bill = await Order.aggregate([
@@ -1278,7 +1278,7 @@ router.get("/statictical/all/today/user=:user", async (req, res) => {
               bill: listBill[x].bill[y]
             });
           }
-        }
+         }
       } else {
         listBill2.push({
           restaurant: listBill[x].restaurant,
@@ -1287,13 +1287,13 @@ router.get("/statictical/all/today/user=:user", async (req, res) => {
         });
       }
     }
-    let to = 0;
+     let to = 0;
     for (n = 0; n < listBill2.length; n++) {
       if (listBill2[n].bill.total !== undefined) {
         to += listBill2[n].bill.total;
       }
     }
-    res.send({ listBill2, to });
+     res.send({ listBill2, to });
   } catch (error) {
     console.log("Data err: ", error);
     return res.status(422).send({ Error: error.message });
