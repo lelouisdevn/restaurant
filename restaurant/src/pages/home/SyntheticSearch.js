@@ -97,7 +97,7 @@ function SyntheticSearch({ data, dataTotal }) {
                       </TableCell>
                       <TableCell align="center">
                         {row.total / dataTotal > 0
-                          ? (row.total / dataTotal).toFixed(2) * 100
+                          ? (((row.total / dataTotal)*100).toFixed(2))
                           : 0}
                         %
                       </TableCell>
