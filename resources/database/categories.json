@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "6470ad278651e478fe867f5c"
+  },
+  "category_name": "Thức uống",
+  "category_img": "https://img.freepik.com/premium-vector/various-soft-drinks-bottles-cans-glass-coffee-cola-vector-illustration_9845-81.jpg?w=2000",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6470ad488651e478fe867f5e"
+  },
+  "category_name": "Thức ăn",
+  "category_img": "https://img.freepik.com/premium-vector/fast-food-illustration-set_121223-1482.jpg?w=2000",
+  "__v": 0
+}]

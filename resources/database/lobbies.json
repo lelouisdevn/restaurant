@@ -1,0 +1,209 @@
+[{
+  "_id": {
+    "$oid": "646f9265ca84826eedc6c925"
+  },
+  "lob_name": "Trệt - Khu vực 1",
+  "lob_tbl_num": 16,
+  "__v": 0,
+  "lob_status": 1,
+  "lob_arrange": "column",
+  "lob_num": 3,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  }
+},{
+  "_id": {
+    "$oid": "646f933fca84826eedc6c931"
+  },
+  "lob_name": "Trệt - Khu vực 2",
+  "lob_tbl_num": 15,
+  "__v": 0,
+  "lob_status": 1,
+  "lob_arrange": "column",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  }
+},{
+  "_id": {
+    "$oid": "646f9365ca84826eedc6c935"
+  },
+  "lob_name": "Lầu - Khu vực 1",
+  "lob_tbl_num": 15,
+  "__v": 0,
+  "lob_status": 1,
+  "lob_arrange": "column",
+  "lob_num": 3,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  }
+},{
+  "_id": {
+    "$oid": "646f937bca84826eedc6c939"
+  },
+  "lob_name": "Lầu - Khu vực 2",
+  "lob_tbl_num": 12,
+  "__v": 0,
+  "lob_status": 1,
+  "lob_arrange": "column",
+  "lob_num": 5,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  }
+},{
+  "_id": {
+    "$oid": "64889bb815e20a670d5dba6f"
+  },
+  "lob_name": "Trệt",
+  "lob_tbl_num": 4,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64887855df1e19ce103b2c12"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6488a14615e20a670d5dbc6e"
+  },
+  "lob_name": "Lầu S1",
+  "lob_tbl_num": 18,
+  "lob_status": 1,
+  "lob_arrange": "column",
+  "lob_num": 5,
+  "restaurant": {
+    "$oid": "64812087e4ae47c9cb56a826"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6488a27015e20a670d5dbccd"
+  },
+  "lob_name": "Lầu S2",
+  "lob_tbl_num": 20,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 3,
+  "restaurant": {
+    "$oid": "64812087e4ae47c9cb56a826"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6489609598646acdca9dbd15"
+  },
+  "lob_name": "Tang 1",
+  "lob_tbl_num": 4,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "6489602a98646acdca9dbce1"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64913668318fc299f674f4b6"
+  },
+  "lob_name": "Trệt - Sảnh 1 ",
+  "lob_tbl_num": 10,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "648a64197177e75ff576a82d"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649af0719893cb1d925171d2"
+  },
+  "lob_name": "KV51",
+  "lob_tbl_num": 10,
+  "lob_status": 0,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649b09c19893cb1d92517c23"
+  },
+  "lob_name": "KV51",
+  "lob_tbl_num": 100,
+  "lob_status": 0,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a1741d63c923b48585b9b8"
+  },
+  "lob_name": "Trệt - Sảnh2",
+  "lob_tbl_num": 5,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "648a64197177e75ff576a82d"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a17bdd63c923b48585c0de"
+  },
+  "lob_name": "Trệt 1",
+  "lob_tbl_num": 5,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "648fd7fadaf29f4ba12e5933"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a21881bdc27c3065d58bf1"
+  },
+  "lob_name": "Lầu 1",
+  "lob_tbl_num": 5,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64887855df1e19ce103b2c12"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a22f44bdc27c3065d592eb"
+  },
+  "lob_name": "Kv51",
+  "lob_tbl_num": 2,
+  "lob_status": 0,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a27c4b0d4988d750b429a2"
+  },
+  "lob_name": "kv51",
+  "lob_tbl_num": 1,
+  "lob_status": 1,
+  "lob_arrange": "row",
+  "lob_num": 4,
+  "restaurant": {
+    "$oid": "64730496807c841ff6a953a3"
+  },
+  "__v": 0
+}]

@@ -1,6 +1,6 @@
 # Restaurant Management System
 
-![Homepage](https://github.com/lelouisdevn/restaurant/blob/gamma/preview/homepage.png)
+![Homepage](https://github.com/lelouisdevn/restaurant/blob/beta/resources/preview/homepage.png)
 
 This project is developed as a part of the internship program in VNPT Group. The company aim to provide students opportunities to work in a more practical environment to help enhance their skillsets, and additionally search for and foster qualified engineers for their new projects.
 

@@ -1,0 +1,154 @@
+[{
+  "_id": {
+    "$oid": "64730496807c841ff6a953a3"
+  },
+  "rest_name": "Nhà hàng Saga",
+  "rest_addr": "Phường Lê Bình, Quận Cái Răng, Thành phố Cần Thơ",
+  "rest_phone": "0788959486",
+  "__v": 0,
+  "rest_desc": "Nhà hàng có 20 năm kinh nghiệm trong lĩnh vực ăn uống."
+},{
+  "_id": {
+    "$oid": "64887855df1e19ce103b2c12"
+  },
+  "rest_name": "Louisiana Kafeteria",
+  "rest_desc": "Nhà hàng mới đi vào hoạt động từ năm 2023",
+  "rest_addr": "St. Pasteur, District 1, Ho Chi Minh City",
+  "rest_phone": "0337144072",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6489602a98646acdca9dbce1"
+  },
+  "rest_name": "Trinity verified creators' page",
+  "rest_desc": "The verified page of system creators",
+  "rest_addr": "Can Tho City",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "648a64197177e75ff576a82d"
+  },
+  "rest_name": "Lotus Restaurant",
+  "rest_desc": "Nhà hàng chuyên về các món ăn miền Tây.",
+  "rest_addr": "Ninh Kiều, Cần Thơ",
+  "rest_phone": "0788956486",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "648fd7fadaf29f4ba12e5933"
+  },
+  "rest_name": "React JS Restaurant",
+  "rest_desc": "Chuyên các món Nhật ",
+  "rest_addr": "Cần Thơ",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6499a691a8646ff0fd2ec7f0"
+  },
+  "rest_name": "Janrtr",
+  "rest_desc": "Famous, well-known",
+  "rest_addr": "NVC, NK, CT",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6499a691a8646ff0fd2ec7f4"
+  },
+  "rest_name": "Janrtr",
+  "rest_desc": "Famous, well-known",
+  "rest_addr": "NVC, NK, CT",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6499a691a8646ff0fd2ec7f8"
+  },
+  "rest_name": "Janrtr",
+  "rest_desc": "Famous, well-known",
+  "rest_addr": "NVC, NK, CT",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6499a691a8646ff0fd2ec7fc"
+  },
+  "rest_name": "Janrtr",
+  "rest_desc": "Famous, well-known",
+  "rest_addr": "NVC, NK, CT",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6499a692a8646ff0fd2ec800"
+  },
+  "rest_name": "Janrtr",
+  "rest_desc": "Famous, well-known",
+  "rest_addr": "NVC, NK, CT",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f025659a1389d957db211"
+  },
+  "rest_name": "The Trinity",
+  "rest_desc": "Rat okay",
+  "rest_addr": "CT",
+  "rest_phone": "0337144072",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f027f59a1389d957db219"
+  },
+  "rest_name": "trinity23",
+  "rest_desc": "ok",
+  "rest_addr": "st",
+  "rest_phone": "0559285589",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f030d59a1389d957db25a"
+  },
+  "rest_name": "trio",
+  "rest_desc": "nha hang",
+  "rest_addr": "soc trang",
+  "rest_phone": "0337144072",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f04e559a1389d957db33a"
+  },
+  "rest_name": "Louis Cafe",
+  "rest_desc": "Since 1968",
+  "rest_addr": "London, England",
+  "rest_phone": "0123456789",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f056f59a1389d957db397"
+  },
+  "rest_name": "Latte B",
+  "rest_desc": "vbcc",
+  "rest_addr": "vbcc",
+  "rest_phone": "4354345631",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f05fa59a1389d957db39f"
+  },
+  "rest_name": "Avf Cake",
+  "rest_desc": "Cửa hàng kinh doanh bánh ngọt",
+  "rest_addr": "Avf avenue",
+  "rest_phone": "1111",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a174e2fe2ef0a330a04f83"
+  },
+  "rest_name": "corpus",
+  "rest_desc": "ujiko",
+  "rest_addr": "c",
+  "rest_phone": "01254639874",
+  "__v": 0
+}]

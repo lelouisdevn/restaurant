@@ -1,0 +1,350 @@
+[{
+  "_id": {
+    "$oid": "6472e71067760e2a1599227b"
+  },
+  "staff_name": "Lê Thị Nở",
+  "staff_dob": "1988-8-23",
+  "staff_phone": "07889591452",
+  "staff_addr": "Làng Vũ Đại",
+  "staff_gender": "Nữ",
+  "username": "thino",
+  "password": "ThiNo",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0,
+  "staff_img": "https://antimatter.vn/wp-content/uploads/2022/04/anh-anime-nu-ngau-1-600x600.jpg"
+},{
+  "_id": {
+    "$oid": "6472f9903c53f7d4dc02cb8a"
+  },
+  "staff_name": "Trần Chí Phèo",
+  "staff_dob": "2023-06-29",
+  "staff_phone": "0788956327",
+  "staff_addr": "Làng Vũ Đại",
+  "staff_gender": "Nam",
+  "username": "chipheo",
+  "password": "ChiPheo",
+  "role": "1",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "648006abc8e4b5e7805a44fc"
+  },
+  "staff_name": "Ngô Trần Vĩnh Thái",
+  "staff_dob": "2001-03-06",
+  "staff_phone": "0337144072",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nam",
+  "username": "thaingo",
+  "password": "thaingo",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "648006aec8e4b5e7805a4500"
+  },
+  "staff_name": "Đặng Thị Thanh Tuyền",
+  "staff_dob": "01/02/2003",
+  "staff_phone": "0123432345",
+  "staff_addr": "3/2, phường Xuân Khánh, quận Ninh Kiều, TP Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "tuyendang",
+  "password": "tuyendang",
+  "role": "2",
+  "staff_status": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "648006bcc8e4b5e7805a450c"
+  },
+  "staff_name": "Trần Thị Thu Ngân",
+  "staff_dob": "2000-11-23",
+  "staff_phone": "0559285589",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "thungan",
+  "password": "thungan",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "648173a6395cbc0cc46f9d19"
+  },
+  "staff_name": "exampleLotus",
+  "staff_dob": "exampleLotus",
+  "staff_phone": "exampleLotus",
+  "staff_addr": "exampleLotus",
+  "staff_gender": "exampleLotus",
+  "username": "Lotus",
+  "password": "Lotus",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64893910122dbeb82b937c29"
+  },
+  "staff_name": "Nguyễn Văn A",
+  "staff_dob": "01/01/2001",
+  "staff_phone": "0337144072",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nam",
+  "username": "avana",
+  "password": "avana",
+  "role": "1",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64895bacb4957e021422458e"
+  },
+  "staff_name": "Ngô Trần Vĩnh Thái",
+  "staff_dob": "06/03/2001",
+  "staff_phone": "0337144072",
+  "staff_addr": "Sóc Trăng",
+  "staff_gender": "Nam",
+  "username": "trinity",
+  "password": "1",
+  "role": "1",
+  "staff_status": 1
+},{
+  "_id": {
+    "$oid": "648a45c9cea3fd9b84e04e17"
+  },
+  "staff_name": "Nguyễn Đầu Bếp",
+  "staff_dob": "1998-06-25",
+  "staff_phone": "Example",
+  "staff_addr": "Số 1 Nguyễn Văn Cừ, Ninh Kiều, Cần Thơ",
+  "staff_gender": "Nam",
+  "username": "bep",
+  "password": "bep",
+  "role": "3",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64941514bbed7f276a430a46"
+  },
+  "staff_name": "Võ Thị Quỳnh Thư",
+  "staff_dob": "2001-02-15",
+  "staff_phone": "0123456789",
+  "staff_addr": "Lê Bình, Cái Răng, Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "thuvo",
+  "password": "thuvo",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6499a70fa8646ff0fd2ec84d"
+  },
+  "staff_name": "fdc f",
+  "staff_dob": "rgr",
+  "staff_phone": "grre",
+  "staff_addr": "grefe",
+  "staff_gender": "gref",
+  "username": "gre",
+  "password": "gre",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649af1309893cb1d925171fb"
+  },
+  "staff_name": "Nhân Zin",
+  "staff_dob": "2002-06-19",
+  "staff_phone": "1",
+  "staff_addr": "1",
+  "staff_gender": "1",
+  "username": "1",
+  "password": "1",
+  "role": "2",
+  "staff_status": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649b0b24c73013e46098c788"
+  },
+  "staff_name": "Đặng Thị Thanh Tuyền",
+  "staff_dob": "2001-03-15",
+  "staff_phone": "0788959456",
+  "staff_addr": "Vĩnh Long",
+  "staff_gender": "Nữ",
+  "username": "tuyen",
+  "password": "tuyen",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "649f041270446c969ee56762"
+  },
+  "staff_name": "Louis",
+  "staff_dob": "02/12/2001",
+  "staff_phone": "0983126447",
+  "staff_addr": "The United Kingdom",
+  "staff_gender": "Nam",
+  "username": "louis",
+  "password": "louis",
+  "role": "1",
+  "staff_status": 1
+},{
+  "_id": {
+    "$oid": "649f052959a1389d957db367"
+  },
+  "staff_name": "thn",
+  "staff_dob": "2023-06-30",
+  "staff_phone": "4554",
+  "staff_addr": "gdg",
+  "staff_gender": "Nam",
+  "username": "thn",
+  "password": "thn",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a167e3fe2ef0a330a04cf1"
+  },
+  "staff_name": "Nguyễn Thị Mùa Thu",
+  "staff_dob": "2001-03-14",
+  "staff_phone": "0998123455",
+  "staff_addr": "Hậu Giang",
+  "staff_gender": "Nam",
+  "username": "autumn",
+  "password": "autumn",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a1724063c923b48585b926"
+  },
+  "staff_name": "Lotus Order",
+  "staff_dob": "2001-06-06",
+  "staff_phone": "0788956452",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nam",
+  "username": "lotusorder",
+  "password": "lotusorder",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a1727a63c923b48585b92f"
+  },
+  "staff_name": "Lotus Bếp",
+  "staff_dob": "2002-06-05",
+  "staff_phone": "0788456321",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nam",
+  "username": "lotusbep",
+  "password": "lotusbep",
+  "role": "3",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a1730c63c923b48585b938"
+  },
+  "staff_name": "Lotus Thu Ngân",
+  "staff_dob": "1999-07-20",
+  "staff_phone": "0788471594",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "lotusthungan",
+  "password": "lotusthungan",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a17b3d63c923b48585c0a1"
+  },
+  "staff_name": "Hồ Thị Thu Tuyền",
+  "staff_dob": "2000-02-06",
+  "staff_phone": "0788369854",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "reactjsorder",
+  "password": "reactjsorder",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a17b7663c923b48585c0ab"
+  },
+  "staff_name": "Dương Bách",
+  "staff_dob": "1999-02-03",
+  "staff_phone": "0788475145",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nam",
+  "username": "reactjsthungan",
+  "password": "reactjsthungan",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a17b8f63c923b48585c0af"
+  },
+  "staff_name": "Hoàng Nguyệt Hoa",
+  "staff_dob": "1999-02-04",
+  "staff_phone": "0788475164",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "reactjsbep",
+  "password": "reactjsbep",
+  "role": "3",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a216a1e6e3187865b88d2d"
+  },
+  "staff_name": "Nguyễn Ngọc Bảo Trân",
+  "staff_dob": "2000-05-07",
+  "staff_phone": "0788478972",
+  "staff_addr": "Cần Thơ",
+  "staff_gender": "Nữ",
+  "username": "lotustran",
+  "password": "lotustran",
+  "role": "2",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a21708bdc27c3065d58a47"
+  },
+  "staff_name": "daupep",
+  "staff_dob": "2023-06-30",
+  "staff_phone": "0123",
+  "staff_addr": "can tho",
+  "staff_gender": "Nữ",
+  "username": "pep",
+  "password": "pep",
+  "role": "3",
+  "staff_status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64a21733e6e3187865b88d3c"
+  },
+  "staff_name": "thunganlotus",
+  "staff_dob": "2007-06-06",
+  "staff_phone": "01215423633",
+  "staff_addr": "CT",
+  "staff_gender": "Nữ",
+  "username": "thunganlotus",
+  "password": "thunganlotus",
+  "role": "4",
+  "staff_status": 1,
+  "__v": 0
+}]
