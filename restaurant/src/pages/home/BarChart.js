@@ -216,7 +216,7 @@ function BarChartPro({ restaurant, aspect, title, type, getMY , getMW, select}) 
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              {/* <XAxis dataKey="Tháng" /> */}
+              <XAxis dataKey="Tháng" />
               <YAxis />
               <Tooltip />
               <Legend />
