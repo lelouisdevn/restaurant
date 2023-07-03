@@ -1,29 +1,38 @@
-# Multitenant restaurant managing system
+# Restaurant Management System
 
-This project is invented as a part of internship programme in VNPT Corporation,
-which aims to provide students at universites or colleges the oppoturnities to work
-in a practical environment to help enhance their skillsets;
+![Homepage](https://github.com/lelouisdevn/restaurant/blob/gamma/preview/homepage.png)
 
-ABOUT PROJECT
--------------
-Multitenancy is an architecture that is fairly renowned recently due to the fact that the price of managing softwares aren't affordable for a lot of companies especially those are small restaurants, cafeterias,...
-With a multitenant system like us, they'll be able to hire accounts referenced to
-their restaurants and use our highly designed features for managing their restaurants' activitites with a more reasonable price;
+This project is developed as a part of the internship program in VNPT Group. The company aim to provide students opportunities to work in a more practical environment to help enhance their skillsets, and additionally search for and foster qualified engineers for their new projects.
 
-COPYRIGHTS
-----------
-This project is not a commercial product but we want to reserve all rights, you can try and implement this project for educational purposes;
+## Project
+The system is first designed as a management application for a single restaurant, although the demands for a management system are quite large, the software prices aren't affordable for many small restaurants. Therefore, we re-design the system's architecture by following the concept of multi-tenant architecture.
 
-INSTALLATION
-------------
-To get started, we assume you have already installed prerequisited technologies such as node, express, mongo,... We recommend using 'npm' package management tool for installing required packages:
+This approach allows multiple clients to use the only instance of the app simultaneously, and therefore would help reduce the cost of development and maintenance. Besides, the system also allows a business owner the ability to run more than one restaurant with a single account.
 
-    $npm install
+## Results and limitations
+By joining in the internship programme in VNPT Group, I and my co-authors had learnt many business models and studied recent technologies to develop the system which satisfied many of the requirements in management activities.
 
-You can run 'nodejs' server with 'nodemon' so it'll automatically restart once changes are made:
+However, the fact that we're more familiar with the traditional methods of web development, we found many obstacles in developing with MERN stack technologies in the early stages. And, the limit of time compelled us to leave back some features such as salary and inventory management.
 
-    $nodemon server.js
-    
-Now, you can run the GUI with
-    
-    $npm start
+## Installation
+Because we had used a lot of libraries such as axios, tailwind, react-pdf,... We recommend using the npm tools for installing required packages:
+
+```bash
+$ npm install
+```
+
+## Usage
+Now you can run front-end with 
+```bash 
+$ npm start
+```
+And run the back-end with nodemon, so it'll automatically restart the server when there are changes.
+```bash 
+$ nodemon server.js
+```
+Or you could just use ```$npm start``` if you want.
+
+
+## License
+
+You can try this for educational purposes.
