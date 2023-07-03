@@ -65,6 +65,17 @@ router.get("/users/id=:id/idUser=:idUser", async (req, res) => {
   }
 });
 
+//check username password khi add ng dung
+router.get("/users/check/:username/:password", async (req, res) => {
+  try {
+    let user = await User.find({ username: req.params.username, password: req.params.password });
+    res.send({ isuser });
+  } catch (error) {
+    console.log("Data err: ", error);
+    return res.status(422).send({ Error: error.message });
+  }
+});
+
 //Sửa thông tin của 1 nguoi dung
 router.put("/users/edit/idUser=:idUser", async (req, res) => {
   console.log(req.params);

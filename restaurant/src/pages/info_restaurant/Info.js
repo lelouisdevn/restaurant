@@ -47,7 +47,7 @@ const Info = () => {
                         <br/>
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Name:
+                                Tên:
                             </td>
                             <td className='basis-3/4 text-2xl'>
                                 {info.rest_name}
@@ -56,7 +56,7 @@ const Info = () => {
                         <br/><br/>
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Describe:
+                                Mô tả:
                             </td>
                             <td className='basis-3/4 '>
                                 {info.rest_desc}
@@ -65,7 +65,7 @@ const Info = () => {
                         <br/><br/>
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Address:
+                                Địa chỉ:
                             </td>
                             <td className='basis-3/4 text-2xl'>
                                 {info.rest_addr}
@@ -74,7 +74,7 @@ const Info = () => {
                         <br/><br/>
                         <tr className='flex flex-row'>
                             <td className='basis-1/4'>
-                                Phone:
+                                SĐT:
                             </td>
                             <td className='basis-3/4 text-2xl'>
                                 {info.rest_phone}

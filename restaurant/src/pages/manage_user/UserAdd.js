@@ -12,7 +12,7 @@ function UserAdd(){
     const [staff_dob, setStaffDob] = useState("");
     const [staff_phone, setStaffPhone] = useState("");
     const [staff_addr, setStaffAddr] = useState("");
-    const [staff_gender, setStaffGender] = useState("");
+    const [staff_gender, setStaffGender] = useState("Nữ");
     const [username, setusername] = useState("");
     const [password, setpassword] = useState("");
     const [role, setRole] = useState("");
