@@ -1,4 +1,5 @@
 # Restaurant Management System
+Link to demo video (YouTube): https://youtu.be/OJ98gg-iL10 
 
 ![Homepage](https://github.com/lelouisdevn/restaurant/blob/beta/resources/preview/homepage.png)
 
