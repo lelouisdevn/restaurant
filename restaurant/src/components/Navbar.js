@@ -129,7 +129,7 @@ const Navbar = (props) => {
               <img style={{ display: "inline" }} src="/images/avatar.jpg" />
               <div style={{ display: "inline" }}>{infoStaff.staff_name}</div>
             </div>
-            <div className="main-content">
+            <div className="main-content" style={{height: "200px"}}>
               {
                 isLoading ? null : rest.map((row) => (
                   <div onClick={(e) => handleRestClick(row.info)} style={{ fontSize: "16px" }}>
