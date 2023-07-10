@@ -8,9 +8,6 @@ import axios from "axios";
 const SelectRest = () => {
     const navigator = useNavigate();
     const navigate = useNavigate();
-    const createRest = () => {
-        navigator("/setting-up/restaurant/new");
-    }
 
 
     /**
@@ -24,6 +21,13 @@ const SelectRest = () => {
     useEffect(() => {
         getRest(id);
     }, [id]);
+    const createRest = () => {
+        if (rest.length >= 3) {
+            alert("Your account cannot add more than 3 restaurants!");
+        }else {
+            navigator("/setting-up/restaurant/new");
+        }
+    }
 
     const getRest = async (id) =>{
         await axios
