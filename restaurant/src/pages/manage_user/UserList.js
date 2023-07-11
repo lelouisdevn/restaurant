@@ -4,6 +4,7 @@ import {
     ListItemIcon,
     ListItemText
 } from "@mui/material";
+import Avatar from '@mui/material/Avatar';
 import "./UserDetail.css"
 import "./UserList.css";
 import React, { useEffect, useState } from 'react';
@@ -61,15 +62,22 @@ function UserList() {
 
             {
                 users.length > 0 ?
-                    <div  style={{ width: "100%" }}>
+                    <div style={{ width: "100%" }}>
                         <table className='table-auto bg-indigo-900 rounded p-5 m-5' style={{ width: "97%" }} >
                             <tbody className="static " style={{ width: "100%" }}>
                                 <tr className="container flex flex-wrap" style={{ position: "relattive", display: "grid", width: "100%", gridTemplateColumns: "auto auto auto auto auto auto", margin: "0 auto" }}>
                                     {users.length > 0 && (users).map((row, index) => (
                                         <td key={index}>
                                             <Link to={`${row.user._id}`} className="fLink">
-                                                <ul className=" list-inside bg-slate-50 rounded-lg p-2 m-3 w-52 h-48 shortedword" style={{ filter: "drop-shadow(1px 1px 5px rgb(182, 181, 181))" }}>
+                                                <ul className=" list-inside bg-slate-50 rounded-lg p-2 m-3 w-52 h-65 shortedword" style={{ filter: "drop-shadow(1px 1px 5px rgb(182, 181, 181))" }}>
                                                     {/* <ul className="" > */}
+                                                    <li>
+                                                        <Avatar style={{  margin: "0 auto" }}
+                                                            alt="Remy Sharp"
+                                                            src={row.user.staff_avt}
+                                                            sx={{ width: 70, height: 70 }}
+                                                        />
+                                                    </li>
                                                     <li className="bg-indigo-200 rounded p-2">Nhân Viên:  {rolechar(row.user.role)}</li>
                                                     <li>Tên: {row.user.staff_name}</li>
                                                     <li>Giới Tính: {row.user.staff_gender}</li>

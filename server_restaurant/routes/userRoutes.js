@@ -14,6 +14,7 @@ router.post("/user", async (req, res) => {
             staff_phone,
             staff_addr,
             staff_gender,
+            staff_avt,
             username,
             password,
             role,
@@ -89,6 +90,7 @@ router.put("/users/edit/idUser=:idUser", async (req, res) => {
           staff_phone: req.body.staff_phone,
           staff_addr: req.body.staff_addr,
           staff_gender: req.body.staff_gender,
+          staff_avt: req.body.staff_avt,
           username: req.body.username,
           password: req.body.password,
           role: req.body.role

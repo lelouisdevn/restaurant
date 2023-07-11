@@ -102,7 +102,7 @@ const Navbar = (props) => {
         <Icons>
           <Avatar
             sx={{ width: 30, height: 30 }}
-            src="/images/avatar.jpg"
+            src={infoStaff.staff_avt}
             onClick={(e) => setOpen(true)}
           />
           <Typography variant="span"> {infoStaff.staff_name}</Typography>

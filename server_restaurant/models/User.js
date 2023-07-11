@@ -38,6 +38,9 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
         default: 1,
+    },
+    staff_avt:{
+        type: String,
     }
 });
 module.exports = mongoose.model("User", UserSchema);

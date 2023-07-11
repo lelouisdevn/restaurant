@@ -23,6 +23,7 @@ function UserDetail() {
     const [staff_phone, setStaffPhone] = useState("");
     const [staff_addr, setStaffAddr] = useState("");
     const [staff_gender, setGender] = useState("");
+    const [staff_avt, setStaffAvt] = useState("");
     const [username, setusername] = useState("");
     const [password, setpassword] = useState("");
     const [role, setRole] = useState("");
@@ -48,6 +49,7 @@ function UserDetail() {
                 staff_phone: staff_phone ? staff_phone : user.staff_phone,
                 staff_addr: staff_addr ? staff_addr : user.staff_addr,
                 staff_gender: staff_gender ? staff_gender : user.staff_gender,
+                staff_avt: staff_avt ? staff_avt : user.staff_avt,
                 username: username ? username : user.username,
                 password: password ? password : user.password,
                 role: role ? role : user.role,
@@ -188,6 +190,13 @@ function UserDetail() {
                             <input defaultValue={user.password}
                                 onChange={(text) => setpassword(text.target.value)}
                                 ></input>
+                        </td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td>Ảnh đại diện:</td>
+                        <td>
+                            <input defaultValue={user.staff_avt} onChange={(text) => setStaffAvt(text.target.value)}></input>
                         </td>
                     </tr>
                     <br/>
