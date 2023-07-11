@@ -71,7 +71,7 @@ function UserList() {
                                             <Link to={`${row.user._id}`} className="fLink">
                                                 <ul className=" list-inside bg-slate-50 rounded-lg p-2 m-3 w-52 h-65 shortedword" style={{ filter: "drop-shadow(1px 1px 5px rgb(182, 181, 181))" }}>
                                                     {/* <ul className="" > */}
-                                                    <li>
+                                                    <li style={{ margin:"5px 0" }}>
                                                         <Avatar style={{  margin: "0 auto" }}
                                                             alt="Remy Sharp"
                                                             src={row.user.staff_avt}
