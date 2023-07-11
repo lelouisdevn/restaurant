@@ -147,7 +147,7 @@
     height: 40%;
 }
 
-.main-content input {
+.main-content input,textarea {
     border: solid 1px lightgrey;
     padding: 5px;
     border-radius: 10px;

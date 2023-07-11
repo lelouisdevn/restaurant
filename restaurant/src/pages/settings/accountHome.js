@@ -5,6 +5,7 @@ import { faClose, faHomeAlt } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { useState } from "react";
 import '../orders/modal.css'
+import FeedBack from "./FeedBack";
 const AccountHome = () => {
     const [selected, setSelected] = useState(true);
     const [successClass, setSuccessClass] = useState("");
@@ -44,25 +45,10 @@ const AccountHome = () => {
                 </div>
             </div>
             { !selected &&
-            <div style={style}>
-                <div className={`update-modal order-modal`}>
-                    <div className="order-modal-title">
-                        <div>Feedback</div>
-                        <span style={{ top: "1px", right: "1px" }} onClick={() => {
-                            setSelected(true)
-                            setSuccessClass("")
-                        }
-                        }>
-                            <FontAwesomeIcon icon={faClose} />
-                        </span>
-                    </div>
-                    <div className="order-modal-content">
-                        <div className="order-container" style={{height: "calc(100vh - 150px)"}}>
-                            abc
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <FeedBack
+                setSelected={setSelected}
+                setSuccessClass={setSuccessClass}
+            />
             }
         </>
     )
