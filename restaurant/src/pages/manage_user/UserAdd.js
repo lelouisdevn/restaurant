@@ -16,6 +16,7 @@ function UserAdd(){
     const [username, setusername] = useState("");
     const [password, setpassword] = useState("");
     const [role, setRole] = useState("");
+    const [staff_avt, setStaffAvt] = useState("");
     const [restaurant, setRestaurant] = useState("");
     
     const handleUserAdd = async () =>{
@@ -28,6 +29,7 @@ function UserAdd(){
                 staff_phone: staff_phone,
                 staff_addr: staff_addr,
                 staff_gender: staff_gender,
+                staff_avt: staff_avt,
                 username: username,
                 password: password,
                 role: role,
@@ -111,6 +113,13 @@ function UserAdd(){
                         <td>Password:</td>
                         <td>
                             <input value={password} onChange={(text) => setpassword(text.target.value)}></input>
+                        </td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td>Ảnh đại diện:</td>
+                        <td>
+                            <input value={staff_avt} onChange={(text) => setStaffAvt(text.target.value)}></input>
                         </td>
                     </tr>
                     <br/>
