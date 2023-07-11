@@ -386,7 +386,8 @@ button.normal {
 .opacity-success {
     opacity: 0.1;
     position: fixed;
-    width: calc(100% - 370px);
+    /* width: calc(100% - 370px); */
+    width: 100%;
 }
 .btn-dlt {
     margin: 15px 0;
