@@ -7,7 +7,7 @@ const Info = require("../models/Info");
 router.get("/getallrestfromone/id=:id", async (req,res) =>{
     try{
         let rest = await UserRestDetail.find({user: req.params.id}).populate("info").exec();
-        //console.log(rest);
+        rest = rest.filter((r) => r.info.status !== 0);
         res.send({rest});
     }catch(error){
         console.log("Data err: ", error);

@@ -17,6 +17,9 @@ const InfoSchema = new Schema({
     rest_phone: {
         type: String,
         required: true,
+    },
+    status: {
+        type: Number,
     }
 });
 module.exports = mongoose.model("Info", InfoSchema);

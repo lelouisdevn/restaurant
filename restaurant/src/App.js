@@ -45,7 +45,9 @@ import ManageOrderList from './pages/orders/manage/ManageOrderList';
 import Bep from './pages/managa_chef/bep';
 import DS_Order from './pages/managa_chef/ds_order';
 import HomePage from './pages/login/HomePage';
-
+import Restaurant from './pages/settings/restaurant';
+import AccountHome from './pages/settings/accountHome';
+import Account from './pages/settings/account';
 
 
 function App() {
@@ -210,6 +212,10 @@ function App() {
             </Route>
           </Route>
 
+          <Route path='/trinity/account/*' element={<Account />}>
+            <Route index element={<AccountHome />} />
+            <Route path='restaurants' element={<Restaurant />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
