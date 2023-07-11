@@ -12,7 +12,7 @@ const AccountHome = () => {
             </div>
             <div className="footer">
                 <div>
-                    <Link to={'/manage/home'}>
+                    <Link to={'/setting-up/select'}>
                         Go to: <> </>
                         <FontAwesomeIcon icon={faHomeAlt} />
                         <> management page</>
