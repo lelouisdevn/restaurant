@@ -1,14 +1,13 @@
 .accounts {
-    display: grid;
-    grid-template-columns: auto auto;
     font-family: 'Josefin Sans', sans-serif;
 }
 .accounts span {
+    display: inline-block;
     height: 200px;
     border: solid 1px rgb(234, 231, 231);
     border-radius: 10px;
     background-color: white;
-    margin: 10px auto;
+    margin: 10px;
     width: 400px;
     font-family: 'Josefin Sans', sans-serif;
 }

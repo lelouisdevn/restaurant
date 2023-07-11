@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faListUl, faLock, faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-const Function = () => {
+const Function = (props) => {
     return (
         <>
             <span>
@@ -26,15 +26,15 @@ const Function = () => {
                 <div>Your data</div>
                 </Link>
             </span>
-            <span>
-                <Link to={'/'}>
+            <span onClick={() => props.selectFeature('feedback')}>
+                {/* <Link to={'/trinity/account/feedback'}> */}
                     <div className="acc-icons">
                         <FontAwesomeIcon icon={faUserAstronaut} />
                     </div>
                     <div>
                         Service feedback
                     </div>
-                </Link>
+                {/* </Link> */}
             </span>
         </>
     )
