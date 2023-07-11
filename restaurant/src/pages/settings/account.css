@@ -1,0 +1,38 @@
+.accounts {
+    display: grid;
+    grid-template-columns: auto auto;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.accounts span {
+    height: 200px;
+    border: solid 1px rgb(234, 231, 231);
+    border-radius: 10px;
+    background-color: white;
+    margin: 10px auto;
+    width: 400px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.accounts span:hover {
+    background-color: whitesmoke;
+    filter: drop-shadow(1px 1px 7px lightgrey);
+}
+.accounts div {
+    margin: 7px auto;
+    font-size: 20px;
+}
+.acc-icons {
+    font-size: 80px!important;
+    color: black;
+}
+.r-i {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: lightgrey;
+    border-radius: 50%;
+    padding: 11px 12px 9px 14px;
+    font-size: 18px;
+}
+.r-i:hover {
+    background-color: rgb(203, 201, 201);
+}
