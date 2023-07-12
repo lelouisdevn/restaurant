@@ -126,7 +126,11 @@ const Navbar = (props) => {
         <div style={{ width: "350px", }}>
           <div style={{ width: "350px" }}>
             <div className="logo" style={{ textAlign: "left", margin: "5px 7px" }}>
-              <img style={{ display: "inline" }} src="/images/avatar.jpg" />
+              {
+                infoStaff.staff_avt === "" ?
+                  <img style={{ display: "inline" }} src="/images/avatar.jpg" /> :
+                  <img style={{ display: "inline" }} src={infoStaff.staff_avt} />
+              }
               <div style={{ display: "inline" }}>{infoStaff.staff_name}</div>
             </div>
             <div className="main-content" style={{height: "200px"}}>
