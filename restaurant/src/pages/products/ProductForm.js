@@ -121,7 +121,7 @@ function ProductForm() {
             <div className='title'>
                 <h2>Quản lý sản phẩm</h2>
             </div>
-            <Toolbar toolbar={toolbar} />
+            {/* <Toolbar toolbar={toolbar} /> */}
             </div>
             <div className='content'>
                 <div className="header-product n_right_content" style={{width: "100%"}}>

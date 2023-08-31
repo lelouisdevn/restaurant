@@ -439,7 +439,7 @@ button.normal {
 }
 
 .menu li .dd-menu li:hover {
-    background-color: rgb(182, 181, 181);
+    background-color: rgb(231, 231, 231);
     border-radius: 10px;
     transition: 400ms;
 }
