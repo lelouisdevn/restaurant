@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './setup.css';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 const SetUpPage = () => {
     const style = {
     }
@@ -11,11 +11,16 @@ const SetUpPage = () => {
             setFloat("logo-ani")
         }, 1000);
     }, []);
+    const navigator = useNavigate();
+    const HOST = "/localhost:3000/";
+    const goToMain = () => {
+        navigator(HOST);
+    }
     return (
         <>
             <div style={style}>
                 <div className={`logo ${float}`} style={{margin: 0}}>
-                    <img src='/images/logoo.png' />
+                    <img src='/images/logoo.png' onClick={goToMain} />
                 </div>
             </div>
             <div className='setup-container'>

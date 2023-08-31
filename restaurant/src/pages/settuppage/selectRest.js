@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faPlus, faPlusCircle, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import Loading from "../products/Loading";
@@ -23,7 +23,7 @@ const SelectRest = () => {
     }, [id]);
     const createRest = () => {
         if (rest.length >= 3) {
-            alert("Your account cannot add more than 3 restaurants!");
+            alert("You cannot create more than 3 restaurants with this account package!");
         } else {
             navigator("/setting-up/restaurant/new");
         }
@@ -89,9 +89,20 @@ const SelectRest = () => {
                             ))
                         }
                     </div>
-                    <div className='footer'>
+                    {/* <div className='footer'>
                         <div onClick={createRest}>
                             <FontAwesomeIcon icon={faGear} />
+                            <> Thêm nhà hàng khác</>
+                        </div>
+                        <div onClick={goToAccount}>
+                            Đi đến: <> </>
+                            <FontAwesomeIcon icon={faUserCircle} />
+                            <> Trinity Account</>
+                        </div>
+                    </div> */}
+                    <div className='footer'>
+                        <div onClick={createRest}>
+                            <FontAwesomeIcon icon={faPlusCircle} />
                             <> Thêm nhà hàng khác</>
                         </div>
                         <div onClick={goToAccount}>
