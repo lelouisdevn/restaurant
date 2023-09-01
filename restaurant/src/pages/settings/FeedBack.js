@@ -84,7 +84,7 @@ const FeedBack = (props) => {
             <div style={style} className={`${successClass}`}>
                 <div className={`update-modal order-modal`} style={{ height: "fit-content" }}>
                     <div className="order-modal-title">
-                        <div>Service Feedback</div>
+                        <div>PHẢN HỒI DỊCH VỤ</div>
                         <span style={{ top: "1px", right: "1px" }} onClick={() => {
                             props.setSelected(true)
                             props.setSuccessClass("")
@@ -95,14 +95,14 @@ const FeedBack = (props) => {
                     </div>
                     <div className="order-modal-content">
                         <div className="order-container main-content" style={{ height: "fit-content" }}>
-                            <>Please fill in these fields and submit for feedback</>
-                            <input placeholder="Your email: " onChange={(e) => setEmail(e.target.value)} />
-                            <input placeholder="Your phone number: " onChange={(e) => setPhone(e.target.value)} />
+                            <>Vui lòng điền các thông tin và gửi phản hồi</>
+                            <input placeholder="Địa chỉ email: " onChange={(e) => setEmail(e.target.value)} />
+                            <input placeholder="Số điện thoại: " onChange={(e) => setPhone(e.target.value)} />
                             {/* <input placeholder="Type of feedback: " type="select" /> */}
-                            <textarea placeholder="Describe your problem here..." rows={10}
+                            <textarea placeholder="Mô tả vấn đề gặp phải..." rows={10}
                                 onChange={(e) => setProblem(e.target.value)}
                             ></textarea>
-                            <button className="updateButton" onClick={submit}>Submit</button>
+                            <button className="updateButton" onClick={submit}>Gửi</button>
                         </div>
                     </div>
                 </div>

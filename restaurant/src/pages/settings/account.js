@@ -30,7 +30,7 @@ const Account = () => {
             <div className="detail-container">
                 <div className="fixed-header">
                     <div className="title" style={{fontFamily:"monospace"}}>
-                        Trinity&trade; Account
+                        Tài khoản Trinity&trade; của bạn
                     </div>
                     <div className="r-i">
                         <FontAwesomeIcon icon={faSignOutAlt} />

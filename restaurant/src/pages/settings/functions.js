@@ -8,14 +8,14 @@ const Function = (props) => {
                 <div className="acc-icons">
                     <FontAwesomeIcon icon={faGear} />
                 </div>
-                <div>Account information</div>
+                <div>Thông tin tài khoản</div>
             </span>
             <span>
                 <Link to={'/trinity/account/restaurants'}>
                 <div className="acc-icons">
                     <FontAwesomeIcon icon={faListUl} />
                 </div>
-                <div>Restaurants</div>
+                <div>Danh sách nhà hàng</div>
                 </Link>
             </span>
             <span>
@@ -23,7 +23,7 @@ const Function = (props) => {
                 <div className="acc-icons">
                     <FontAwesomeIcon icon={faLock} />
                 </div>
-                <div>Your data</div>
+                <div>Dữ liệu & riêng tư</div>
                 </Link>
             </span>
             <span onClick={() => props.selectFeature('feedback')}>
@@ -32,7 +32,7 @@ const Function = (props) => {
                         <FontAwesomeIcon icon={faUserAstronaut} />
                     </div>
                     <div>
-                        Service feedback
+                        Phản hồi dịch vụ
                     </div>
                 {/* </Link> */}
             </span>

@@ -35,11 +35,11 @@ const AccountHome = () => {
                     </div>
                 </div>
                 <div className="footer">
-                    <div>
+                    <div className="single-footer">
                         <Link to={'/setting-up/select'}>
-                            Go to: <> </>
+                            Đi đến: <> </>
                             <FontAwesomeIcon icon={faHomeAlt} />
-                            <> management page</>
+                            <> trang quản lý</>
                         </Link>
                     </div>
                 </div>

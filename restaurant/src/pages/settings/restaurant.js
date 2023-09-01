@@ -26,9 +26,9 @@ const Restaurant = () => {
                     <div className="left-menu">
                         <Link to={'/trinity/account/'}>
                             <FontAwesomeIcon icon={faHomeLg} />
-                            <> Home</>
+                            <> Trang chủ</>
                         </Link>
-                        /Restaurants
+                        /Danh sách nhà hàng
                     </div>
                 </div>
                 <div className="products accounts">
