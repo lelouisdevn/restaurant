@@ -210,3 +210,8 @@
     border-radius: 20px;
     background-color: rgb(236, 234, 234);
 }
+.single-footer {
+    width: 100%!important;
+    border: none!important;
+    text-align: center;
+}

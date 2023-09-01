@@ -76,7 +76,7 @@ const CreateRest = () => {
 
                         </div>
                         <div className="footer">
-                            <div>
+                            <div className="single-footer">
                                 <input value={id} hidden ></input>
                                 <FontAwesomeIcon icon={faAdd} />
                                 <button style={{ padding: "0" }} onClick={() => handleRestAdd(id)} > Thêm</button>
