@@ -17,7 +17,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SetUpPage from "../pages/settuppage/setUpPage";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faSignOut, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 const StyledToolbar = styled(Toolbar)({
@@ -142,10 +142,16 @@ const Navbar = (props) => {
                 ))
               }
             </div>
-            <div className="footer" onClick={() => setOut()} style={{ textAlign: "center" }}>
+            <div className="footer" onClick={() => setOut()} style={{ textAlign: "center", margin: "0 3px" }}>
+            <div>
+                <Link>
+                  <FontAwesomeIcon icon={faPlusCircle} />
+                  <> Thêm mới</>
+                </Link>
+              </div>
               <div>
                 <Link>
-                  <FontAwesomeIcon icon={faSignOut} />
+                  <FontAwesomeIcon icon={faSignOutAlt} />
                   <> Đăng xuất</>
                 </Link>
               </div>
